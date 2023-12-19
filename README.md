@@ -2,7 +2,7 @@
 ### Mul-O: A Web-based Development Platform for Connecting More with Smell
 
 ### CHI2024 reject confirmed. 
-Plan to submit UIST2024...
+Plan to submit to UIST2024...
 We can do it!
 
 ### Designed by Peizhong Gao, Qiwei Zhang, and Linxin Zhang
