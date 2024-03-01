@@ -1,0 +1,77 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block title %}
+    <title>Mulo Home</title>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mulo3.css' %}">
+{% endblock %}
+{% block content %}
+    <section class="p-4"></section>
+    <section class="p-5 text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <a href="/admin/teaching/" style="text-decoration:none; color:#000;">
+                        <div class="card bg-light" style="border-radius: 20px;">
+                            <div class="card-body">
+                                <img src="{% static 'img/bootstrap-icons-1.10.3/yelp.svg' %}"
+                                     alt="Bootstrap"
+                                     width="30" height="30" class="mx-2 mt-5">
+                                <br>
+                                <h5 class="mt-2 mb-5 fw-bold">Teaching</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <a href="/admin/reality/" style="text-decoration:none; color:#000;">
+                        <div class="card bg-light" style="border-radius: 20px;">
+                            <div class="card-body">
+                                <img src="{% static 'img/bootstrap-icons-1.10.3/plus-lg.svg' %}" alt="Bootstrap"
+                                     width="30" height="30" class="mt-5">
+                                <br>
+                                <h5 class="mt-2 mb-5 fw-bold">
+                                    Basic Mode
+                                </h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <a href="#" style="text-decoration:none; color:#000;">
+                        <div class="card bg-light" style="border-radius: 20px;">
+                            <div class="card-body">
+                                <img src="{% static 'img/bootstrap-icons-1.10.3/plus-lg.svg' %}" alt="Bootstrap"
+                                     width="30" height="30" class="mx-2 mt-5">
+                                <br>
+                                <h5 class="mt-2 mb-5 fw-bold">VR Mode</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <a href="#" style="text-decoration:none; color:#000;">
+                        <div class="card bg-light" style="border-radius: 20px;">
+                            <div class="card-body">
+                                <img src="{% static 'img/bootstrap-icons-1.10.3/plus-lg.svg' %}" alt="Bootstrap"
+                                     width="30" height="30" class="mx-2 mt-5">
+                                <br>
+                                <h5 class="mt-2 mb-5 fw-bold">Custom Mode</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
+{% endblock %}

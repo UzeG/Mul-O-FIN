@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+    <title>Mulo Home</title>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mulo1.css' %}">
+{% endblock %}
+{% block style %}
+    <style>
+        body::before {
+            display: block;
+            content: '';
+            height: 220px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navmenu">
+                {% if user.is_authenticated %}
+                    <ul class="navbar-nav ms-auto">
+                        <!-- margin start = margin left mt/mb/ms/me-->
+                        <li class="nav-item">
+                            <div class="nav-link">
+                                <a href="/home/logout/">
+                                    <input class="btn my-3 fw-bold" value="SIGN OUT"
+                                           style="border-radius: 25px; background-color: #eceff1; height:40px; width: 150px; ">
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav ms-auto">
+                        <!-- margin start = margin left mt/mb/ms/me-->
+                        <li class="nav-item">
+                            <div class="nav-link">
+                                <a href="/home/login/">
+                                    <input class="btn my-3 fw-bold" value="SIGN IN"
+                                           style="border-radius: 25px; background-color: #eceff1; height:40px; width: 150px; ">
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-link">
+                                <a href="/home/register/">
+                                    <input class="btn my-3 fw-bold" value="REGISTER"
+                                           style="border-radius: 25px; background-color: #eceff1; height:40px; width: 150px; ">
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <section class="text-center mt-2">
+        <div class="container">
+            <h1 class="fw-bold" style="font-size: 100px; color: #5C6BC0">Mul-O Olfactory Interactive Platform</h1>
+        </div>
+    </section>
+    <section class="text-center my-5">
+        <div class="container">
+            {% if user.is_authenticated %}
+                <a href="/admin/main/">
+                    <input class="btn my-5 fw-bold" value="S T A R T"
+                           style="border-radius: 25px; background-color: #eceff1; height:50px; width: 240px; ">
+                </a>
+            {% else %}
+                <a href="/home/login/">
+                    <input class="btn my-5 fw-bold" value="S T A R T"
+                           style="border-radius: 25px; background-color: #eceff1; height:50px; width: 240px; ">
+                </a>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

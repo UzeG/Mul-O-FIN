@@ -1,0 +1,813 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block title %}
+    <title>Mulo Home</title>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mulo3.css' %}">
+{% endblock %}
+{% block content %}
+    <section class="text-center mt-3">
+        <div class="container">
+            <!-- P1 P2 P3 P4 -->
+            <div class="row g-4 mb-4">
+                <div class="col lg-4">
+                    <div class="container">
+                        <div class="text-end mt-3">
+                            <img
+                                    src="{% static 'img/bootstrap-icons-1.10.3/server.svg' %}"
+                                    alt="Bootstrap"
+                                    width="20" height="20">
+                            <button id="tcpConn" type="button"
+                                    class="btn bg-light fw-bold ms-1"
+                                    style="border-radius: 15px; border: 1px solid darkgray;">
+                                Click me !
+                            </button>
+                            <button type="button" class="btn" data-bs-toggle="popover"
+                                    title=""
+                                    data-bs-content="Click the Bluetooth button on the mulO device and find your device name on your computer. If the lights are always on means the link is successful. If the light blink means wait to link.">
+                                <img
+                                        src="{% static 'img/bootstrap-icons-1.10.3/question-circle-fill.svg' %}"
+                                        alt="Bootstrap"
+                                        width="14" height="14" class="mb-1">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col lg-2">
+                    <h5 class="fw-bold text-center pb-2">
+                        P1
+                    </h5>
+                    <input name="role" type="text" class="form-control"
+                           placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                </div>
+                <div class="col lg-2">
+                    <h5 class="fw-bold text-center pb-2">
+                        P2
+                    </h5>
+                    <input name="role" type="text" class="form-control"
+                           placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                </div>
+                <div class="col lg-2">
+                    <h5 class="fw-bold text-center pb-2">
+                        P3
+                    </h5>
+                    <input name="role" type="text" class="form-control"
+                           placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                </div>
+                <div class="col lg-2">
+                    <h5 class="fw-bold text-center pb-2">
+                        P4
+                    </h5>
+                    <input name="role" type="text" class="form-control"
+                           placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                </div>
+            </div>
+
+            <!-- ALL -->
+            <div class="row g-4 mb-3">
+                <div class="col lg-4">
+                    <div class="row g-4">
+                        <div class="col-lg-2">
+                            <h5 class="fw-bold text-start pb-3" style="line-height: 38px">
+                                ALL
+                            </h5>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-8">
+                            <input name="role" type="text" class="form-control"
+                                   placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col lg-2">
+                    <input id="allP1" type="button" class="btn btn-danger"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="allP2" type="button" class="btn btn-danger"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="allP3" type="button" class="btn btn-danger"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="allP4" type="button" class="btn btn-danger"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+            </div>
+
+            <!-- D1 -->
+            <div class="row g-4 mb-3">
+                <div class="col lg-4">
+                    <div class="row g-4">
+                        <div class="col-lg-2">
+                            <h5 class="fw-bold text-start pb-3" style="line-height: 38px">
+                                D1
+                            </h5>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-8">
+                            <input name="role" type="text" class="form-control"
+                                   placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col lg-2">
+                    <input id="d1P1" type="button" class="btn btn-primary"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d1P2" type="button" class="btn btn-primary"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d1P3" type="button" class="btn btn-primary"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d1P4" type="button" class="btn btn-primary"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+            </div>
+
+            <!-- D2 -->
+            <div class="row g-4 mb-3">
+                <div class="col lg-4">
+                    <div class="row g-4">
+                        <div class="col-lg-2">
+                            <h5 class="fw-bold text-start pb-3" style="line-height: 38px">
+                                D2
+                            </h5>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-8">
+                            <input name="role" type="text" class="form-control"
+                                   placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col lg-2">
+                    <input id="d2P1" type="button" class="btn btn-success"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d2P2" type="button" class="btn btn-success"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d2P3" type="button" class="btn btn-success"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d2P4" type="button" class="btn btn-success"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+            </div>
+
+            <!-- D3 -->
+            <div class="row g-4 mb-3">
+                <div class="col lg-4">
+                    <div class="row g-4">
+                        <div class="col-lg-2">
+                            <h5 class="fw-bold text-start pb-3" style="line-height: 38px">
+                                D3
+                            </h5>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-8">
+                            <input name="role" type="text" class="form-control"
+                                   placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col lg-2">
+                    <input id="d3P1" type="button" class="btn btn-info"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d3P2" type="button" class="btn btn-info"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d3P3" type="button" class="btn btn-info"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d3P4" type="button" class="btn btn-info"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+            </div>
+
+            <!-- D4 -->
+            <div class="row g-4 mb-3">
+                <div class="col lg-4">
+                    <div class="row g-4">
+                        <div class="col-lg-2">
+                            <h5 class="fw-bold text-start pb-3" style="line-height: 38px">
+                                D4
+                            </h5>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-8">
+                            <input name="role" type="text" class="form-control"
+                                   placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col lg-2">
+                    <input id="d4P1" type="button" class="btn btn-warning"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d4P2" type="button" class="btn btn-warning"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d4P3" type="button" class="btn btn-warning"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d4P4" type="button" class="btn btn-warning"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+            </div>
+
+            <!-- D5 -->
+            <div class="row g-4 mb-3">
+                <div class="col lg-4">
+                    <div class="row g-4">
+                        <div class="col-lg-2">
+                            <h5 class="fw-bold text-start pb-3" style="line-height: 38px">
+                                D5
+                            </h5>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-8">
+                            <input name="role" type="text" class="form-control"
+                                   placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col lg-2">
+                    <input id="d5P1" type="button" class="btn btn-secondary"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d5P2" type="button" class="btn btn-secondary"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d5P3" type="button" class="btn btn-secondary"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d5P4" type="button" class="btn btn-secondary"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+            </div>
+
+            <!-- D6 -->
+            <div class="row g-4 mb-3">
+                <div class="col lg-4">
+                    <div class="row g-4">
+                        <div class="col-lg-2">
+                            <h5 class="fw-bold text-start pb-3" style="line-height: 38px">
+                                D6
+                            </h5>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-8">
+                            <input name="role" type="text" class="form-control"
+                                   placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col lg-2">
+                    <input id="d6P1" type="button" class="btn btn-dark"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d6P2" type="button" class="btn btn-dark"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d6P3" type="button" class="btn btn-dark"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d6P4" type="button" class="btn btn-dark"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+            </div>
+
+            <!-- D7 -->
+            <div class="row g-4 mb-3">
+                <div class="col lg-4">
+                    <div class="row g-4">
+                        <div class="col-lg-2">
+                            <h5 class="fw-bold text-start pb-3" style="line-height: 38px">
+                                D7
+                            </h5>
+                        </div>
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-8">
+                            <input name="role" type="text" class="form-control"
+                                   placeholder="" style="border-radius: 20px;border-color: #6f42c1;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col lg-2">
+                    <input id="d7P1" type="button" class="btn btn-light"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d7P2" type="button" class="btn btn-light"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d7P3" type="button" class="btn btn-light"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+                <div class="col lg-2">
+                    <input id="d7P4" type="button" class="btn btn-light"
+                           value="" style="height:40px; width:40px; border-radius:40px;border-color: #6f42c1;"/>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+        $(function () {
+            // 页面框架加载完成之后代码自动执行
+            bindTcpConnEvent();
+            bindAllP1Event();
+            bindAllP2Event();
+            bindAllP3Event();
+            bindAllP4Event();
+            bindD1P1Event();
+            bindD1P2Event();
+            bindD1P3Event();
+            bindD1P4Event();
+            bindD2P1Event();
+            bindD2P2Event();
+            bindD2P3Event();
+            bindD2P4Event();
+            bindD3P1Event();
+            bindD3P2Event();
+            bindD3P3Event();
+            bindD3P4Event();
+            bindD4P1Event();
+            bindD4P2Event();
+            bindD4P3Event();
+            bindD4P4Event();
+            bindD5P1Event();
+            bindD5P2Event();
+            bindD5P3Event();
+            bindD5P4Event();
+            bindD6P1Event();
+            bindD6P2Event();
+            bindD6P3Event();
+            bindD6P4Event();
+            bindD7P1Event();
+            bindD7P2Event();
+            bindD7P3Event();
+            bindD7P4Event();
+        })
+
+        function bindTcpConnEvent() {
+            $('#tcpConn').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/tcp/conn/',
+                })
+                alert('Server started sucessfully!');
+
+                // 用js实现页面的刷新
+                location.reload()
+            })
+        }
+
+        function bindAllP1Event() {
+            $('#allP1').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "allp1",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindAllP2Event() {
+            $('#allP2').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "allp2",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindAllP3Event() {
+            $('#allP3').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "allp3",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindAllP4Event() {
+            $('#allP4').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "allp4",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD1P1Event() {
+            $('#d1P1').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d1p1",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD1P2Event() {
+            $('#d1P2').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d1p2",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD1P3Event() {
+            $('#d1P3').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d1p3",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD1P4Event() {
+            $('#d1P4').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d1p4",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD2P1Event() {
+            $('#d2P1').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d2p1",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD2P2Event() {
+            $('#d2P2').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d2p2",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD2P3Event() {
+            $('#d2P3').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d2p3",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD2P4Event() {
+            $('#d2P4').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d2p4",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD3P1Event() {
+            $('#d3P1').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d3p1",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD3P2Event() {
+            $('#d3P2').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d3p2",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD3P3Event() {
+            $('#d3P3').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d3p3",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD3P4Event() {
+            $('#d3P4').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d3p4",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD4P1Event() {
+            $('#d4P1').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d4p1",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD4P2Event() {
+            $('#d4P2').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d4p2",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD4P3Event() {
+            $('#d4P3').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d4p3",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD4P4Event() {
+            $('#d4P4').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d4p4",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD5P1Event() {
+            $('#d5P1').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d5p1",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD5P2Event() {
+            $('#d5P2').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d5p2",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD5P3Event() {
+            $('#d5P3').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d5p3",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD5P4Event() {
+            $('#d5P4').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d5p4",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD6P1Event() {
+            $('#d6P1').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d6p1",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD6P2Event() {
+            $('#d6P2').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d6p2",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD6P3Event() {
+            $('#d6P3').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d6p3",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD6P4Event() {
+            $('#d6P4').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d6p4",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD7P1Event() {
+            $('#d7P1').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d7p1",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD7P2Event() {
+            $('#d7P2').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d7p2",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD7P3Event() {
+            $('#d7P3').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d7p3",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+
+        function bindD7P4Event() {
+            $('#d7P4').click(function () {
+                $.ajax({
+                    url: '/admin/teaching/handle/client/request/',
+                    type: 'post',
+                    data: {
+                        ref: "d7p4",
+                    }
+                })
+                alert('Started sucessfully!');
+            })
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,543 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block title %}
+    <title>Mulo Home</title>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mulo3.css' %}">
+{% endblock %}
+{% block content %}
+    <section class="p-3 text-center">
+        <div class="container">
+            <div class="row g-4">
+
+                <!-- 左边框 -->
+                <div class="col-lg-4">
+                    <h5 class="fw-bold text-start pb-3">
+                        <a href="/admin/main/" style="text-decoration:none;">
+                            <img
+                                    src="{% static 'img/bootstrap-icons-1.10.3/chevron-left.svg' %}"
+                                    alt="Bootstrap"
+                                    width="20" height="20" class="mb-1">
+                        </a>
+                        VR Mode
+                    </h5>
+                    <div class="card bg-light my-4" style="border-radius: 20px;">
+                        <div class="card-body">
+                            <div class="card-text text-start mt-1">
+                                <h5 class="ms-2 fw-bold">
+                                    Odor Selection
+                                    <button type="button" class="btn" data-bs-toggle="popover"
+                                            title=""
+                                            data-bs-content="Click the Bluetooth button on the mulO device and find your device name on your computer. If the lights are always on means the link is successful. If the light blink means wait to link.">
+                                        <img
+                                                src="{% static 'img/bootstrap-icons-1.10.3/question-circle-fill.svg' %}"
+                                                alt="Bootstrap"
+                                                width="14" height="14" class="mb-2">
+                                    </button>
+                                </h5>
+                            </div>
+                            <div class="row g-4 mb-3">
+                                <div class="col-md-6 col-lg-6">
+                                    <ul class="list-group list-group-flush ms-2" style="list-style: none;">
+                                        <li class="card-text text-start mt-2">
+                                            <h7 class="ms-1 fw-bold">
+                                                Port 1
+                                            </h7>
+                                            <div class="clearfix mt-1">
+                                                {% for field in form_odor %}
+                                                    <div class="form-group"
+                                                         style="position: relative;">
+                                                        {{ field }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                        <li class="card-text text-start mt-3">
+                                            <h7 class="ms-1 fw-bold">
+                                                Port 3
+                                            </h7>
+                                            <div class="clearfix mt-1">
+                                                {% for field in form_odor %}
+                                                    <div class="form-group"
+                                                         style="position: relative;">
+                                                        {{ field }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <ul class="list-group list-group-flush me-2" style="list-style: none;">
+                                        <li class="card-text text-start mt-2">
+                                            <h7 class="ms-1 fw-bold">
+                                                Port 2
+                                            </h7>
+                                            <div class="clearfix mt-1">
+                                                {% for field in form_odor %}
+                                                    <div class="form-group"
+                                                         style="position: relative;">
+                                                        {{ field }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                        <li class="card-text text-start mt-3">
+                                            <h7 class="ms-1 fw-bold">
+                                                Port 4
+                                            </h7>
+                                            <div class="clearfix mt-1">
+                                                {% for field in form_odor %}
+                                                    <div class="form-group"
+                                                         style="position: relative;">
+                                                        {{ field }}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 中间空白 -->
+                <div class="col-lg-1"></div>
+
+                <!-- 右边框 Event White Board -->
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-lg-9 text-start">
+                            <h4 class="ms-2 fw-bold">
+                                Event White Board
+                                <button type="button" class="btn" data-bs-toggle="popover"
+                                        title=""
+                                        data-bs-content="Click the Bluetooth button on the mulO device and find your device name on your computer. If the lights are always on means the link is successful. If the light blink means wait to link.">
+                                    <img
+                                            src="{% static 'img/bootstrap-icons-1.10.3/question-circle-fill.svg' %}"
+                                            alt="Bootstrap"
+                                            width="14" height="14" class="mb-2">
+                                </button>
+                            </h4>
+                        </div>
+                        <div class="col-lg-3 text-end">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#complete"
+                                    class="btn bg-light fw-bold ms-1"
+                                    style="border-radius: 15px; border: 1px solid darkgray;">
+                                Complete
+                            </button>
+                        </div>
+                    </div>
+                    {% for obj in template_list %}
+                        <!-- Event Template -->
+                        <div class="card bg-light my-4" style="border-radius: 0; border-left: 10px solid #66CC00;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <ul class="list-group list-group-flush ms-2" style="list-style: none;">
+                                            <li class="card-text text-start mt-1">
+                                                <h5 class="mt-2 fw-bold">
+                                                    {{ obj.event_name }}
+                                                </h5>
+                                            </li>
+                                            <li class="card-text text-start mt-3">
+                                                <h6>
+                                                    When {{ obj.role_num }} {{ obj.input_device }} trigger the "like"
+                                                    button within any {{ obj.time_window }} seconds,
+                                                    {{ obj.output_device }} devices will play the {{ obj.port }} port
+                                                    scent, the duration is {{ obj.duration }}s and the pwm
+                                                    is {{ obj.pwm }}.
+                                                </h6>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Edit / Delete -->
+                                    <div class="col-lg-2">
+                                        <h4 class="card-text">
+                                            <img tid="{{ obj.id }}" type="button"
+                                                 src="{% static 'img/bootstrap-icons-1.10.3/pencil-square.svg' %}"
+                                                 alt="Bootstrap"
+                                                 width="22" height="22" class="my-5 mx-2 btn-edit">
+                                            <img tid="{{ obj.id }}" type="button"
+                                                 src="{% static 'img/bootstrap-icons-1.10.3/trash.svg' %}"
+                                                 alt="Bootstrap"
+                                                 width="22" height="22" class="my-5 btn-delete">
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <!-- Create Template -->
+                    <div class="text-start mt-3">
+                        <img id="btnAdd" type="button"
+                             src="{% static 'img/bootstrap-icons-1.10.3/plus-circle.svg' %}"
+                             alt="Bootstrap"
+                             width="30" height="30">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新建 / 编辑 事件范式（对话框） -->
+    <div class="modal fade" id="templateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="templateLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content" style="background-color: #eceff1">
+                <div class="modal-header">
+                    <h4 class="ms-2 fw-bold modal-title" id="templateLabel">
+                        Event Template
+                        <button type="button" class="btn" data-bs-toggle="popover"
+                                title=""
+                                data-bs-content="Click the Bluetooth button on the mulO device and find your device name on your computer. If the lights are always on means the link is successful. If the light blink means wait to link.">
+                            <img
+                                    src="{% static 'img/bootstrap-icons-1.10.3/question-circle-fill.svg' %}"
+                                    alt="Bootstrap"
+                                    width="14" height="14" class="mb-2">
+                        </button>
+                    </h4>
+                    <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAdd">
+                        <div class="container">
+                            <div class="row mx-1 my-4 mb-5">
+                                <div class="col-lg-6">
+                                    <h7 class="ms-1 fw-bold">
+                                        Event Name
+                                    </h7>
+                                    <div class="form-group mt-2">
+                                        {{ form_template.event_name }}
+                                        <span class="error-msg mt-2 ms-1"
+                                              style="color: red; position: absolute;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h7 class="ms-1 fw-bold">
+                                        Input Device
+                                    </h7>
+                                    <div class="form-group mt-2" style="position: relative;">
+                                        {{ form_template.input_device }}
+                                        <span class="error-msg mt-2 ms-1"
+                                              style="color: red; position: absolute;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mx-1 my-4 mb-5">
+                                <div class="col-lg-6">
+                                    <h7 class="ms-1 fw-bold">
+                                        Role Num
+                                    </h7>
+                                    <div class="form-group mt-2" style="position: relative;">
+                                        {{ form_template.role_num }}
+                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h7 class="ms-1 fw-bold">
+                                        Time Window
+                                    </h7>
+                                    <div class="form-group mt-2">
+                                        {{ form_template.time_window }}
+                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mx-1 my-4 mb-5">
+                                <div class="col-lg-6">
+                                    <h7 class="ms-1 fw-bold">
+                                        Output Device
+                                    </h7>
+                                    <div class="form-group mt-2" style="position: relative;">
+                                        {{ form_template.output_device }}
+                                        <span class="error-msg mt-2 ms-1"
+                                              style="color: red; position: absolute;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h7 class="ms-1 fw-bold">
+                                        Port
+                                    </h7>
+                                    <div class="form-group mt-2" style="position: relative;">
+                                        {{ form_template.port }}
+                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mx-1 my-4">
+                                <div class="col-lg-6">
+                                    <h7 class="ms-1 fw-bold">
+                                        Duration
+                                    </h7>
+                                    <div class="form-group mt-2">
+                                        {{ form_template.duration }}
+                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <h7 class="ms-1 fw-bold">
+                                        PWM
+                                    </h7>
+                                    <div class="form-group mt-2">
+                                        {{ form_template.pwm }}
+                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnSave" type="button" class="btn btn-success me-2">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除事件范式 -->
+    <div class="modal fade" id="deleteModal" data-bs-backdrop="static" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {#            <div class="alert alert-danger alert-dismissible fade show" role="alert">#}
+            {#                <h4 class="alert-heading ms-4" style="font-weight:bold;">Are you sure delete the template?</h4>#}
+            {#                <hr class="ms-4">#}
+            {#                <p class="ms-4">After deletion, the relevant data will be deleted at the same time, and the operation#}
+            {#                    cannot be undone.</p>#}
+            {#                <p style="text-align: right;" class="mb-0">#}
+            {#                    <button id="btnConfirmDelete" class="btn btn-danger" type="button">Confirm</button>#}
+            {#                    <button class="btn btn-light" type="button" data-bs-dismiss="modal">Cancel</button>#}
+            {#                </p>#}
+            {#            </div>#}
+        </div>
+    </div>
+
+    <div class="modal fade" id="complete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background-color: #eceff1">
+                <div class="modal-body mt-2"><h5>You have successfully uploaded the code!</h5></div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+        var DELETE_ID;
+        var EDIT_ID;
+
+        $(function () {
+            bindBtnRoleEvent();
+            bindBtnAddEvent();
+            bindBtnSaveEvent();
+            bindBtnDeleteEvent();
+            bindBtnConfirmDeleteEvent();
+            bindBtnEditEvent();
+        })
+
+        function bindBtnRoleEvent() {
+            $('#btnRole').click(function () {
+                $.ajax({
+                    url: '/admin/reality/role/',
+                    type: 'post',
+                    data: $("#formRole").serialize(),
+                    dataType: "JSON",
+                    success: function (res) {
+                        if (res.status) {
+                            {#alert("Successfully Confirmed!");#}
+                            // 刷新页面
+                            location.reload();
+                        } else {
+                            // 把错误信息显示在对话框中
+                            $.each(res.error, function (name, errorList) {
+                                $('#id_' + name).next().text(errorList[0]);
+                            })
+                        }
+                    }
+                })
+            })
+        }
+
+        function bindBtnAddEvent() {
+            $('#btnAdd').click(function () {
+                $(".error-msg").empty();
+                // 将正在编辑的ID设置为空
+                EDIT_ID = undefined;
+                // 清空对话框中的数据
+                $('#formAdd')[0].reset();
+                // 设置对话框的标题
+                $('#templateLabel').text('Create New Event Template')
+                // 点击新建按钮，显示对话框
+                $('#templateModal').modal('show');
+            })
+        }
+
+        function bindBtnSaveEvent() {
+            // 向后台发送请求
+            $('#btnSave').click(function () {
+                // 清楚错误信息
+                $(".error-msg").empty();
+
+                if (EDIT_ID) {
+                    // 编辑
+                    doEdit();
+                } else {
+                    // 添加
+                    doAdd();
+                }
+            });
+        }
+
+        function doEdit() {
+            // 向后台发送请求（添加Ajax请求）
+            $.ajax({
+                url: '/admin/reality/edit/' + '?tid=' + EDIT_ID,        //   -> /admin/reality/edit/?tid=12
+                type: 'post',
+                data: $('#formAdd').serialize(),
+                dataType: 'JSON',
+                success: function (res) {
+                    if (res.status) {
+                        alert("Successlly Edited!");
+                        // 清空表单 $("#formAdd")是jQuery对象 -> $("#formAdd")[0] DOM对象
+                        $("#formAdd")[0].reset();
+                        // 关闭对话框
+                        $("#templateModal").modal('hide');
+                        // 刷新页面
+                        location.reload();
+                    } else {
+                        if (res.tips) {
+                            alert(res.tips);
+                        } else {
+                            // 把错误信息显示在对话框中
+                            $.each(res.error, function (name, errorList) {
+                                $('#id_' + name).next().text(errorList[0]);
+                            })
+                        }
+                    }
+                }
+            })
+        }
+
+        function doAdd() {
+            // 向后台发送请求（添加Ajax请求）
+            $.ajax({
+                url: '/admin/reality/add/',
+                type: 'post',
+                data: $('#formAdd').serialize(),
+                dataType: 'JSON',
+                success: function (res) {
+                    if (res.status) {
+                        {#alert("Successfully Created!");#}
+                        // 清空表单 $("#formAdd")是jQuery对象 -> $("#formAdd")[0] DOM对象
+                        $("#formAdd")[0].reset();
+                        // 关闭对话框
+                        $("#templateModal").modal('hide');
+                        // 刷新页面
+                        location.reload();
+                    } else {
+                        // 把错误信息显示在对话框中
+                        $.each(res.error, function (name, errorList) {
+                            $('#id_' + name).next().text(errorList[0]);
+                        })
+                    }
+                }
+            })
+        }
+
+        function bindBtnDeleteEvent() {
+            $(".btn-delete").click(function () {
+                {#alert('点击了删除');#}
+                // 显示删除对话框
+                $("#deleteModal").modal('show');
+
+                // 获取当前行的ID并赋值给全部变量
+                DELETE_ID = $(this).attr("tid")
+            });
+        }
+
+        function bindBtnConfirmDeleteEvent() {
+            $("#btnConfirmDelete").click(function () {
+                // 点击确认删除按钮，将全局变量中设置的那个要删除ID发送到后台
+                $.ajax({
+                    {#url: "/order/" + DELETE_ID + "/delete/",  //   =>  /order/123/delete#}
+                    url: "admin/reality/delete/",  //   =>  /order/delete/?uid=123#}
+                    type: "GET",
+                    data: {
+                        tid: DELETE_ID
+                    },
+                    dataType: "JSON",
+                    success: function (res) {
+                        if (res.status) {
+                            // alert("删除成功");
+
+                            {#// 隐藏删除框#}
+                            {#$('#deleteModal').modal('hide')#}
+                            {##}
+                            {#// 在页面上将当前一行数据删除（js）#}
+                            {#$("tr[uid='" + DELETE_ID + "']").remove();#}
+                            {##}
+                            {#// 要删除的ID制空#}
+                            {#DELETE_ID = 0;#}
+                            location.reload();
+                        } else {
+                            // 删除失败
+                            alert(res.error);
+                        }
+                    }
+                })
+            })
+        }
+
+        function bindBtnEditEvent() {
+            $(".btn-edit").click(function () {
+                {#alert('Click Edit')#}
+                // 清空对话框中的数据
+                $('#formAdd')[0].reset();
+                var tid = $(this).attr("tid");
+                EDIT_ID = tid;
+                // 发送Ajax去后端获取当前行的相关数据  /admin/reality/detail/?uid=123
+                $.ajax({
+                    url: "admin/reality/detail/",
+                    type: "get",
+                    data: {
+                        tid: tid
+                    },
+                    dataType: 'JSON',
+                    success: function (res) {
+                        if (res.status) {
+                            // 将数据赋值到对话框中的标签中
+                            $.each(res.data, function (name, value) {
+                                $('#id_' + name).val(value);
+                            })
+                            // 设置对话框的标题
+                            $('#templateLabel').text('Edit Event Template')
+                            // 点击编辑，显示对话框
+                            $('#templateModal').modal('show');
+                        } else {
+                            alert(res.error);
+                        }
+                    }
+                })
+                // 在对话框中默认看到
+            });
+        }
+    </script>
+{% endblock %}

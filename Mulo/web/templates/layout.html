@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}{% endblock %}
+    {% block css %}{% endblock %}
+    {% block style %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-5.3.0/css/bootstrap.min.css' %}">
+</head>
+
+<body>
+{% block content %}{% endblock %}
+<section class="p-5 mt-5"></section>
+<section class="p-5 mt-5"></section>
+<footer class="p-1 bg-dark text-white text-center mt-5">
+    <div class="container">
+        <p class="lead mt-3" style="font-size: 15px;">
+            <img src="{% static 'img/van.svg' %}" alt="Bootstrap"
+                 width="30" height="30" class="mx-4 mt-1">
+            Copyright &copy; 2023 The Future Laboratory，Tsinghua University
+        </p>
+    </div>
+</footer>
+<script src="{% static 'js/jquery-3.6.4.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-5.3.0/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-5.3.0/js/bootstrap.bundle.min.js' %}"></script>
+{% block js %}{% endblock %}
+</body>
+</html>

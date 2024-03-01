@@ -1,0 +1,64 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+    <title>Mulo Login</title>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mulo2.css' %}">
+{% endblock %}
+{% block content %}
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-nav ms-auto my-4" href="/home/register/" style="text-decoration:none; color: #C5CAE9;">
+                Don't have an account yet? Sign up&nbsp
+            </a>
+        </div>
+    </nav>
+
+    <section class="p-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 text-end">
+                    <h1 class="fw-bold" style="font-size: 65px; color: #5C6BC0"><br>Welcome to <br><br>Mul-O</h1>
+                    <br>
+                    <h5 style="color: #9da8da">Sign in your account</h5>
+                </div>
+                <div class="col-lg-2" style="color: #9da8da"></div>
+                <div class="col-lg-5" style="color: #9da8da">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        &nbsp&nbsp<label>Username</label>
+                        <div class="input-group mt-2 mb-1 w-75">
+                            {{ form.username }}
+                        </div>
+                        &nbsp&nbsp<span style="color: red">{{ form.username.errors.0 }}</span>
+                        <br>
+                        <br>
+                        &nbsp&nbsp<label>Password</label>
+                        <div class="input-group mt-2 mb-1 w-75">
+                            {{ form.password }}
+                        </div>
+                        &nbsp&nbsp<span style="color: red">{{ form.password.errors.0 }}</span>
+                        <br>
+                        <br>
+                        &nbsp&nbsp<label>Captcha</label>
+                        <div class="row">
+                            <div class="input-group mt-2 mb-1 col">
+                                {{ form.code }}
+                            </div>
+                            <div class="col mt-2">
+                                <img id="home_code" src="/home/code/" style="width: 130px; height: 35px;">
+                            </div>
+                            <span style="color: red">&nbsp&nbsp{{ form.code.errors.0 }}</span>
+                            <br>
+                            <br>
+                        </div>
+                        <input type="submit" class="btn my-5 fw-bold" value="S I G N   I N"
+                               style="border-radius: 25px; background-color: #eceff1; height:50px; width: 240px; ">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

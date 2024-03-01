@@ -1,0 +1,215 @@
+{% extends 'nav.html' %}
+{% csrf_token %}
+{% load static %}
+{% block title %}
+    <title>Mulo Home</title>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mulo3.css' %}">
+{% endblock %}
+{% block content %}
+    <section class="pt-3 text-start">
+        <div class="container">
+            <h5 class="fw-bold">
+                <div class="row">
+                    <div class="col-3">
+                        <a href="/admin/reality/" style="text-decoration:none;">
+                            <img
+                                    src="{% static 'img/bootstrap-icons-1.10.3/chevron-left.svg' %}"
+                                    alt="Bootstrap"
+                                    width="20" height="20" class="mb-1">
+                        </a>
+                        Device Management
+                    </div>
+                    <div class="col-9">
+                        <div class="text-end mb-2">
+                            <img
+                                    src="{% static 'img/bootstrap-icons-1.10.3/server.svg' %}"
+                                    alt="Bootstrap"
+                                    width="20" height="20">
+                            <button id="tcpConn" type="button"
+                                    class="btn bg-light fw-bold ms-1"
+                                    style="border-radius: 15px; border: 1px solid darkgray;">
+                                Click me !
+                            </button>
+                            <button type="button" class="btn" data-bs-toggle="popover"
+                                    title=""
+                                    data-bs-content="Click the Bluetooth button on the mulO device and find your device name on your computer. If the lights are always on means the link is successful. If the light blink means wait to link.">
+                                <img
+                                        src="{% static 'img/bootstrap-icons-1.10.3/question-circle-fill.svg' %}"
+                                        alt="Bootstrap"
+                                        width="14" height="14" class="mb-1">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </h5>
+        </div>
+    </section>
+
+    <section class="p-3 text-start">
+        <div class="container">
+            <div class="row g-4">
+                {% for obj in device_list %}
+                    <div class="col-lg-3">
+                        <div class="card bg-light" style="border-radius: 0px;">
+                            <div class="card-body mx-2">
+                                <div class="card-text text-start mt-1">
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <h5 class="ms-2 fw-bold">
+                                                Device
+                                                <button type="button" class="btn" data-bs-toggle="popover"
+                                                        title=""
+                                                        data-bs-content="Click the Bluetooth button on the mulO device and find your device name on your computer. If the lights are always on means the link is successful. If the light blink means wait to link.">
+                                                    <img
+                                                            src="{% static 'img/bootstrap-icons-1.10.3/question-circle-fill.svg' %}"
+                                                            alt="Bootstrap"
+                                                            width="14" height="14" class="mb-2">
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <a href="#">
+                                                <button class="btn bg-light mb-1 ms-2 fw-bold text-end bind-btn"
+                                                        style="border-radius: 15px; border: 1px solid darkgray;"
+                                                        data-device-id="{{ obj.id }}">
+                                                    Bind
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush my-2" style="list-style: none;">
+                                    <li class="card-text text-start mb-2">
+                                        <div class="row">
+                                            <div class="col-lg-3 my-2 text-end">
+                                                <h7 class="ms-2 fw-bold">
+                                                    IP
+                                                </h7>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <div class="input-group ms-2 mt-2">
+                                                    {{ obj.ip }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="card-text text-start mb-2">
+                                        <div class="row">
+                                            <div class="col-lg-3 my-2 text-end">
+                                                <h7 class="ms-2 fw-bold">
+                                                    Port
+                                                </h7>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <div class="input-group ms-2 mt-2">
+                                                    {{ obj.port }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="card-text text-start">
+                                        <div class="row">
+                                            <div class="col-lg-3 my-2 text-end">
+                                                <h7 class="ms-2 fw-bold">
+                                                    Role
+                                                </h7>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                {% if obj.character %}
+                                                    {{ obj.character }} <!-- 显示Device存储的role -->
+                                                {% endif %}
+                                                <div class="form-group mt-1" style="position: relative;">
+                                                    {{ form_role_selection.role_selection }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- ... 其他部分 ... -->
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+        $(function () {
+            bindTcpConnEvent();
+            bindBindButtons();
+
+            function bindTcpConnEvent() {
+                $('#tcpConn').click(function () {
+                    $.ajax({
+                        url: '/admin/teaching/tcp/conn/',
+                        success: function () {
+                            alert('Server started successfully!');
+                            location.reload();
+                        },
+                        error: function () {
+                            alert('Error occurred while starting the server.');
+                        }
+                    });
+                });
+            }
+
+            function bindBindButtons() {
+                $('.bind-btn').click(function () {
+                    let device_id = $(this).data('device-id');
+                    let tag_id = $('select[name="role_selection"]').val();
+                    // 获取CSRF令牌值
+                    let csrf_token = '{{ csrf_token }}';
+
+                    $.ajax({
+                        url: '/devices/bind/',
+                        method: 'POST',
+                        data: {
+                            csrfmiddlewaretoken: csrf_token,  // 添加CSRF令牌
+                            device_id: device_id,
+                            tag_id: tag_id
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                alert('Device successfully bound with the tag.');
+                            } else {
+                                alert('Failed to bind device with the tag.');
+                            }
+                        },
+                        error: function () {
+                            alert('Error occurred while binding device with the tag.');
+                        }
+                    });
+                });
+            }
+
+            function checkDeviceConnection() {
+                fetch('http://127.0.0.1')
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data === 'connected') {
+                            console.log('设备已连接');
+                        } else if (data === 'disconnected') {
+                            console.log('设备未连接');
+                        } else {
+                            console.log('无法获取设备连接状态');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('发生错误:', error);
+                    });
+            }
+
+            setInterval(checkDeviceConnection, 5000);
+        });
+    </script>
+{% endblock %}

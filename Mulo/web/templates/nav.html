@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}{% endblock %}
+    {% block css %}{% endblock %}
+    {% block style %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-5.3.0/css/bootstrap.min.css' %}">
+</head>
+
+<body>
+<nav class="navbar fixed-top" style="border-bottom: 1px dotted #dddddd; background-color: white">
+    <div class="container">
+        <a href="/admin/main/" style="text-decoration: none; color: #5C6BC0">
+            <h1 class="fw-bold mt-2 mb-2">
+                <img src="{% static 'img/logo.jpg' %}" style="height: 50px;">
+            </h1>
+        </a>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+        <div class="me-5"></div>
+
+        <h6 class="fw-bold ms-auto mt-3" style="color:#4D3AE4">
+            <img src="{% static 'img/bootstrap-icons-1.10.3/person-rolodex.svg' %}" alt="Bootstrap"
+                 width="20" height="20" class="mx-2 mb-1">
+            {{ user.username }}
+        </h6>
+        <div class="nav-link ms-auto pt-1 me-4 mb-1">
+            <div class="btn-group">
+                <img type="button" class="dropdown-toggle rounded-circle" data-bs-toggle="dropdown"
+                     src="{% static 'img/robot.jpg' %}" style="height:50px">
+                <div class="dropdown-menu dropdown-menu-end bg-secondary-subtle mt-3">
+                    <a href="/home/profile/" class="dropdown-item" style="color: #4D3AE4">
+                        <img src="{% static 'img/bootstrap-icons-1.10.3/person-gear.svg' %}" alt="Bootstrap"
+                             width="20" height="20" class="mx-2 mb-1">
+                        Edit Profile
+                    </a>
+                    <a href="/home/modify_password/" class="dropdown-item" style="color: #4D3AE4">
+                        <img src="{% static 'img/bootstrap-icons-1.10.3/file-earmark-ppt.svg' %}" alt="Bootstrap"
+                             width="20" height="20" class="mx-2 mb-1">
+                        Modify Password
+                    </a>
+                    <div class="dropdown-divider" style="color: #C5CAE9"></div>
+                    <div type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"
+                         class="btn dropdown-item ms-1" style="color: #4D3AE4">
+                        <img src="{% static 'img/bootstrap-icons-1.10.3/escape.svg' %}" alt="Bootstrap"
+                             width="17" height="17" class="mx-2 ms-2">
+                        Log Out
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+<section class="p-5 mt-5"></section>
+<section class="p-5 mt-5"></section>
+<footer class="p-1 bg-dark text-white text-center mt-5">
+    <div class="container">
+        <p class="lead mt-3" style="font-size: 15px;">
+            <img src="{% static 'img/van.svg' %}" alt="Bootstrap"
+                 width="30" height="30" class="mx-4 mt-1">
+            Copyright &copy; 2023 The Future Laboratory，Tsinghua University
+        </p>
+    </div>
+</footer>
+
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: #eceff1">
+            <div class="modal-body mt-2"><h5>Please confirm that you want to log out.</h5></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a href="/home/logout/">
+                    <button type="button" class="btn btn-primary">Yes</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'js/jquery-3.6.4.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-5.3.0/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-5.3.0/js/bootstrap.bundle.min.js' %}"></script>
+{% block js %}{% endblock %}
+</body>
+</html>

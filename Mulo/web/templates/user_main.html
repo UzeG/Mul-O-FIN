@@ -1,0 +1,139 @@
+{% extends 'nav.html' %}
+{% load static %}
+{% block title %}
+    <title>Mulo Home</title>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mulo3.css' %}">
+{% endblock %}
+{% block content %}
+    <section class="p-5 text-center">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card bg-light" style="border-radius: 20px;">
+                        <div class="card-body">
+                            <img src="{% static 'img/headshot.jpg' %}" style="width:140px; height:140px;"
+                                 class="mb-3 rounded-circle">
+                            <h5 class="card-title">Bob</h5>
+                            <ul class="list-group list-group-flush" style="list-style: none;">
+                                <li class="card-text text-start mt-5">
+                                    Add My Device&nbsp
+                                    <button type="button" class="btn" data-bs-toggle="popover"
+                                            title=""
+                                            data-bs-content="Click the Bluetooth button on the mulO device and find your device name on your computer. If the lights are always on means the link is successful. If the light blink means wait to link.">
+                                        <img
+                                                src="{% static 'img/bootstrap-icons-1.10.3/question-circle-fill.svg' %}"
+                                                alt="Bootstrap"
+                                                width="20" height="20" class="mb-1">
+                                    </button>
+                                </li>
+                                <li class="card-text text-start mt-5 my-2">
+                                    <div class="row">
+                                        <div class="col mt-2">Bluetooth</div>
+                                        <div class="input-group w-75 col">
+                                            <input type="text" class="form-control">
+                                            <button type="button" class="btn btn-secondary dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Device 1</a></li>
+                                                <li><a class="dropdown-item" href="#">Device 2</a></li>
+                                                <li><a class="dropdown-item" href="#">Device 3</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="card-text text-start mt-3 my-2">
+                                    <div class="row">
+                                        <div class="col mt-2">USB</div>
+                                        <div class="input-group w-75 col">
+                                            <input type="text" class="form-control">
+                                            <button type="button" class="btn btn-secondary dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Device 1</a></li>
+                                                <li><a class="dropdown-item" href="#">Device 2</a></li>
+                                                <li><a class="dropdown-item" href="#">Device 3</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="card-text text-start mt-3 my-2">
+                                    <div class="row">
+                                        <div class="col mt-2">WIFI</div>
+                                        <div class="input-group w-75 col">
+                                            <input type="text" class="form-control">
+                                            <button type="button" class="btn btn-secondary dropdown-toggle"
+                                                    data-bs-toggle="dropdown">
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Device 1</a></li>
+                                                <li><a class="dropdown-item" href="#">Device 2</a></li>
+                                                <li><a class="dropdown-item" href="#">Device 3</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="card-text text-start mt-3 my-2">
+                                    <div class="row">
+                                        <div class="col mt-2">Device Name</div>
+                                        <div class="input-group w-75 col">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-9">
+                    <div class="row mb-5">
+                        <div class="col-lg-4">
+                            <div class="card bg-light" style="border-radius: 20px;">
+                                <div class="card-body">
+                                    <img src="{% static 'img/bootstrap-icons-1.10.3/plus-lg.svg' %}" alt="Bootstrap"
+                                         width="30" height="30" class="mt-5">
+                                    <br>
+                                    <h5 class="mt-2 mb-5">Enter Room</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card bg-light" style="border-radius: 20px;">
+                                <div class="card-body">
+                                    <img src="{% static 'img/bootstrap-icons-1.10.3/folder2-open.svg' %}"
+                                         alt="Bootstrap"
+                                         width="30" height="30" class="mx-2 mt-5">
+                                    <br>
+                                    <h5 class="mt-2 mb-5">temp1</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card bg-light" style="border-radius: 20px;">
+                                <div class="card-body">
+                                    <img src="{% static 'img/bootstrap-icons-1.10.3/folder2-open.svg' %}"
+                                         alt="Bootstrap"
+                                         width="30" height="30" class="mx-2 mt-5">
+                                    <br>
+                                    <h5 class="mt-2 mb-5">temp2</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
+{% endblock %}

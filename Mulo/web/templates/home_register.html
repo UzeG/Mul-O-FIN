@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+    <title>Mulo Login</title>
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/mulo2.css' %}">
+{% endblock %}
+{% block content %}
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-nav ms-auto my-4" href="/home/login/" style="text-decoration:none; color: #C5CAE9;">
+                Already have an account? Sign in
+            </a>
+        </div>
+    </nav>
+
+    <section class="p-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 text-end">
+                    <h1 class="fw-bold" style="font-size: 65px; color: #5C6BC0"><br>Welcome to <br><br>Mul-O</h1>
+                    <br>
+                    <h5 style="color: #9da8da">Register your account</h5>
+                </div>
+                <div class="col-lg-2" style="color: #9da8da"></div>
+                <div class="col-lg-5" style="color: #9da8da">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                &nbsp&nbsp<label>{{ field.label }}</label>
+                                <div class="input-group mt-2 mb-1 w-75">
+                                    {{ field }}
+                                </div>
+                                &nbsp&nbsp<span style="color: red;">{{ field.errors.0 }}</span>
+                                <br><br>
+                            </div>
+                        {% endfor %}
+                        <input type="submit" class="btn my-2 fw-bold" value="R E G I S T E R"
+                               style="border-radius: 25px; background-color: #eceff1; height:50px; width: 240px;">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
