@@ -292,9 +292,9 @@
     </section>
 
     <!-- 新建 / 编辑 事件范式（对话框） -->
-    <div class="modal fade" id="templateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal {% comment %}fade{% endcomment %}" id="templateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="templateLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content" style="background-color: #eceff1">
                 <div class="modal-header">
                     <h4 class="ms-2 fw-bold modal-title" id="templateLabel">
@@ -314,89 +314,149 @@
                 <div class="modal-body">
                     <form id="formAdd">
                         <div class="container">
-                            <div class="row mx-1 my-4 mb-5">
-                                <div class="col-lg-6">
-                                    <h7 class="ms-1 fw-bold">
-                                        Event Name
-                                    </h7>
-                                    <div class="form-group mt-2">
+                            <div class="row my-1 mb-2">
+                                <div class="justify-content-between w-100 mb-2" style="display: flex; width: 100%">
+                                    <div class="row align-items-center" style="width: 28%">
+                                        <h7 class="fw-bold col-lg-12">
+                                            Main Event Name
+                                        </h7>
+                                    </div>
+                                    <div style="width: 75%">
                                         {{ form_template.event_name }}
                                         <span class="error-msg mt-2 ms-1"
                                               style="color: red; position: absolute;"></span>
                                     </div>
+
                                 </div>
-                                <div class="col-lg-6">
-                                    <h7 class="ms-1 fw-bold">
-                                        Input Device
-                                    </h7>
-                                    <div class="form-group mt-2" style="position: relative;">
-                                        {{ form_template.input_device }}
-                                        <span class="error-msg mt-2 ms-1"
-                                              style="color: red; position: absolute;"></span>
-                                    </div>
-                                </div>
+{#                                <div class="col-lg-6">#}
+{#                                    <h7 class="ms-1 fw-bold">#}
+{#                                        Input Device#}
+{#                                    </h7>#}
+{#                                    <div class="form-group mt-2" style="position: relative;">#}
+{#                                        {{ form_template.input_device }}#}
+{#                                        <span class="error-msg mt-2 ms-1"#}
+{#                                              style="color: red; position: absolute;"></span>#}
+{#                                    </div>#}
+{#                                </div>#}
                             </div>
-                            <div class="row mx-1 my-4 mb-5">
-                                <div class="col-lg-6">
-                                    <h7 class="ms-1 fw-bold">
-                                        Role Num
-                                    </h7>
-                                    <div class="form-group mt-2" style="position: relative;">
-                                        {{ form_template.role_num }}
-                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                            <div class="" style="display: flex;">
+                                <div class="col-lg-3" style="display: flex; flex-direction: column">
+                                    <div class="mb-3">
+                                        <h7 class="fw-bold">
+                                            Event Number
+                                        </h7>
+{#                                        <div class="form-group mt-2" style="position: relative;">#}
+{#                                            {{ form_template.role_num }}#}
+{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+                                        <div class="form-group mt-2" style="position: relative;">
+                                            {{ form_template.input_device }}
+                                            <span class="error-msg mt-2 ms-1"
+                                                  style="color: red; position: absolute;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h7 class="fw-bold">
+                                            Input Device
+                                        </h7>
+                                        <div class="form-group mt-2" style="position: relative;">
+                                            {{ form_template.input_device }}
+                                            <span class="error-msg mt-2 ms-1"
+                                                  style="color: red; position: absolute;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h7 class="fw-bold">
+                                            Time Window(s)
+                                        </h7>
+                                        <div class="form-group mt-2">
+                                            {{ form_template.time_window }}
+                                            <span class="error-msg" style="color: red; position: absolute;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h7 class="fw-bold">
+                                            Threshold
+                                        </h7>
+                                        <div class="form-group mt-2" style="position: relative;">
+                                            {{ form_template.role_num }}
+                                            <span class="error-msg" style="color: red; position: absolute;"></span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h7 class="fw-bold">
+                                            Output Device
+                                        </h7>
+                                        <div class="form-group mt-2" style="position: relative;">
+                                            {{ form_template.output_device }}
+                                            <span class="error-msg mt-2 ms-1"
+                                                  style="color: red; position: absolute;"></span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <h7 class="ms-1 fw-bold">
-                                        Time Window
-                                    </h7>
-                                    <div class="form-group mt-2">
-                                        {{ form_template.time_window }}
-                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                    </div>
-                                </div>
+                                <div class="col-lg-9">2</div>
                             </div>
-                            <div class="row mx-1 my-4 mb-5">
-                                <div class="col-lg-6">
-                                    <h7 class="ms-1 fw-bold">
-                                        Output Device
-                                    </h7>
-                                    <div class="form-group mt-2" style="position: relative;">
-                                        {{ form_template.output_device }}
-                                        <span class="error-msg mt-2 ms-1"
-                                              style="color: red; position: absolute;"></span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <h7 class="ms-1 fw-bold">
-                                        Port
-                                    </h7>
-                                    <div class="form-group mt-2" style="position: relative;">
-                                        {{ form_template.port }}
-                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mx-1 my-4">
-                                <div class="col-lg-6">
-                                    <h7 class="ms-1 fw-bold">
-                                        Duration
-                                    </h7>
-                                    <div class="form-group mt-2">
-                                        {{ form_template.duration }}
-                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <h7 class="ms-1 fw-bold">
-                                        PWM
-                                    </h7>
-                                    <div class="form-group mt-2">
-                                        {{ form_template.pwm }}
-                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                    </div>
-                                </div>
-                            </div>
+
+{#                            <div class="row mx-1 my-4 mb-5">#}
+{#                                <div class="col-lg-6">#}
+{#                                    <h7 class="ms-1 fw-bold">#}
+{#                                        Role Num#}
+{#                                    </h7>#}
+{#                                    <div class="form-group mt-2" style="position: relative;">#}
+{#                                        {{ form_template.role_num }}#}
+{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-lg-6">#}
+{#                                    <h7 class="ms-1 fw-bold">#}
+{#                                        Time Window#}
+{#                                    </h7>#}
+{#                                    <div class="form-group mt-2">#}
+{#                                        {{ form_template.time_window }}#}
+{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="row mx-1 my-4 mb-5">#}
+{#                                <div class="col-lg-6">#}
+{#                                    <h7 class="ms-1 fw-bold">#}
+{#                                        Output Device#}
+{#                                    </h7>#}
+{#                                    <div class="form-group mt-2" style="position: relative;">#}
+{#                                        {{ form_template.output_device }}#}
+{#                                        <span class="error-msg mt-2 ms-1"#}
+{#                                              style="color: red; position: absolute;"></span>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-lg-6">#}
+{#                                    <h7 class="ms-1 fw-bold">#}
+{#                                        Port#}
+{#                                    </h7>#}
+{#                                    <div class="form-group mt-2" style="position: relative;">#}
+{#                                        {{ form_template.port }}#}
+{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="row mx-1 my-4">#}
+{#                                <div class="col-lg-6">#}
+{#                                    <h7 class="ms-1 fw-bold">#}
+{#                                        Duration#}
+{#                                    </h7>#}
+{#                                    <div class="form-group mt-2">#}
+{#                                        {{ form_template.duration }}#}
+{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-lg-6">#}
+{#                                    <h7 class="ms-1 fw-bold">#}
+{#                                        PWM#}
+{#                                    </h7>#}
+{#                                    <div class="form-group mt-2">#}
+{#                                        {{ form_template.pwm }}#}
+{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
                         </div>
                     </form>
                 </div>
@@ -604,6 +664,8 @@
         });
     });
 }
-
+    window.onload = () => {
+        $('#btnAdd').click()
+    }
     </script>
 {% endblock %}
