@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from web.utils.form import OdorModelForm, TemplateModelForm, RoleModelForm, OdorSelectionModelForm, \
-    RoleSelectionModelForm, DeviceModelForm
+from web.utils.form import OdorModelForm, TemplateModelForm, RoleModelForm, \
+    RoleSelectionModelForm, DeviceModelForm, EventOdorModelForm
 from web.models import Template
 from web import models
 from web.models import UserProfile
@@ -107,19 +107,19 @@ def admin_reality(request):
     user_profile = UserProfile.objects.get(user=request.user)
 
     form_template = TemplateModelForm()
-    form_odor = OdorModelForm()
-    form_odor_selection = OdorSelectionModelForm()
+    # form_odor = OdorModelForm()
+    form_event_odor = EventOdorModelForm()
     odor_list = models.Odor.objects.all().order_by('-id')
     role_list = models.Role.objects.all().order_by('-id')
     template_list = models.Template.objects.filter(uuid=user_profile.uuid).order_by('-id')
 
     context = {
         'odor_list': odor_list,
-        'form_odor': form_odor,
+        # 'form_odor': form_odor,
+        'form_event_odor': form_event_odor,
         'form_template': form_template,
         'role_list': role_list,
         'template_list': template_list,
-        'form_odor_selection': form_odor_selection,
     }
     return render(request, 'admin_reality.html', context)
 

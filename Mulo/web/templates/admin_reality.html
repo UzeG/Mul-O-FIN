@@ -5,6 +5,7 @@
 {% endblock %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/mulo3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/createNewEventTemplate.css' %}">
 {% endblock %}
 {% block content %}
     <section class="p-3 text-center">
@@ -160,49 +161,49 @@
                                     </div>
                                 {% endfor %}
                             </div>
-                            <div class="row g-2 mb-2 mt-2">
-                                <div class="col-md-5 col-lg-5 ms-4">
-                                    <ul class="list-group list-group-flush" style="list-style: none;">
-                                        <li class="card-text text-start mt-2">
-                                            <h7 class="ms-1 fw-bold">
-                                                Odor 1
-                                            </h7>
-                                            <div class="form-group mt-2" style="position: relative;">
-                                                {{ form_odor_selection.odor_selection }}
-                                            </div>
-                                        </li>
-                                        <li class="card-text text-start mt-3">
-                                            <h7 class="ms-1 fw-bold">
-                                                Odor 3
-                                            </h7>
-                                            <div class="form-group mt-2" style="position: relative;">
-                                                {{ form_odor_selection.odor_selection }}
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-lg-1"></div>
-                                <div class="col-md-5 col-lg-5">
-                                    <ul class="list-group list-group-flush me-2" style="list-style: none;">
-                                        <li class="card-text text-start mt-2">
-                                            <h7 class="ms-1 fw-bold">
-                                                Odor 2
-                                            </h7>
-                                            <div class="form-group mt-2" style="position: relative;">
-                                                {{ form_odor_selection.odor_selection }}
-                                            </div>
-                                        </li>
-                                        <li class="card-text text-start mt-3">
-                                            <h7 class="ms-1 fw-bold">
-                                                Odor 4
-                                            </h7>
-                                            <div class="form-group mt-2" style="position: relative;">
-                                                {{ form_odor_selection.odor_selection }}
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+{#                            <div class="row g-2 mb-2 mt-2">#}
+{#                                <div class="col-md-5 col-lg-5 ms-4">#}
+{#                                    <ul class="list-group list-group-flush" style="list-style: none;">#}
+{#                                        <li class="card-text text-start mt-2">#}
+{#                                            <h7 class="ms-1 fw-bold">#}
+{#                                                Odor 1#}
+{#                                            </h7>#}
+{#                                            <div class="form-group mt-2" style="position: relative;">#}
+{#                                                {{ form_odor_selection.odor_selection }}#}
+{#                                            </div>#}
+{#                                        </li>#}
+{#                                        <li class="card-text text-start mt-3">#}
+{#                                            <h7 class="ms-1 fw-bold">#}
+{#                                                Odor 3#}
+{#                                            </h7>#}
+{#                                            <div class="form-group mt-2" style="position: relative;">#}
+{#                                                {{ form_odor_selection.odor_selection }}#}
+{#                                            </div>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                                <div class="col-lg-1"></div>#}
+{#                                <div class="col-md-5 col-lg-5">#}
+{#                                    <ul class="list-group list-group-flush me-2" style="list-style: none;">#}
+{#                                        <li class="card-text text-start mt-2">#}
+{#                                            <h7 class="ms-1 fw-bold">#}
+{#                                                Odor 2#}
+{#                                            </h7>#}
+{#                                            <div class="form-group mt-2" style="position: relative;">#}
+{#                                                {{ form_odor_selection.odor_selection }}#}
+{#                                            </div>#}
+{#                                        </li>#}
+{#                                        <li class="card-text text-start mt-3">#}
+{#                                            <h7 class="ms-1 fw-bold">#}
+{#                                                Odor 4#}
+{#                                            </h7>#}
+{#                                            <div class="form-group mt-2" style="position: relative;">#}
+{#                                                {{ form_odor_selection.odor_selection }}#}
+{#                                            </div>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                            </div>#}
                         </div>
                     </div>
                 </div>
@@ -341,19 +342,19 @@
                             </div>
                             <div style="display: flex;">
                                 <div class="col-lg-3" style="display: flex; flex-direction: column; border-right: 2px solid #fff;">
-                                    <div class="mb-3">
-                                        <h7 class="fw-bold">
-                                            Event Number
-                                        </h7>
+{#                                    <div class="mb-3">#}
+{#                                        <h7 class="fw-bold">#}
+{#                                            Event Number#}
+{#                                        </h7>#}
 {#                                        <div class="form-group mt-2" style="position: relative;">#}
 {#                                            {{ form_template.role_num }}#}
 {#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
-                                        <div class="form-group mt-2" style="position: relative; width: 80%">
-                                            {{ form_template.input_device }}
-                                            <span class="error-msg mt-2 ms-1"
-                                                  style="color: red; position: absolute;"></span>
-                                        </div>
-                                    </div>
+{#                                        <div class="form-group mt-2" style="position: relative; width: 80%">#}
+{#                                            {{ form_template.input_device }}#}
+{#                                            <span class="error-msg mt-2 ms-1"#}
+{#                                                  style="color: red; position: absolute;"></span>#}
+{#                                        </div>#}
+{#                                    </div>#}
                                     <div class="mb-3">
                                         <h7 class="fw-bold">
                                             Input Device
@@ -393,7 +394,66 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-9">2</div>
+                                <div class="col-lg-9" style="padding-left: 2rem;">
+                                    <div style="display: flex; align-items: center">
+                                        <h7 class="fw-bold" style="margin-right: .5rem">
+                                            Odor Setting
+                                        </h7>
+                                        {# 添加按钮 #}
+                                        <span class="odor-plus-icon circle-icon">+</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column">
+                                        {# 竖排列表 #}
+                                        <div class="odor-list">
+                                            <div class="odor-item">
+                                                <div class="odor-item-color"></div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Odor
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.odor }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Odor Port
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.port }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Duration(s)
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.duration }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Intensity(%)
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.intensity }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <span class="odor-minus-icon circle-icon">-</span>
+                                            </div>
+{#                                            <div class="odor-item">2</div>#}
+{#                                            <div class="odor-item">3</div>#}
+                                        </div>
+                                        {# 拖动条 #}
+                                        <div class="odor-bar">
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
 {#                            <div class="row mx-1 my-4 mb-5">#}

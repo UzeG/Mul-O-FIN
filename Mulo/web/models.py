@@ -5,6 +5,13 @@ import socket
 
 
 # Create your models here.
+port_choices = (
+        (1, 'Port 1'),
+        (2, 'Port 2'),
+        (3, 'Port 3'),
+        (4, 'Port 4'),
+)
+
 
 class UserProfile(models.Model):
     """ 用户描述表 """
@@ -57,10 +64,18 @@ class Odor(models.Model):
         return self.odor
 
 
-class OdorSelection(models.Model):
-    """ 气味选择表 """
-    odor_selection = models.ForeignKey(verbose_name='', to='Odor', related_name='FriendList_odor_selection',
-                                       on_delete=models.CASCADE)
+class EventOdorModel(models.Model):
+    event_template = models.ForeignKey(to='Template', on_delete=models.CASCADE, related_name='odors')
+    odor = models.ForeignKey(to='Odor', on_delete=models.CASCADE)
+    port = models.PositiveIntegerField(choices=port_choices, default=1)
+    duration = models.PositiveIntegerField(default=3)
+    intensity = models.PositiveIntegerField(default=100)  # pwn?
+
+
+# class OdorSelection(models.Model):
+#     """ 气味选择表 """
+#     odor_selection = models.ForeignKey(verbose_name='', to='Odor', related_name='FriendList_odor_selection',
+#                                        on_delete=models.CASCADE)
 
 
 class Role(models.Model):
@@ -88,15 +103,13 @@ class Template(models.Model):
     output_device = models.ForeignKey(verbose_name='', to='Role', related_name='FriendList_output_device',
                                       on_delete=models.CASCADE,
                                       default='')
-    port_choices = (
-        (1, 'Port 1'),
-        (2, 'Port 2'),
-        (3, 'Port 3'),
-        (4, 'Port 4'),
-    )
-    port = models.SmallIntegerField(verbose_name='', choices=port_choices, default=1)
-    duration = models.SmallIntegerField(verbose_name='', default=3)
-    pwm = models.IntegerField(verbose_name='', default=150)
+
+    # port = models.SmallIntegerField(verbose_name='', choices=port_choices, default=1)
+    # duration = models.SmallIntegerField(verbose_name='', default=3)
+    # pwm = models.IntegerField(verbose_name='', default=150)
+
+    # parent event
+    parent = models.ForeignKey(to='self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     # 存储所属的uuid
     uuid = models.CharField(verbose_name='', max_length=36, default=None)

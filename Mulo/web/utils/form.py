@@ -96,10 +96,10 @@ class OdorModelForm(BootStrapModelForm):
         fields = '__all__'
 
 
-class OdorSelectionModelForm(BootStrapModelForm):
-    class Meta:
-        model = models.OdorSelection
-        fields = '__all__'
+# class OdorSelectionModelForm(BootStrapModelForm):
+#     class Meta:
+#         model = models.OdorSelection
+#         fields = '__all__'
 
 
 class TemplateModelForm(BootStrapModelForm):
@@ -124,4 +124,10 @@ class RoleSelectionModelForm(BootStrapModelForm):
 class DeviceModelForm(BootStrapModelForm):
     class Meta:
         model = models.Device
+        fields = '__all__'
+
+
+class EventOdorModelForm(BootStrapModelForm):
+    class Meta:
+        model = models.EventOdorModel
         fields = '__all__'
