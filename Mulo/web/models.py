@@ -68,6 +68,7 @@ class EventOdorModel(models.Model):
     event_template = models.ForeignKey(to='Template', on_delete=models.CASCADE, related_name='odors')
     odor = models.ForeignKey(to='Odor', on_delete=models.CASCADE)
     port = models.PositiveIntegerField(choices=port_choices, default=1)
+    start = models.PositiveIntegerField(default=0)
     duration = models.PositiveIntegerField(default=3)
     intensity = models.PositiveIntegerField(default=100)  # pwn?
 
@@ -110,6 +111,9 @@ class Template(models.Model):
 
     # parent event
     parent = models.ForeignKey(to='self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+
+    # total output time
+    total_time = models.PositiveIntegerField(default=10, null=False)
 
     # 存储所属的uuid
     uuid = models.CharField(verbose_name='', max_length=36, default=None)

@@ -6,6 +6,7 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/mulo3.css' %}">
     <link rel="stylesheet" href="{% static 'css/createNewEventTemplate.css' %}">
+    <link rel="stylesheet" href="{% static 'timebar/style.css' %}">
 {% endblock %}
 {% block content %}
     <section class="p-3 text-center">
@@ -445,12 +446,139 @@
                                                 </div>
                                                 <span class="odor-minus-icon circle-icon">-</span>
                                             </div>
-{#                                            <div class="odor-item">2</div>#}
-{#                                            <div class="odor-item">3</div>#}
+                                            <div class="odor-item">
+                                                <div class="odor-item-color"></div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Odor
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.odor }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Odor Port
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.port }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Duration(s)
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.duration }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Intensity(%)
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.intensity }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <span class="odor-minus-icon circle-icon">-</span>
+                                            </div>
+                                            <div class="odor-item">
+                                                <div class="odor-item-color"></div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Odor
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.odor }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Odor Port
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.port }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Duration(s)
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.duration }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Intensity(%)
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.intensity }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <span class="odor-minus-icon circle-icon">-</span>
+                                            </div>
+                                            <div class="odor-item">
+                                                <div class="odor-item-color"></div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Odor
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.odor }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Odor Port
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.port }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Duration(s)
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.duration }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="odor-item-item">
+                                                    <span class="fw-bold title">
+                                                        Intensity(%)
+                                                    </span>
+                                                    <div class="form-group">
+                                                        {{ form_event_odor.intensity }}
+                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    </div>
+                                                </div>
+                                                <span class="odor-minus-icon circle-icon">-</span>
+                                            </div>
                                         </div>
                                         {# 拖动条 #}
                                         <div class="odor-bar">
+                                            <div class="total-time">
+                                                <span class="title">total time: </span>
+                                                <div class="form-group">
+                                                    {{ form_template.total_time }}
+                                                    <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                </div>
+                                            </div>
+                                            <div id="timebar">
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -728,4 +856,5 @@
         $('#btnAdd').click()
     }
     </script>
+    <script type="text/javascript" src="{% static 'timebar/TimeBar.js' %}"></script>
 {% endblock %}
