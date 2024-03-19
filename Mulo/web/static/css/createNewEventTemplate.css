@@ -1,0 +1,82 @@
+.circle-icon {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.odor-plus-icon {
+  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-color: var(--bs-body-color);
+  color: #eceff1;
+}
+.odor-list {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  height: 18rem;
+  overflow: auto;
+}
+.odor-list .form-group * {
+  font-size: 0.85rem !important;
+}
+.odor-list .odor-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.odor-list .odor-item .odor-item-color {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background-color: skyblue;
+}
+.odor-list .odor-item .odor-item-item {
+  width: 20%;
+}
+.odor-minus-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #ee7976;
+  color: #eceff1;
+}
+.odor-bar {
+  width: 100%;
+  position: relative;
+  margin-bottom: 3rem;
+}
+.odor-bar #timebar {
+  background-color: var(--bs-secondary-bg-subtle);
+}
+.odor-bar .total-time {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  color: #888;
+  margin-bottom: 0.2rem;
+}
+.odor-bar .total-time .title {
+  margin-right: 0.5rem;
+}
+.odor-bar .total-time * {
+  font-weight: lighter;
+  font-size: 0.9rem !important;
+}
+.odor-bar .total-time input {
+  height: 2rem;
+  border-radius: 0.5rem !important;
+  width: 3.5rem;
+}
+.odor-bar .time-scale {
+  display: flex;
+  justify-content: space-between;
+  color: #ccc;
+}

@@ -1,0 +1,98 @@
+@bgColor: #eceff1;
+@fontColor: var(--bs-body-color);
+@iptColor: var(--bs-secondary-bg-subtle);
+
+.circle-icon {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.odor-plus-icon {
+    font-size: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    background-color: @fontColor;
+    color: @bgColor;
+}
+
+.odor-list {
+    display: flex;
+    flex-direction: column;
+    padding-top: .6rem;
+    padding-bottom: .6rem;
+    height: 18rem;
+    overflow: auto;
+
+    .form-group * {
+        font-size: .85rem !important;
+    }
+
+    .odor-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: .5rem;
+
+        .odor-item-color {
+            width: .8rem;
+            height: .8rem;
+            border-radius: 50%;
+            background-color: skyblue;
+        }
+
+        .odor-item-item {
+            width: 20%;
+        }
+    }
+}
+
+.odor-minus-icon {
+    // display: none;
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: rgb(238, 121, 118);
+    color: @bgColor;
+}
+
+.odor-bar {
+    width: 100%;
+    position: relative;
+    margin-bottom: 3rem;
+    
+    #timebar {
+        background-color: @iptColor;
+    }
+
+    .total-time {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        color: #888;
+        .title {
+            margin-right: .5rem;
+        }
+        * {
+            font-weight: lighter;
+            font-size: .9rem!important;
+        }
+        input {
+            height: 2rem;
+            border-radius: .5rem!important;
+            width: 3.5rem;
+        }
+        margin-bottom: .2rem;
+    }
+
+    .time-scale {
+        display: flex;
+        justify-content: space-between;
+        color: #ccc;
+    }
+}

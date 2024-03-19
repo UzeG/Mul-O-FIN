@@ -1,0 +1,64 @@
+#timebar {
+  width: 100%;
+  height: 0.6rem;
+  border-radius: 0.3rem;
+  position: relative;
+}
+#timebar .target {
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  border-radius: inherit;
+}
+#timebar .target .body {
+  width: 100%;
+  height: 100%;
+  background-color: inherit;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+#timebar .target .head,
+#timebar .target .tail {
+  position: absolute;
+  width: 0.25rem;
+}
+#timebar .target .head .tri,
+#timebar .target .tail .tri {
+  width: 0;
+  height: 0;
+  border: 0.4rem solid transparent;
+  border-bottom: 0.8rem solid;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(-37%, 10%);
+}
+#timebar .target .head {
+  top: 0;
+  left: 0;
+  height: 3rem;
+  border-radius: 0.3rem 0 0 0;
+}
+#timebar .target .tail {
+  top: 0;
+  right: 0;
+  height: 1.5rem;
+  border-radius: 0 0.3rem 0 0;
+}
+#timebar .target .target-scale {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  transform: translate(0, -100%);
+  color: #666;
+  font-size: 0.8rem;
+}
+#timebar .target .target-scale > div:nth-child(1) {
+  transform: translate(-30%);
+}
+#timebar .target .target-scale > div:nth-child(2) {
+  transform: translate(30%);
+}
