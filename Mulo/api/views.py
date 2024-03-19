@@ -1,3 +1,6 @@
+import json
+
+import django.core.serializers
 from django.shortcuts import render
 
 # Create your views here.
@@ -10,7 +13,10 @@ from web.controller.interactive import find_template, convert_template
 from web.controller.interactive import Interactive
 from web.middleware.auth import is_valid_uuid
 
+from web import models
+
 import datetime
+from django.core.serializers import serialize
 
 interactive = Interactive()
 
@@ -244,3 +250,13 @@ class TemplateView(APIView):
             ret['error_code'] = '10008'
             ret['error'] = 'Param error, see doc for more info'
             return JsonResponse(ret)
+
+
+class GetOdorList(APIView):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        odor_list = list(models.Odor.objects.values('id', 'odor').all().order_by('-id'))
+        return JsonResponse({
+            'status': True,
+            'data': odor_list
+        })

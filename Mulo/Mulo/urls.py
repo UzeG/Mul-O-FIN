@@ -18,6 +18,7 @@ from web.views import home, admin, user
 from web.views.device import bind_device_role
 from django.contrib.admin import site
 from api.views import LoginView, RegView, LogoutView, EventView, DateView, ClearView, TemplateView
+from api.views import GetOdorList
 
 urlpatterns = [
     # 主界面
@@ -70,5 +71,5 @@ urlpatterns = [
     re_path(r'^api/clear', ClearView.as_view()),
     re_path(r'^api/template/$', TemplateView.as_view()),
     re_path(r'^api/template', TemplateView.as_view()),
-
+    re_path(r'^api/get_odor_list', GetOdorList.as_view())
 ]

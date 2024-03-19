@@ -6,7 +6,7 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/mulo3.css' %}">
     <link rel="stylesheet" href="{% static 'css/createNewEventTemplate.css' %}">
-    <link rel="stylesheet" href="{% static 'timebar/style.css' %}">
+    <link rel="stylesheet" href="{% static 'adminReality/timebar/style.css' %}">
 {% endblock %}
 {% block content %}
     <section class="p-3 text-center">
@@ -162,49 +162,49 @@
                                     </div>
                                 {% endfor %}
                             </div>
-{#                            <div class="row g-2 mb-2 mt-2">#}
-{#                                <div class="col-md-5 col-lg-5 ms-4">#}
-{#                                    <ul class="list-group list-group-flush" style="list-style: none;">#}
-{#                                        <li class="card-text text-start mt-2">#}
-{#                                            <h7 class="ms-1 fw-bold">#}
-{#                                                Odor 1#}
-{#                                            </h7>#}
-{#                                            <div class="form-group mt-2" style="position: relative;">#}
-{#                                                {{ form_odor_selection.odor_selection }}#}
-{#                                            </div>#}
-{#                                        </li>#}
-{#                                        <li class="card-text text-start mt-3">#}
-{#                                            <h7 class="ms-1 fw-bold">#}
-{#                                                Odor 3#}
-{#                                            </h7>#}
-{#                                            <div class="form-group mt-2" style="position: relative;">#}
-{#                                                {{ form_odor_selection.odor_selection }}#}
-{#                                            </div>#}
-{#                                        </li>#}
-{#                                    </ul>#}
-{#                                </div>#}
-{#                                <div class="col-lg-1"></div>#}
-{#                                <div class="col-md-5 col-lg-5">#}
-{#                                    <ul class="list-group list-group-flush me-2" style="list-style: none;">#}
-{#                                        <li class="card-text text-start mt-2">#}
-{#                                            <h7 class="ms-1 fw-bold">#}
-{#                                                Odor 2#}
-{#                                            </h7>#}
-{#                                            <div class="form-group mt-2" style="position: relative;">#}
-{#                                                {{ form_odor_selection.odor_selection }}#}
-{#                                            </div>#}
-{#                                        </li>#}
-{#                                        <li class="card-text text-start mt-3">#}
-{#                                            <h7 class="ms-1 fw-bold">#}
-{#                                                Odor 4#}
-{#                                            </h7>#}
-{#                                            <div class="form-group mt-2" style="position: relative;">#}
-{#                                                {{ form_odor_selection.odor_selection }}#}
-{#                                            </div>#}
-{#                                        </li>#}
-{#                                    </ul>#}
-{#                                </div>#}
-{#                            </div>#}
+                            {#                            <div class="row g-2 mb-2 mt-2">#}
+                            {#                                <div class="col-md-5 col-lg-5 ms-4">#}
+                            {#                                    <ul class="list-group list-group-flush" style="list-style: none;">#}
+                            {#                                        <li class="card-text text-start mt-2">#}
+                            {#                                            <h7 class="ms-1 fw-bold">#}
+                            {#                                                Odor 1#}
+                            {#                                            </h7>#}
+                            {#                                            <div class="form-group mt-2" style="position: relative;">#}
+                            {#                                                {{ form_odor_selection.odor_selection }}#}
+                            {#                                            </div>#}
+                            {#                                        </li>#}
+                            {#                                        <li class="card-text text-start mt-3">#}
+                            {#                                            <h7 class="ms-1 fw-bold">#}
+                            {#                                                Odor 3#}
+                            {#                                            </h7>#}
+                            {#                                            <div class="form-group mt-2" style="position: relative;">#}
+                            {#                                                {{ form_odor_selection.odor_selection }}#}
+                            {#                                            </div>#}
+                            {#                                        </li>#}
+                            {#                                    </ul>#}
+                            {#                                </div>#}
+                            {#                                <div class="col-lg-1"></div>#}
+                            {#                                <div class="col-md-5 col-lg-5">#}
+                            {#                                    <ul class="list-group list-group-flush me-2" style="list-style: none;">#}
+                            {#                                        <li class="card-text text-start mt-2">#}
+                            {#                                            <h7 class="ms-1 fw-bold">#}
+                            {#                                                Odor 2#}
+                            {#                                            </h7>#}
+                            {#                                            <div class="form-group mt-2" style="position: relative;">#}
+                            {#                                                {{ form_odor_selection.odor_selection }}#}
+                            {#                                            </div>#}
+                            {#                                        </li>#}
+                            {#                                        <li class="card-text text-start mt-3">#}
+                            {#                                            <h7 class="ms-1 fw-bold">#}
+                            {#                                                Odor 4#}
+                            {#                                            </h7>#}
+                            {#                                            <div class="form-group mt-2" style="position: relative;">#}
+                            {#                                                {{ form_odor_selection.odor_selection }}#}
+                            {#                                            </div>#}
+                            {#                                        </li>#}
+                            {#                                    </ul>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
                         </div>
                     </div>
                 </div>
@@ -294,7 +294,8 @@
     </section>
 
     <!-- 新建 / 编辑 事件范式（对话框） -->
-    <div class="modal {% comment %}fade{% endcomment %}" id="templateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal {% comment %}fade{% endcomment %}" id="templateModal" data-bs-backdrop="static"
+         data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="templateLabel" aria-hidden="true">
         <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content" style="background-color: #eceff1">
@@ -330,38 +331,39 @@
                                     </div>
 
                                 </div>
-{#                                <div class="col-lg-6">#}
-{#                                    <h7 class="ms-1 fw-bold">#}
-{#                                        Input Device#}
-{#                                    </h7>#}
-{#                                    <div class="form-group mt-2" style="position: relative;">#}
-{#                                        {{ form_template.input_device }}#}
-{#                                        <span class="error-msg mt-2 ms-1"#}
-{#                                              style="color: red; position: absolute;"></span>#}
-{#                                    </div>#}
-{#                                </div>#}
+                                {#                                <div class="col-lg-6">#}
+                                {#                                    <h7 class="ms-1 fw-bold">#}
+                                {#                                        Input Device#}
+                                {#                                    </h7>#}
+                                {#                                    <div class="form-group mt-2" style="position: relative;">#}
+                                {#                                        {{ form_template.input_device }}#}
+                                {#                                        <span class="error-msg mt-2 ms-1"#}
+                                {#                                              style="color: red; position: absolute;"></span>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
                             </div>
                             <div style="display: flex;">
-                                <div class="col-lg-3" style="display: flex; flex-direction: column; border-right: 2px solid #fff;">
-{#                                    <div class="mb-3">#}
-{#                                        <h7 class="fw-bold">#}
-{#                                            Event Number#}
-{#                                        </h7>#}
-{#                                        <div class="form-group mt-2" style="position: relative;">#}
-{#                                            {{ form_template.role_num }}#}
-{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
-{#                                        <div class="form-group mt-2" style="position: relative; width: 80%">#}
-{#                                            {{ form_template.input_device }}#}
-{#                                            <span class="error-msg mt-2 ms-1"#}
-{#                                                  style="color: red; position: absolute;"></span>#}
-{#                                        </div>#}
-{#                                    </div>#}
+                                <div class="col-lg-3"
+                                     style="display: flex; flex-direction: column; border-right: 2px solid #fff;">
+                                    {#                                    <div class="mb-3">#}
+                                    {#                                        <h7 class="fw-bold">#}
+                                    {#                                            Event Number#}
+                                    {#                                        </h7>#}
+                                    {#                                        <div class="form-group mt-2" style="position: relative;">#}
+                                    {#                                            {{ form_template.role_num }}#}
+                                    {#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+                                    {#                                        <div class="form-group mt-2" style="position: relative; width: 80%">#}
+                                    {#                                            {{ form_template.input_device }}#}
+                                    {#                                            <span class="error-msg mt-2 ms-1"#}
+                                    {#                                                  style="color: red; position: absolute;"></span>#}
+                                    {#                                        </div>#}
+                                    {#                                    </div>#}
                                     <div class="mb-3">
                                         <h7 class="fw-bold">
-                                            Input Device
+                                            Input Description
                                         </h7>
                                         <div class="form-group mt-2" style="position: relative; width: 80%">
-                                            {{ form_template.input_device }}
+                                            {{ form_template.input_description }}
                                             <span class="error-msg mt-2 ms-1"
                                                   style="color: red; position: absolute;"></span>
                                         </div>
@@ -406,166 +408,98 @@
                                     <div style="display: flex; flex-direction: column">
                                         {# 竖排列表 #}
                                         <div class="odor-list">
-                                            <div class="odor-item">
-                                                <div class="odor-item-color"></div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Odor
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.odor }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Odor Port
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.port }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Duration(s)
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.duration }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Intensity(%)
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.intensity }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <span class="odor-minus-icon circle-icon">-</span>
-                                            </div>
-                                            <div class="odor-item">
-                                                <div class="odor-item-color"></div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Odor
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.odor }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Odor Port
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.port }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Duration(s)
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.duration }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Intensity(%)
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.intensity }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <span class="odor-minus-icon circle-icon">-</span>
-                                            </div>
-                                            <div class="odor-item">
-                                                <div class="odor-item-color"></div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Odor
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.odor }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Odor Port
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.port }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Duration(s)
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.duration }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Intensity(%)
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.intensity }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <span class="odor-minus-icon circle-icon">-</span>
-                                            </div>
-                                            <div class="odor-item">
-                                                <div class="odor-item-color"></div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Odor
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.odor }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Odor Port
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.port }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Duration(s)
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.duration }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="odor-item-item">
-                                                    <span class="fw-bold title">
-                                                        Intensity(%)
-                                                    </span>
-                                                    <div class="form-group">
-                                                        {{ form_event_odor.intensity }}
-                                                        <span class="error-msg" style="color: red; position: absolute;"></span>
-                                                    </div>
-                                                </div>
-                                                <span class="odor-minus-icon circle-icon">-</span>
-                                            </div>
+                                            {# odor 元素 #}
+{#                                            <div class="odor-item">#}
+{#                                                <div class="odor-item-color"></div>#}
+{#                                                <div class="odor-item-item">#}
+{#                                                    <span class="fw-bold title">#}
+{#                                                        Odor#}
+{#                                                    </span>#}
+{#                                                    <div class="form-group">#}
+{#                                                        {{ form_event_odor.odor }}#}
+{#                                                        <span class="error-msg"#}
+{#                                                              style="color: red; position: absolute;"></span>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="odor-item-item">#}
+{#                                                    <span class="fw-bold title">#}
+{#                                                        Odor Port#}
+{#                                                    </span>#}
+{#                                                    <div class="form-group">#}
+{#                                                        {{ form_event_odor.port }}#}
+{#                                                        <span class="error-msg"#}
+{#                                                              style="color: red; position: absolute;"></span>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="odor-item-item">#}
+{#                                                    <span class="fw-bold title">#}
+{#                                                        Duration(s)#}
+{#                                                    </span>#}
+{#                                                    <div class="form-group">#}
+{#                                                        {{ form_event_odor.duration }}#}
+{#                                                        <span class="error-msg"#}
+{#                                                              style="color: red; position: absolute;"></span>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="odor-item-item">#}
+{#                                                    <span class="fw-bold title">#}
+{#                                                        Intensity(%)#}
+{#                                                    </span>#}
+{#                                                    <div class="form-group">#}
+{#                                                        {{ form_event_odor.intensity }}#}
+{#                                                        <span class="error-msg"#}
+{#                                                              style="color: red; position: absolute;"></span>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <span class="odor-minus-icon circle-icon">-</span>#}
+{#                                            </div>#}
+{##}
+{#                                            <div class="odor-item">#}
+{#                                                <div class="odor-item-color"></div>#}
+{#                                                <div class="odor-item-item">#}
+{#                                                    <span class="fw-bold title">#}
+{#                                                        Odor#}
+{#                                                    </span>#}
+{#                                                    <div class="form-group">#}
+{#                                                        <select class="form-control bg-secondary-subtle odor-item-odor" style="border-radius: 15px;">#}
+{#                                                            <option value="-1" selected>---------</option>#}
+{#                                                            <option value="1">odor 1</option>#}
+{#                                                            <option value="2">odor 2</option>#}
+{#                                                            <option value="3">odor 3</option>#}
+{#                                                        </select>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="odor-item-item">#}
+{#                                                    <span class="fw-bold title">#}
+{#                                                        Odor Port#}
+{#                                                    </span>#}
+{#                                                    <div class="form-group">#}
+{#                                                        <select class="form-control bg-secondary-subtle odor-item-port" style="border-radius: 15px;">#}
+{#                                                            <option value="1" selected>Port 1</option>#}
+{#                                                            <option value="2">Port 2</option>#}
+{#                                                            <option value="3">Port 3</option>#}
+{#                                                            <option value="4">Port 4</option>#}
+{#                                                        </select>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="odor-item-item">#}
+{#                                                    <span class="fw-bold title">#}
+{#                                                        Duration(s)#}
+{#                                                    </span>#}
+{#                                                    <div class="form-group">#}
+{#                                                        <input type="number" value="1" class="form-control bg-secondary-subtle odor-item-duration" style="border-radius: 15px;">#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="odor-item-item">#}
+{#                                                    <span class="fw-bold title">#}
+{#                                                        Intensity(%)#}
+{#                                                    </span>#}
+{#                                                    <div class="form-group">#}
+{#                                                        <input type="number" value="1" class="form-control bg-secondary-subtle odor-item-intensity" style="border-radius: 15px;">#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <span class="odor-minus-icon circle-icon">-</span>#}
+{#                                            </div>#}
                                         </div>
                                         {# 拖动条 #}
                                         <div class="odor-bar">
@@ -573,8 +507,11 @@
                                                 <span class="title">total time: </span>
                                                 <div class="form-group">
                                                     {{ form_template.total_time }}
-                                                    <span class="error-msg" style="color: red; position: absolute;"></span>
+                                                    <span class="error-msg"
+                                                          style="color: red; position: absolute;"></span>
                                                 </div>
+                                            </div>
+                                            <div class="time-scale">
                                             </div>
                                             <div id="timebar">
 
@@ -582,69 +519,69 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-{#                            <div class="row mx-1 my-4 mb-5">#}
-{#                                <div class="col-lg-6">#}
-{#                                    <h7 class="ms-1 fw-bold">#}
-{#                                        Role Num#}
-{#                                    </h7>#}
-{#                                    <div class="form-group mt-2" style="position: relative;">#}
-{#                                        {{ form_template.role_num }}#}
-{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                                <div class="col-lg-6">#}
-{#                                    <h7 class="ms-1 fw-bold">#}
-{#                                        Time Window#}
-{#                                    </h7>#}
-{#                                    <div class="form-group mt-2">#}
-{#                                        {{ form_template.time_window }}#}
-{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="row mx-1 my-4 mb-5">#}
-{#                                <div class="col-lg-6">#}
-{#                                    <h7 class="ms-1 fw-bold">#}
-{#                                        Output Device#}
-{#                                    </h7>#}
-{#                                    <div class="form-group mt-2" style="position: relative;">#}
-{#                                        {{ form_template.output_device }}#}
-{#                                        <span class="error-msg mt-2 ms-1"#}
-{#                                              style="color: red; position: absolute;"></span>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                                <div class="col-lg-6">#}
-{#                                    <h7 class="ms-1 fw-bold">#}
-{#                                        Port#}
-{#                                    </h7>#}
-{#                                    <div class="form-group mt-2" style="position: relative;">#}
-{#                                        {{ form_template.port }}#}
-{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="row mx-1 my-4">#}
-{#                                <div class="col-lg-6">#}
-{#                                    <h7 class="ms-1 fw-bold">#}
-{#                                        Duration#}
-{#                                    </h7>#}
-{#                                    <div class="form-group mt-2">#}
-{#                                        {{ form_template.duration }}#}
-{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                                <div class="col-lg-6">#}
-{#                                    <h7 class="ms-1 fw-bold">#}
-{#                                        PWM#}
-{#                                    </h7>#}
-{#                                    <div class="form-group mt-2">#}
-{#                                        {{ form_template.pwm }}#}
-{#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
+                                {#                            <div class="row mx-1 my-4 mb-5">#}
+                                {#                                <div class="col-lg-6">#}
+                                {#                                    <h7 class="ms-1 fw-bold">#}
+                                {#                                        Role Num#}
+                                {#                                    </h7>#}
+                                {#                                    <div class="form-group mt-2" style="position: relative;">#}
+                                {#                                        {{ form_template.role_num }}#}
+                                {#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
+                                {#                                <div class="col-lg-6">#}
+                                {#                                    <h7 class="ms-1 fw-bold">#}
+                                {#                                        Time Window#}
+                                {#                                    </h7>#}
+                                {#                                    <div class="form-group mt-2">#}
+                                {#                                        {{ form_template.time_window }}#}
+                                {#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
+                                {#                            </div>#}
+                                {#                            <div class="row mx-1 my-4 mb-5">#}
+                                {#                                <div class="col-lg-6">#}
+                                {#                                    <h7 class="ms-1 fw-bold">#}
+                                {#                                        Output Device#}
+                                {#                                    </h7>#}
+                                {#                                    <div class="form-group mt-2" style="position: relative;">#}
+                                {#                                        {{ form_template.output_device }}#}
+                                {#                                        <span class="error-msg mt-2 ms-1"#}
+                                {#                                              style="color: red; position: absolute;"></span>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
+                                {#                                <div class="col-lg-6">#}
+                                {#                                    <h7 class="ms-1 fw-bold">#}
+                                {#                                        Port#}
+                                {#                                    </h7>#}
+                                {#                                    <div class="form-group mt-2" style="position: relative;">#}
+                                {#                                        {{ form_template.port }}#}
+                                {#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
+                                {#                            </div>#}
+                                {#                            <div class="row mx-1 my-4">#}
+                                {#                                <div class="col-lg-6">#}
+                                {#                                    <h7 class="ms-1 fw-bold">#}
+                                {#                                        Duration#}
+                                {#                                    </h7>#}
+                                {#                                    <div class="form-group mt-2">#}
+                                {#                                        {{ form_template.duration }}#}
+                                {#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
+                                {#                                <div class="col-lg-6">#}
+                                {#                                    <h7 class="ms-1 fw-bold">#}
+                                {#                                        PWM#}
+                                {#                                    </h7>#}
+                                {#                                    <div class="form-group mt-2">#}
+                                {#                                        {{ form_template.pwm }}#}
+                                {#                                        <span class="error-msg" style="color: red; position: absolute;"></span>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
+                                {#                            </div>#}
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -760,6 +697,7 @@
             });
         }
 
+        // TODO
         function doEdit() {
             // 向后台发送请求（添加Ajax请求）
             $.ajax({
@@ -790,7 +728,7 @@
             })
         }
 
-
+        // TODO
         function doAdd() {
             // 向后台发送请求（添加Ajax请求）
             $.ajax({
@@ -819,42 +757,44 @@
 
 
         function bindBtnEditEvent() {
-    $(".btn-edit").click(function () {
-        // 清空对话框中的数据
-        $('#formAdd')[0].reset();
-        var tid = $(this).attr("tid");
-        EDIT_ID = tid;
+            $(".btn-edit").click(function () {
+                // 清空对话框中的数据
+                $('#formAdd')[0].reset();
+                var tid = $(this).attr("tid");
+                EDIT_ID = tid;
 
-        // 发送Ajax请求，获取当前行的相关数据
-        $.ajax({
-            url: "/admin/reality/detail/",
-            type: "get",
-            data: {
-                tid: tid
-            },
-            dataType: 'JSON',
-            success: function (res) {
-                if (res.status) {
-                    // 将数据赋值到对话框中的标签中
-                    $.each(res.data, function (name, value) {
-                        $('#id_' + name).val(value);
-                    })
+                // 发送Ajax请求，获取当前行的相关数据
+                $.ajax({
+                    url: "/admin/reality/detail/",
+                    type: "get",
+                    data: {
+                        tid: tid
+                    },
+                    dataType: 'JSON',
+                    success: function (res) {
+                        if (res.status) {
+                            // 将数据赋值到对话框中的标签中
+                            $.each(res.data, function (name, value) {
+                                $('#id_' + name).val(value);
+                            })
 
-                    // 设置对话框的标题
-                    $('#templateLabel').text('Edit Event Template')
+                            // 设置对话框的标题
+                            $('#templateLabel').text('Edit Event Template')
 
-                    // 点击编辑，显示对话框
-                    $('#templateModal').modal('show');
-                } else {
-                    alert(res.error);
-                }
-            }
-        });
-    });
-}
-    window.onload = () => {
-        $('#btnAdd').click()
-    }
+                            // 点击编辑，显示对话框
+                            $('#templateModal').modal('show');
+                        } else {
+                            alert(res.error);
+                        }
+                    }
+                });
+            });
+        }
+
+        window.onload = () => {
+            $('#btnAdd').click()
+        }
     </script>
-    <script type="text/javascript" src="{% static 'timebar/TimeBar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'adminReality/timebar/TimeBar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'adminReality/main.js' %}"></script>
 {% endblock %}

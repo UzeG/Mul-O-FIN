@@ -96,9 +96,10 @@ class RoleSelection(models.Model):
 class Template(models.Model):
     """ 事件范式 """
     event_name = models.CharField(verbose_name='event_name', max_length=32)
-    input_device = models.ForeignKey(verbose_name='', to='Role', related_name='FriendList_input_device',
-                                     on_delete=models.CASCADE,
-                                     default='')
+    # input_device = models.ForeignKey(verbose_name='', to='Role', related_name='FriendList_input_device',
+    #                                  on_delete=models.CASCADE,
+    #                                  default='')
+    input_description = models.CharField(max_length=64, default='', null=True, blank=True)
     role_num = models.SmallIntegerField(verbose_name='', default=1)
     time_window = models.SmallIntegerField(verbose_name='', default=10)
     output_device = models.ForeignKey(verbose_name='', to='Role', related_name='FriendList_output_device',
@@ -111,7 +112,6 @@ class Template(models.Model):
 
     # parent event
     parent = models.ForeignKey(to='self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
-
     # total output time
     total_time = models.PositiveIntegerField(default=10, null=False)
 
