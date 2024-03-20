@@ -168,13 +168,11 @@ def admin_reality_add(request):
             template = Template.objects.create(
                 event_name=form.cleaned_data['event_name'],
                 uuid=user_profile.uuid,
-                role_num=form.cleaned_data['role_num'],
+                threshold=form.cleaned_data['threshold'],
                 time_window=form.cleaned_data['time_window'],
-                input_device=form.cleaned_data['input_device'],
+                input_description=form.cleaned_data['input_description'],
                 output_device=form.cleaned_data['output_device'],
-                port=form.cleaned_data['port'],
-                duration=form.cleaned_data['duration'],
-                pwm=form.cleaned_data['pwm']
+                total_time=form.cleaned_data['total_time'],
             )
             template.save()
 

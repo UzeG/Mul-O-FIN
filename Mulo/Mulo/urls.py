@@ -71,5 +71,6 @@ urlpatterns = [
     re_path(r'^api/clear', ClearView.as_view()),
     re_path(r'^api/template/$', TemplateView.as_view()),
     re_path(r'^api/template', TemplateView.as_view()),
-    re_path(r'^api/get_odor_list', GetOdorList.as_view())
+    re_path(r'^api/get_odor_list', GetOdorList.as_view()),
+    # re_path(r'^api/get_template_odor/', )
 ]

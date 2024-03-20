@@ -100,7 +100,8 @@ class Template(models.Model):
     #                                  on_delete=models.CASCADE,
     #                                  default='')
     input_description = models.CharField(max_length=64, default='', null=True, blank=True)
-    role_num = models.SmallIntegerField(verbose_name='', default=1)
+    # role_num = models.SmallIntegerField(verbose_name='', default=1)
+    threshold = models.SmallIntegerField(verbose_name='', default=1)  # role_num -> threshold
     time_window = models.SmallIntegerField(verbose_name='', default=10)
     output_device = models.ForeignKey(verbose_name='', to='Role', related_name='FriendList_output_device',
                                       on_delete=models.CASCADE,

@@ -12,13 +12,26 @@
         top: 50%;
         transform: translate(0, -50%);
         border-radius: inherit;
+        z-index: 1;
+
+        &.active {
+            & {
+                z-index: 999 !important;
+            }
+
+            .target-scale {
+                font-size: 1rem !important;
+                color: #333;
+            }
+        }
+
 
         .body {
             width: 100%;
             height: 100%;
             background-color: inherit;
             border-radius: @borderRadius;
-            cursor: pointer;
+            cursor: ew-resize;
         }
 
         .head,
@@ -53,6 +66,7 @@
         }
 
         .target-scale {
+            transition: all .2s;
             width: 100%;
             display: flex;
             justify-content: space-between;
