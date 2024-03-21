@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from web.utils.form import OdorModelForm, TemplateModelForm, RoleModelForm, \
-    RoleSelectionModelForm, DeviceModelForm, EventOdorModelForm
+    RoleSelectionModelForm, DeviceModelForm
 from web.models import Template
 from web import models
 from web.models import UserProfile
@@ -11,6 +11,8 @@ import socket
 import threading
 import pymysql
 from web.controller.sockets import sockets
+import uuid
+from django.http import QueryDict
 
 
 @login_required
@@ -108,7 +110,6 @@ def admin_reality(request):
 
     form_template = TemplateModelForm()
     # form_odor = OdorModelForm()
-    form_event_odor = EventOdorModelForm()
     odor_list = models.Odor.objects.all().order_by('-id')
     role_list = models.Role.objects.all().order_by('-id')
     template_list = models.Template.objects.filter(uuid=user_profile.uuid).order_by('-id')
@@ -116,7 +117,6 @@ def admin_reality(request):
     context = {
         'odor_list': odor_list,
         # 'form_odor': form_odor,
-        'form_event_odor': form_event_odor,
         'form_template': form_template,
         'role_list': role_list,
         'template_list': template_list,
@@ -176,7 +176,7 @@ def admin_reality_add(request):
             )
             template.save()
 
-            return JsonResponse({"status": True})
+            return JsonResponse({"status": True, 'tid': template.id})
 
         except Exception as e:
             print(e)
@@ -211,8 +211,9 @@ def admin_reality_detail(request):
 
     # 方式2
     tid = request.GET.get('tid')
-    row_dict = models.Template.objects.filter(id=tid).values('event_name', 'input_device', 'role_num', 'time_window',
-                                                             'output_device', 'port', 'duration', 'pwm').first()
+    row_dict = models.Template.objects.filter(id=tid)\
+        .values('event_name', 'input_description', 'threshold', 'time_window', 'output_device', 'total_time', 'parent_id')\
+        .first()
     if not row_dict:
         return JsonResponse({'status': False, 'error': 'The data does not exist.'})
 

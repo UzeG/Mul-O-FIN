@@ -64,13 +64,13 @@ class Odor(models.Model):
         return self.odor
 
 
-class EventOdorModel(models.Model):
+class TemplateOdorModel(models.Model):
     event_template = models.ForeignKey(to='Template', on_delete=models.CASCADE, related_name='odors')
     odor = models.ForeignKey(to='Odor', on_delete=models.CASCADE)
     port = models.PositiveIntegerField(choices=port_choices, default=1)
-    start = models.PositiveIntegerField(default=0)
-    duration = models.PositiveIntegerField(default=3)
-    intensity = models.PositiveIntegerField(default=100)  # pwn?
+    start = models.FloatField(default=0)
+    duration = models.FloatField(default=3)
+    intensity = models.FloatField(default=100)  # pwn?
 
 
 # class OdorSelection(models.Model):

@@ -5,15 +5,16 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from web.models import Device, Role, Odor, UserProfile, Template
+from web.models import Device, Role, Odor, UserProfile, Template, TemplateOdorModel
 from web.controller.interactive import find_template, convert_template
 from web.controller.interactive import Interactive
 from web.middleware.auth import is_valid_uuid
-
-from web import models
+from rest_framework import permissions
+from django.forms.models import model_to_dict
 
 import datetime
 from django.core.serializers import serialize
@@ -255,8 +256,49 @@ class TemplateView(APIView):
 class GetOdorList(APIView):
     @staticmethod
     def get(request, *args, **kwargs):
-        odor_list = list(models.Odor.objects.values('id', 'odor').all().order_by('-id'))
+        odor_list = list(Odor.objects.values('id', 'odor').all().order_by('-id'))
         return JsonResponse({
             'status': True,
             'data': odor_list
         })
+
+
+class SaveTemplateOdors(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def post(request, *arg, **kwargs):
+        tid = request.data['tid']
+        odors = request.data['odors']
+
+        TemplateOdorModel.objects.all().filter(event_template_id=tid).delete()
+
+        for odor in odors:
+            TemplateOdorModel.objects.create(
+                event_template_id=str(tid),
+                odor_id=str(odor['odor_id']),
+                port=str(odor['port_id']),
+                start=odor['start'],
+                duration=odor['duration'],
+                intensity=odor['intensity']
+            ).save()
+
+        return JsonResponse({
+            'status': True
+        })
+
+
+class GetTemplateOdorsByTid(APIView):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        tid = request.query_params.get('tid')
+        # {odor_id: string, port_id: string, duration: number, intensity: number, start: number}[]
+        odors = TemplateOdorModel.objects\
+            .filter(event_template_id=tid)\
+            .values('odor_id', 'port', 'start', 'duration', 'intensity')
+        odors = list(odors)
+        return JsonResponse({
+            'status': True,
+            'data': odors
+        })
+

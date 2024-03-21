@@ -125,9 +125,3 @@ class DeviceModelForm(BootStrapModelForm):
     class Meta:
         model = models.Device
         fields = '__all__'
-
-
-class EventOdorModelForm(BootStrapModelForm):
-    class Meta:
-        model = models.EventOdorModel
-        fields = '__all__'
