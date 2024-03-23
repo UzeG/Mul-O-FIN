@@ -299,7 +299,7 @@
                                             Main Event Name
                                         </h7>
                                     </div>
-                                    <div style="width: 75%">
+                                    <div style="width: 75%" class="event-name-ipt">
                                         {{ form_template.event_name }}
                                         <span class="error-msg mt-2 ms-1"
                                               style="color: red; position: absolute;"></span>
@@ -324,7 +324,7 @@
                                         <h7 class="fw-bold">
                                             Input Description
                                         </h7>
-                                        <div class="form-group mt-2" style="position: relative; width: 80%">
+                                        <div class="form-group mt-2 input-description" style="position: relative; width: 80%">
                                             {{ form_template.input_description }}
                                             <span class="error-msg mt-2 ms-1"
                                                   style="color: red; position: absolute;"></span>
@@ -512,7 +512,10 @@
                 // 点击新建按钮，显示对话框
                 $('#templateModal').modal('show');
                 $('#templateModal').off('shown.bs.modal').on('shown.bs.modal', function () {
-                    Utils.loadData(itemManager, targetManager)
+                    Utils.loadData(itemManager, targetManager);
+                    const str = `Event_${$('#event-tree').children().length + 1}`;
+                    $('.event-name-ipt>input').val(str);
+                    $('.input-description>input').val(`this is ${str}`)
                 })
             })
         }
@@ -713,8 +716,17 @@
                 $('#eventNameLabel').text('Sub Event Name');
                 // 点击新建按钮，显示对话框
                 $('#templateModal').modal('show');
+
+                const currentCreatSubBtn = $(this);
                 $('#templateModal').off('shown.bs.modal').on('shown.bs.modal', function () {
-                    Utils.loadData(itemManager, targetManager)
+                    Utils.loadData(itemManager, targetManager);
+                    const parent = currentCreatSubBtn.parent().parent().parent()
+                    const parentPath = parent.attr('path');
+                    console.log(parentPath)
+                    const siblingCount = parent.children().last().children().last().children().length;
+                    const str = `Event_${parentPath}-${siblingCount + 1}`;
+                    $('.event-name-ipt>input').val(str);
+                    $('.input-description>input').val(`this is ${str}`);
                 })
             })
         }
@@ -818,7 +830,7 @@
                 const vHeight = horizontalLine.getBoundingClientRect().top - nodeContent.getBoundingClientRect().bottom
 
                 const verticalLine = nodesContainer.querySelector('.vertical-line');
-                verticalLine.style.setProperty('height', `${vHeight}px`);
+                verticalLine.style.setProperty('height', `${vHeight + 2}px`);
 
                 for (const item of subItems) {
                     fn(item);
