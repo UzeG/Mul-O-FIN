@@ -5,13 +5,14 @@
 {% endblock %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/mulo3.css' %}">
-    <link rel="stylesheet" href="{% static 'css/createNewEventTemplate.css' %}">
+    <link rel="stylesheet" href="{% static 'adminReality/EventTemplateModal/EventTemplateModal.css' %}">
+    <link rel="stylesheet" href="{% static 'adminReality/EventWhiteBoard/EventWhiteBoard.css' %}">
     <link rel="stylesheet" href="{% static 'adminReality/timebar/style.css' %}">
 {% endblock %}
 {% block content %}
     <section class="p-3 text-center">
         <div class="container">
-            <div class="row g-4">
+            <div class="row g-4 justify-content-between">
 
                 <!-- 左边框 -->
                 <div class="col-lg-5">
@@ -209,14 +210,10 @@
                     </div>
                 </div>
 
-
-                <!-- 中间空白 -->
-                <div class="col-lg-1"></div>
-
                 <!-- 右边框 Event White Board -->
-                <div class="col-lg-6">
+                <div style="width: 55%">
                     <div class="row align-items-center">
-                        <div class="col-lg-6 text-start">
+                        <div class="col-lg-5 text-start">
                             <h4 class="fw-bold" style="margin-bottom: 0!important;">
                                 Event White Board
                                 <button type="button" class="btn" data-bs-toggle="popover"
@@ -236,7 +233,7 @@
                                  alt="Bootstrap"
                                  width="30" height="30">
                         </div>
-                        <div class="col-lg-4 text-end">
+                        <div class="col-lg-5 text-end">
                             <button type="button" data-bs-toggle="modal" data-bs-target="#complete"
                                     class="btn bg-light fw-bold ms-1"
                                     style="border-radius: 15px; border: 1px solid darkgray;">
@@ -244,49 +241,11 @@
                             </button>
                         </div>
                     </div>
-                    {% for obj in template_list %}
-                        <!-- Event Template -->
-                        <div class="card bg-light my-4" style="height: 12rem!important; border-radius: .8rem; border-left: .5rem solid #66CC00;">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <ul class="list-group list-group-flush ms-2" style="list-style: none;">
-                                            <li class="card-text text-start mt-1">
-                                                <h5 class="mt-2 fw-bold">
-                                                    {{ obj.event_name }}
-                                                </h5>
-                                            </li>
-                                            <li class="card-text text-start mt-3">
-                                                <h6>
-                                                    When {{ obj.threshold }} [{{ obj.input_description }}] trigger the
-                                                    "{{ obj.event_name }}"
-                                                    button within any {{ obj.time_window }} seconds,
-                                                    {{ obj.output_device }} devices will play the {{ obj.port }} port
-                                                    scent, the duration is {{ obj.duration }}s.
-                                                </h6>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <!-- Edit / Delete -->
-                                    <div class="col-lg-4">
-                                        <h4 class="card-text">
-                                            <img tid="{{ obj.id }}" type="button"
-                                                 src="{% static 'img/bootstrap-icons-1.10.3/pencil-square.svg' %}"
-                                                 alt="Bootstrap"
-                                                 width="22" height="22" class="my-5 mx-2 btn-edit">
-                                            <a href="/admin/reality/{{ obj.id }}/delete">
-                                                <img src="{% static 'img/bootstrap-icons-1.10.3/trash.svg' %}"
-                                                     alt="Bootstrap"
-                                                     width="22" height="22" class="my-5">
-                                            </a>
-                                            <img src="{% static 'img/bootstrap-icons-1.10.3/trello.svg' %}" alt="" width="22" height="22" class="my-5">
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+                    <div id="event-tree" style="margin-top: 2rem">
+                        {% for root in template_tree %}
+                            {% include 'event_node.html' with node=root depth=0 %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -298,20 +257,37 @@
          aria-labelledby="templateLabel" aria-hidden="true">
         <div class="modal-lg modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content" style="background-color: #eceff1">
-                <div class="modal-header">
-                    <h4 class="ms-2 fw-bold modal-title" id="templateLabel">
-                        Event Template
-                        <button type="button" class="btn" data-bs-toggle="popover"
-                                title=""
-                                data-bs-content="Click the Bluetooth button on the mulO device and find your device name on your computer. If the lights are always on means the link is successful. If the light blink means wait to link.">
-                            <img
-                                    src="{% static 'img/bootstrap-icons-1.10.3/question-circle-fill.svg' %}"
-                                    alt="Bootstrap"
-                                    width="14" height="14" class="mb-2">
+                <div class="modal-header" style="flex-direction: column; align-items: flex-start">
+                    <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center">
+                        <h4 class="ms-2 fw-bold modal-title" id="templateLabel">
+                            Event Template
+    {#                        <button type="button" class="btn" data-bs-toggle="popover"#}
+    {#                                title=""#}
+    {#                                data-bs-content="Click the Bluetooth button on the mulO device and find your device name on your computer. If the lights are always on means the link is successful. If the light blink means wait to link.">#}
+    {#                            <img#}
+    {#                                    src="{% static 'img/bootstrap-icons-1.10.3/question-circle-fill.svg' %}"#}
+    {#                                    alt="Bootstrap"#}
+    {#                                    width="14" height="14" class="mb-2">#}
+    {#                        </button>#}
+                        </h4>
+                        <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close">
                         </button>
-                    </h4>
-                    <button type="button" class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
+                    </div>
+                    <div class="valid-controller" style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center; margin-top: 1rem">
+                        <h5 class="ms-2 fw-bold modal-title">
+                            Valid While Event 2-2-1
+                        </h5>
+                        <div style="display: flex; flex-direction: row; align-items: center; font-weight: 800; font-size: 1.2rem">
+                            <div class="yes" style="display: flex; flex-direction: row; align-items: center; margin-right: 2rem">
+                                <input type="checkbox" class="checkbox bg-secondary-subtle" style="width: 1.2rem; height: 1.2rem;">
+                                <span style="margin-left: .5rem">= yes</span>
+                            </div>
+                            <div class="no" style="display: flex; flex-direction: row; align-items: center; ">
+                                <input type="checkbox" class="checkbox bg-secondary-subtle"  style="width: 1.2rem; height: 1.2rem">
+                                <span style="margin-left: .5rem">= no</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-body">
                     <form id="formAdd">
@@ -319,7 +295,7 @@
                             <div class="row my-1 mb-2">
                                 <div class="justify-content-between w-100 mb-2" style="display: flex; width: 100%">
                                     <div class="row align-items-center" style="width: 28%">
-                                        <h7 class="fw-bold col-lg-12">
+                                        <h7 class="fw-bold col-lg-12" id="eventNameLabel">
                                             Main Event Name
                                         </h7>
                                     </div>
@@ -444,6 +420,7 @@
             return new bootstrap.Popover(popoverTriggerEl)
         })
         var EDIT_ID;
+        let PARENT_ID = undefined;
 
         const targetManager = new Bar({
             el: document.getElementById('timebar'),
@@ -459,21 +436,19 @@
             itemManager.add({ color, target });
         });
 
-        document.body.addEventListener('keydown', e => {
-            if (e.key === 'a') {
-                const data = Utils.getData(itemManager, targetManager);
-                console.log(data);
-            }
-        });
-
         $(function () {
             bindBtnRoleEvent();
             bindBtnOdorEvent();
             bindBtnAddEvent();
             bindBtnSaveEvent();
             bindBtnEditEvent();
+
+            bindBtnCreateSub();
+            bindBtnOpenSub();
+            bindValidWhileParentCheckbox();
         })
 
+        // 添加 role
         function bindBtnRoleEvent() {
             $('#btnRole').click(function () {
                 $.ajax({
@@ -497,6 +472,7 @@
             })
         }
 
+        // 添加 odor
         function bindBtnOdorEvent() {
             $('#btnOdor').click(function () {
                 $.ajax({
@@ -520,11 +496,15 @@
             })
         }
 
+        // 新建 event
         function bindBtnAddEvent() {
             $('#btnAdd').click(function () {
+                $('.valid-controller').hide();
+
                 $(".error-msg").empty();
                 // 将正在编辑的ID设置为空
                 EDIT_ID = undefined;
+                PARENT_ID = undefined;
                 // 清空对话框中的数据
                 $('#formAdd')[0].reset();
                 // 设置对话框的标题
@@ -537,7 +517,7 @@
             })
         }
 
-
+        // 保存新建/编辑 event
         function bindBtnSaveEvent() {
             // 向后台发送请求
             $('#btnSave').click(function () {
@@ -549,14 +529,14 @@
                     doEdit();
                 } else {
                     // 添加
-                    doAdd();
+                    doAdd()
                 }
             });
         }
 
-        // TODO
+        // 编辑 event
         function doEdit() {
-            // 向后台发送请求（添加Ajax请求）
+            console.log(PARENT_ID)
             $.ajax({
                 url: '/admin/reality/edit/' + '?tid=' + EDIT_ID,        //   -> /admin/reality/edit/?tid=12
                 type: 'post',
@@ -570,6 +550,7 @@
                         // 关闭对话框
                         $("#templateModal").modal('hide');
 
+                        // 保存事件 odors
                         await fetch('/api/save_template_odors/', {
                             method: 'POST',
                             headers: {
@@ -579,6 +560,31 @@
                             body: JSON.stringify({
                                 tid: EDIT_ID,
                                 odors: Utils.getData(itemManager, targetManager)
+                            })
+                        })
+
+                        await fetch('/api/save_template_valid_while_parent/', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': document.cookie.split('; ').slice(-1)[0].split('csrftoken=')[1],
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                tid: EDIT_ID,
+                                valid_while_parent: getValidWhileParent()
+                            })
+                        })
+
+                        // 需要重新设置父事件
+                        await fetch('/api/set_template_parent/', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': document.cookie.split('; ').slice(-1)[0].split('csrftoken=')[1],
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                tid: EDIT_ID,
+                                pid: PARENT_ID
                             })
                         })
 
@@ -595,6 +601,50 @@
                         }
                     }
                 }
+            })
+        }
+
+        /**
+         *
+         * @param {Boolean | null} val
+         */
+        function setValidWhileParentCheckbox(val) {
+            if (val === null) {
+                $('.yes input').prop('checked', false);
+                $('.no input').prop('checked', false);
+            } else {
+                if (val) {
+                    $('.yes input').prop('checked', true);
+                    $('.no input').prop('checked', false);
+                } else {
+                    $('.yes input').prop('checked', false);
+                    $('.no input').prop('checked', true);
+                }
+            }
+        }
+
+        /**
+         *
+         * @returns {boolean | null}
+         */
+        function getValidWhileParent() {
+            let valid_while_parent;
+            if ($('.yes input').prop('checked')) {
+                valid_while_parent = true;
+            } else if ($('.no input').prop('checked')) {
+                valid_while_parent = false;
+            } else {
+                valid_while_parent = null;
+            }
+            return valid_while_parent;
+        }
+
+        function bindValidWhileParentCheckbox() {
+            $('.yes input').click(function() {
+                $(this).prop('checked') && $('.no input').prop('checked', false);
+            })
+            $('.no input').click(function() {
+                $(this).prop('checked') && $('.yes input').prop('checked', false);
             })
         }
 
@@ -623,6 +673,17 @@
                                 odors: Utils.getData(itemManager, targetManager)
                             })
                         })
+                        PARENT_ID && await fetch('/api/set_template_parent/', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': document.cookie.split('; ').slice(-1)[0].split('csrftoken=')[1],
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                tid: res.tid,
+                                pid: PARENT_ID
+                            })
+                        })
                         // 刷新页面
                         location.reload();
                     } else {
@@ -635,6 +696,28 @@
             })
         }
 
+        function bindBtnCreateSub() {
+            $('.create-sub').click(function () {
+                $('.valid-controller').show();
+                const path = $(this).parent().parent().parent().attr('path');
+                $('.valid-controller h5').text(`Valid While Event ${path}`);
+
+                $(".error-msg").empty();
+                // 将正在编辑的ID设置为空
+                EDIT_ID = undefined;
+                PARENT_ID = $(this).attr("tid");
+                // 清空对话框中的数据
+                $('#formAdd')[0].reset();
+                // 设置对话框的标题
+                $('#templateLabel').text('Create Sub Event Template')
+                $('#eventNameLabel').text('Sub Event Name');
+                // 点击新建按钮，显示对话框
+                $('#templateModal').modal('show');
+                $('#templateModal').off('shown.bs.modal').on('shown.bs.modal', function () {
+                    Utils.loadData(itemManager, targetManager)
+                })
+            })
+        }
 
         function bindBtnEditEvent() {
             $(".btn-edit").click(function () {
@@ -642,6 +725,15 @@
                 $('#formAdd')[0].reset();
                 var tid = $(this).attr("tid");
                 EDIT_ID = tid;
+                PARENT_ID = $(this).parent().parent().parent().attr("pid");
+
+                const path = $(this).parent().parent().parent().parent().parent().parent().attr('path');
+                if (path) {
+                    $('.valid-controller').show();
+                    $('.valid-controller h5').text(`Valid While Event ${path}`);
+                } else {
+                    $('.valid-controller').hide();
+                }
 
                 // 发送Ajax请求，获取当前行的相关数据
                 $.ajax({
@@ -667,13 +759,12 @@
                             $('#templateModal').modal('show');
 
                             $('#templateModal').off('shown.bs.modal').on('shown.bs.modal', async function () {
-                                const res = (await (await fetch(`/api/get_template_odors_by_tid?tid=${tid}`)).json())
+                                const res = await (await fetch(`/api/get_template_odors_by_tid?tid=${tid}`)).json()
                                 if (res.status) {
                                     const data = {
                                         totalTime: total_time,
                                         data: []
                                     };
-                                    // TODO 每次点击编辑/新增，列表内容不会重新赋值而是累加：Bar 的 get width() 方法无法准确获取其 element 的 width
                                     res.data.forEach(({odor_id, port, start, duration, intensity}) => {
                                         data.data.push({
                                             odor_id: String(odor_id),
@@ -684,6 +775,12 @@
                                     {#{odor_id: string, port_id: string, duration: number, intensity: number, start: number}[]#}
                                     Utils.loadData(itemManager, targetManager, data);
                                 }
+
+                                const res2 = await (await fetch(`/api/get_valid_while_parent_by_tid?tid=${tid}`)).json()
+                                if (res2.status) {
+                                    const validWhileParent = res2.data;
+                                    setValidWhileParentCheckbox(validWhileParent);
+                                }
                             });
                         } else {
                             alert(res.error);
@@ -693,12 +790,49 @@
             });
         }
 
+        function bindBtnOpenSub() {
+            $('.open-sub').click(async function () {
+                $(this).parent().parent().siblings().toggle()
+                const imgEl = $(this).children().first()[0];
+                const src = imgEl.getAttribute('src');
+                imgEl.setAttribute('src', (src === '/static/img/bootstrap-icons-1.10.3/arrow-up-square.svg') ? '/static/img/bootstrap-icons-1.10.3/arrow-down-square.svg' : '/static/img/bootstrap-icons-1.10.3/arrow-up-square.svg')
+                setVerticalLines();
+            })
+        }
+
         $('#templateModal').on('hidden.bs.modal', () => {
             Utils.reset(itemManager, targetManager);
         });
 
+        const setVerticalLines = () => {
+            const fn = node => {
+                const nodeContent = node.querySelector('.node-content'); // 1
+                const nodesContainer = node.querySelector('.nodes-container'); // 2
+                const nodesContainerWrapper = nodesContainer.querySelector('.nodes-container-wrapper');
+                const subItems = nodesContainerWrapper.children;
+                if (subItems.length === 0)
+                    return;
+
+                const lastSubItem = subItems[subItems.length - 1];
+                const horizontalLine = lastSubItem.querySelector('.node-content>.horizontal-line');
+                const vHeight = horizontalLine.getBoundingClientRect().top - nodeContent.getBoundingClientRect().bottom
+
+                const verticalLine = nodesContainer.querySelector('.vertical-line');
+                verticalLine.style.setProperty('height', `${vHeight}px`);
+
+                for (const item of subItems) {
+                    fn(item);
+                }
+            }
+
+            const roots = document.querySelectorAll('#event-tree>.whiteboard-item');
+            for (let i = 0; i < roots.length; i++) {
+                fn(roots.item(i));
+            }
+        }
+        {#setInterval(() => setVerticalLines(), 100)#}
+        setVerticalLines()
         // TODO: 当 odor 选中 -------- 时做错误处理
 })
     </script>
-    <script type="text/javascript" src="{% static 'adminReality/main.js' %}"></script>
 {% endblock %}

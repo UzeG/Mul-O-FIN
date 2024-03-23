@@ -238,7 +238,7 @@ class TemplateView(APIView):
                 output_device=output_device,
                 port=port,
                 duration=duration,
-                pwm=pwm
+                pwm=pwm,
             )
             template.save()
 
@@ -264,6 +264,7 @@ class GetOdorList(APIView):
 
 
 class SaveTemplateOdors(APIView):
+    # rest framework api 需要 override permission_classes
     permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod
@@ -280,7 +281,7 @@ class SaveTemplateOdors(APIView):
                 port=str(odor['port_id']),
                 start=odor['start'],
                 duration=odor['duration'],
-                intensity=odor['intensity']
+                intensity=odor['intensity'],
             ).save()
 
         return JsonResponse({
@@ -302,3 +303,60 @@ class GetTemplateOdorsByTid(APIView):
             'data': odors
         })
 
+
+class SetTemplateParent(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        tid = request.data['tid']
+        pid = request.data['pid']
+        Template.objects.filter(id=tid).update(parent_id=pid)
+        return JsonResponse({
+            'status': True
+        })
+
+
+class GetSubTemplatesByTid(APIView):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        # 父时间 id
+        tid = request.query_params.get('tid')
+        templates = Template.objects\
+            .filter(parent_id=tid)\
+            .order_by('-id')
+        data = []
+        for template in list(templates):
+            dict_template = model_to_dict(template)
+            dict_template['output_device'] = Role.objects.get(id=dict_template['output_device']).role
+            data.append(dict_template)
+        return JsonResponse({
+            'status': True,
+            'data': data
+        })
+
+
+class GetValidWhileParentByTid(APIView):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        tid = request.query_params.get('tid')
+        valid_while_parent = Template.objects.filter(id=tid).first().valid_while_parent
+        print(valid_while_parent)
+        return JsonResponse({
+            'status': True,
+            'data': valid_while_parent
+        })
+
+
+class SaveTemplateValidWhileParent(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def post(request, *arg, **kwargs):
+        tid = request.data['tid']
+        valid_while_parent = request.data['valid_while_parent']
+        Template.objects.filter(id=tid).update(valid_while_parent=valid_while_parent)
+        print('valid_while_parent', valid_while_parent)
+        return JsonResponse({
+            'status': True,
+        })

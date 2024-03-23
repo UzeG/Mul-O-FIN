@@ -11,8 +11,8 @@ import socket
 import threading
 import pymysql
 from web.controller.sockets import sockets
-import uuid
-from django.http import QueryDict
+
+from web.utils.code import get_template_tree
 
 
 @login_required
@@ -112,14 +112,16 @@ def admin_reality(request):
     # form_odor = OdorModelForm()
     odor_list = models.Odor.objects.all().order_by('-id')
     role_list = models.Role.objects.all().order_by('-id')
-    template_list = models.Template.objects.filter(uuid=user_profile.uuid).order_by('-id')
+
+    # template_tree 树形结构
+    template_tree = get_template_tree(user_profile)
 
     context = {
         'odor_list': odor_list,
         # 'form_odor': form_odor,
         'form_template': form_template,
         'role_list': role_list,
-        'template_list': template_list,
+        'template_tree': template_tree,
     }
     return render(request, 'admin_reality.html', context)
 
@@ -234,8 +236,10 @@ def admin_reality_edit(request):
         return JsonResponse({'status': False, 'tips': "The data does not exist."})
 
     form = TemplateModelForm(data=request.POST, instance=row_object)
+    print('before', models.Template.objects.filter(id=tid).first().parent_id)
     if form.is_valid():
         form.save()
+        print('after', models.Template.objects.filter(id=tid).first().parent_id)
         return JsonResponse({'status': True})
 
     return JsonResponse({'status': False, 'error': form.errors})

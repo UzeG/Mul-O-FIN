@@ -115,6 +115,8 @@ class Template(models.Model):
     parent = models.ForeignKey(to='self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     # total output time
     total_time = models.PositiveIntegerField(default=10, null=False)
+    # valid while parent
+    valid_while_parent = models.BooleanField(default=None, blank=True, null=True)
 
     # 存储所属的uuid
     uuid = models.CharField(verbose_name='', max_length=36, default=None)

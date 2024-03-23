@@ -18,7 +18,8 @@ from web.views import home, admin, user
 from web.views.device import bind_device_role
 from django.contrib.admin import site
 from api.views import LoginView, RegView, LogoutView, EventView, DateView, ClearView, TemplateView
-from api.views import GetOdorList, SaveTemplateOdors, GetTemplateOdorsByTid
+from api.views import GetOdorList, SaveTemplateOdors, GetTemplateOdorsByTid, SetTemplateParent, GetSubTemplatesByTid, \
+    GetValidWhileParentByTid, SaveTemplateValidWhileParent
 
 urlpatterns = [
     # 主界面
@@ -73,5 +74,9 @@ urlpatterns = [
     re_path(r'^api/template', TemplateView.as_view()),
     re_path(r'^api/get_odor_list', GetOdorList.as_view()),
     re_path(r'^api/save_template_odors/$', SaveTemplateOdors.as_view()),
-    re_path(r'^api/get_template_odors_by_tid', GetTemplateOdorsByTid.as_view())
+    re_path(r'^api/get_template_odors_by_tid/$', GetTemplateOdorsByTid.as_view()),
+    re_path(r'^api/set_template_parent/$', SetTemplateParent.as_view()),
+    re_path(r'^api/get_sub_templates_by_tid/$', GetSubTemplatesByTid.as_view()),
+    re_path(r'^api/get_valid_while_parent_by_tid/$', GetValidWhileParentByTid.as_view()),
+    re_path(r'^api/save_template_valid_while_parent/$', SaveTemplateValidWhileParent.as_view())
 ]

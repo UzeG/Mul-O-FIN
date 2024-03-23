@@ -1,6 +1,9 @@
 import random
 import re
 from PIL import Image, ImageFont, ImageDraw, ImageFilter
+from django.forms import model_to_dict
+
+from web.models import Template, Role
 
 
 def validate_code(width=120, height=30, char_length=5, font_file='kumo.ttf', font_size=28):
@@ -61,3 +64,43 @@ def validate_email(email):
         return True
     else:
         return False
+
+
+def get_template_tree(user_profile):
+    def fn(node):
+        nodes = Template.objects\
+            .filter(parent_id=node['data']['id'])\
+            .order_by('-id')
+        if len(nodes) == 0:
+            return
+        for j, n in enumerate(nodes):
+            leaf_node = {
+                'data': model_to_dict(n),
+                'nodes': [],
+                'path': f"{node['path']}-{j + 1}"
+            }
+            fn(leaf_node)
+            node['nodes'].append(leaf_node)
+
+    tree = []
+    roots = Template.objects\
+        .filter(uuid=user_profile.uuid, parent_id=None)\
+        .order_by('-id')
+
+    for i, root in enumerate(roots):
+        root_node = {
+            'data': model_to_dict(root),
+            'nodes': [],
+            'path': f'{i + 1}'
+        }
+        fn(root_node)
+        tree.append(root_node)
+
+    return tree
+    # print(templates)
+    #
+    # data = []
+    # for template in list(templates):
+    #     dict_template = model_to_dict(template)
+    #     dict_template['output_device'] = Role.objects.get(id=dict_template['output_device']).role
+    #     data.append(dict_template)

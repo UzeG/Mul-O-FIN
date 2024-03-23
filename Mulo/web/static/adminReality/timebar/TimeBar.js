@@ -33,7 +33,7 @@ class Utils {
         return data;
     }
     /**
-     * 当为编辑页是需要调用#}
+     * 当为编辑页时需要调用。会设置时间轴长度、加载数据。
      * @param {{totalTime: number, data: {odor_id: string, port_id: string, duration: number, intensity: number, start: number}[]}} data 
      * @param {ItemManager} itemManager
      * @param {Bar} targetManager 
@@ -427,6 +427,9 @@ class ItemManager {
         this.items = [];
     }
 
+    /**
+     * ajax 方式获取 odors 和 ports 以更新 <select />
+     */
     async setOdorsPosts() {
         this.odors = (await (await fetch('/api/get_odor_list/')).json()).data;
         this.ports = [

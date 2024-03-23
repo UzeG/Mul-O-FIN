@@ -1,0 +1,89 @@
+#event-tree > .whiteboard-item:first-child > .node-content {
+  margin-top: 0 !important;
+}
+.nodes-container-wrapper > .whiteboard-item:first-child > .node-content {
+  margin-top: 0 !important;
+}
+.whiteboard-item {
+  display: flex;
+  flex-direction: column;
+}
+.whiteboard-item > .node-content {
+  height: 10rem;
+  border-radius: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 1rem;
+}
+.whiteboard-item > .node-content > .horizontal-line {
+  position: absolute;
+  top: 50%;
+  left: -1.5rem;
+  transform: translate(0, -50%);
+  width: 1.5rem;
+  border-top: 2px dashed #ccc;
+}
+.whiteboard-item > .node-content > .horizontal-line .horizontal-line-arrow {
+  position: absolute;
+  right: -0.4rem;
+  top: -0.05rem;
+  transform: translate(0, -50%);
+  width: 0;
+  height: 0;
+  border: 0.4rem solid transparent;
+  border-left: 0.8rem solid #ccc;
+}
+.whiteboard-item > .node-content > .item-info {
+  padding: 1rem 0rem 0.5rem 1.5rem;
+  max-width: 70%;
+  text-align: left;
+}
+.whiteboard-item > .node-content > .item-info > .item-info-title {
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+.whiteboard-item > .node-content > .item-info > .item-info-title div {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+.whiteboard-item > .node-content > .item-info > .item-info-text {
+  font-weight: lighter;
+  color: #666;
+}
+.whiteboard-item > .node-content > .item-icons {
+  min-width: 10rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.whiteboard-item > .node-content > .item-icons .item-icon {
+  cursor: pointer;
+  margin-right: 1rem;
+}
+.whiteboard-item > .nodes-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.whiteboard-item > .nodes-container .vertical-line {
+  width: 5%;
+  position: relative;
+}
+.whiteboard-item > .nodes-container .vertical-line div {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  left: 30%;
+  border-left: 2px dashed #ccc;
+  top: -1rem;
+}
+.whiteboard-item > .nodes-container > .nodes-container-wrapper {
+  width: 95%;
+}
