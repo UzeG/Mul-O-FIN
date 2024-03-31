@@ -1,0 +1,88 @@
+@borderRadius: .3rem;
+
+#timebar {
+    width: 100%;
+    height: .6rem;
+    border-radius: @borderRadius;
+    position: relative;
+
+    .target {
+        height: 100%;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        border-radius: inherit;
+        z-index: 1;
+
+        &.active {
+            & {
+                z-index: 999 !important;
+            }
+
+            .target-scale {
+                font-size: 1rem !important;
+                color: #333;
+            }
+        }
+
+
+        .body {
+            width: 100%;
+            height: 100%;
+            background-color: inherit;
+            border-radius: @borderRadius;
+            cursor: ew-resize;
+        }
+
+        .head,
+        .tail {
+            position: absolute;
+            width: .25rem;
+
+            .tri {
+                width: 0;
+                height: 0;
+                border: .4rem solid transparent;
+                border-bottom: .8rem solid;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                transform: translate(-37%, 10%);
+            }
+        }
+
+        .head {
+            top: 0;
+            left: 0;
+            height: 3rem;
+            border-radius: @borderRadius 0 0 0;
+        }
+
+        .tail {
+            top: 0;
+            right: 0;
+            height: 1.5rem;
+            border-radius: 0 @borderRadius 0 0;
+        }
+
+        .target-scale {
+            transition: all .2s;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 0;
+            transform: translate(0, -100%);
+            color: #666;
+            font-size: .8rem;
+
+            &>div:nth-child(1) {
+                transform: translate(-30%);
+            }
+
+            &>div:nth-child(2) {
+                transform: translate(30%);
+            }
+        }
+    }
+}

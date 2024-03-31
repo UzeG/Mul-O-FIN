@@ -1,16 +1,23 @@
+import json
+
+import django.core.serializers
 from django.shortcuts import render
 
 # Create your views here.
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from web.models import Device, Role, Odor, UserProfile, Template
+from web.models import Device, Role, Odor, UserProfile, Template, TemplateOdorModel
 from web.controller.interactive import find_template, convert_template
 from web.controller.interactive import Interactive
 from web.middleware.auth import is_valid_uuid
+from rest_framework import permissions
+from django.forms.models import model_to_dict
 
 import datetime
+from django.core.serializers import serialize
 
 interactive = Interactive()
 
@@ -231,7 +238,7 @@ class TemplateView(APIView):
                 output_device=output_device,
                 port=port,
                 duration=duration,
-                pwm=pwm
+                pwm=pwm,
             )
             template.save()
 
@@ -244,3 +251,112 @@ class TemplateView(APIView):
             ret['error_code'] = '10008'
             ret['error'] = 'Param error, see doc for more info'
             return JsonResponse(ret)
+
+
+class GetOdorList(APIView):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        odor_list = list(Odor.objects.values('id', 'odor').all().order_by('-id'))
+        return JsonResponse({
+            'status': True,
+            'data': odor_list
+        })
+
+
+class SaveTemplateOdors(APIView):
+    # rest framework api 需要 override permission_classes
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def post(request, *arg, **kwargs):
+        tid = request.data['tid']
+        odors = request.data['odors']
+
+        TemplateOdorModel.objects.all().filter(event_template_id=tid).delete()
+
+        for odor in odors:
+            TemplateOdorModel.objects.create(
+                event_template_id=str(tid),
+                odor_id=str(odor['odor_id']),
+                port=str(odor['port_id']),
+                start=odor['start'],
+                duration=odor['duration'],
+                intensity=odor['intensity'],
+            ).save()
+
+        return JsonResponse({
+            'status': True
+        })
+
+
+class GetTemplateOdorsByTid(APIView):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        tid = request.query_params.get('tid')
+        # {odor_id: string, port_id: string, duration: number, intensity: number, start: number}[]
+        odors = TemplateOdorModel.objects\
+            .filter(event_template_id=tid)\
+            .values('odor_id', 'port', 'start', 'duration', 'intensity')
+        odors = list(odors)
+        return JsonResponse({
+            'status': True,
+            'data': odors
+        })
+
+
+class SetTemplateParent(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+        tid = request.data['tid']
+        pid = request.data['pid']
+        Template.objects.filter(id=tid).update(parent_id=pid)
+        return JsonResponse({
+            'status': True
+        })
+
+
+class GetSubTemplatesByTid(APIView):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        # 父时间 id
+        tid = request.query_params.get('tid')
+        templates = Template.objects\
+            .filter(parent_id=tid)\
+            .order_by('-id')
+        data = []
+        for template in list(templates):
+            dict_template = model_to_dict(template)
+            dict_template['output_device'] = Role.objects.get(id=dict_template['output_device']).role
+            data.append(dict_template)
+        return JsonResponse({
+            'status': True,
+            'data': data
+        })
+
+
+class GetValidWhileParentByTid(APIView):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        tid = request.query_params.get('tid')
+        valid_while_parent = Template.objects.filter(id=tid).first().valid_while_parent
+        print(valid_while_parent)
+        return JsonResponse({
+            'status': True,
+            'data': valid_while_parent
+        })
+
+
+class SaveTemplateValidWhileParent(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def post(request, *arg, **kwargs):
+        tid = request.data['tid']
+        valid_while_parent = request.data['valid_while_parent']
+        Template.objects.filter(id=tid).update(valid_while_parent=valid_while_parent)
+        print('valid_while_parent', valid_while_parent)
+        return JsonResponse({
+            'status': True,
+        })

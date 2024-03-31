@@ -5,6 +5,13 @@ import socket
 
 
 # Create your models here.
+port_choices = (
+        (1, 'Port 1'),
+        (2, 'Port 2'),
+        (3, 'Port 3'),
+        (4, 'Port 4'),
+)
+
 
 class UserProfile(models.Model):
     """ 用户描述表 """
@@ -57,10 +64,19 @@ class Odor(models.Model):
         return self.odor
 
 
-class OdorSelection(models.Model):
-    """ 气味选择表 """
-    odor_selection = models.ForeignKey(verbose_name='', to='Odor', related_name='FriendList_odor_selection',
-                                       on_delete=models.CASCADE)
+class TemplateOdorModel(models.Model):
+    event_template = models.ForeignKey(to='Template', on_delete=models.CASCADE, related_name='odors')
+    odor = models.ForeignKey(to='Odor', on_delete=models.CASCADE)
+    port = models.PositiveIntegerField(choices=port_choices, default=1)
+    start = models.FloatField(default=0)
+    duration = models.FloatField(default=3)
+    intensity = models.FloatField(default=100)  # pwn?
+
+
+# class OdorSelection(models.Model):
+#     """ 气味选择表 """
+#     odor_selection = models.ForeignKey(verbose_name='', to='Odor', related_name='FriendList_odor_selection',
+#                                        on_delete=models.CASCADE)
 
 
 class Role(models.Model):
@@ -80,23 +96,27 @@ class RoleSelection(models.Model):
 class Template(models.Model):
     """ 事件范式 """
     event_name = models.CharField(verbose_name='event_name', max_length=32)
-    input_device = models.ForeignKey(verbose_name='', to='Role', related_name='FriendList_input_device',
-                                     on_delete=models.CASCADE,
-                                     default='')
-    role_num = models.SmallIntegerField(verbose_name='', default=1)
+    # input_device = models.ForeignKey(verbose_name='', to='Role', related_name='FriendList_input_device',
+    #                                  on_delete=models.CASCADE,
+    #                                  default='')
+    input_description = models.CharField(max_length=64, default='', null=True, blank=True)
+    # role_num = models.SmallIntegerField(verbose_name='', default=1)
+    threshold = models.SmallIntegerField(verbose_name='', default=1)  # role_num -> threshold
     time_window = models.SmallIntegerField(verbose_name='', default=10)
     output_device = models.ForeignKey(verbose_name='', to='Role', related_name='FriendList_output_device',
                                       on_delete=models.CASCADE,
                                       default='')
-    port_choices = (
-        (1, 'Port 1'),
-        (2, 'Port 2'),
-        (3, 'Port 3'),
-        (4, 'Port 4'),
-    )
-    port = models.SmallIntegerField(verbose_name='', choices=port_choices, default=1)
-    duration = models.SmallIntegerField(verbose_name='', default=3)
-    pwm = models.IntegerField(verbose_name='', default=150)
+
+    # port = models.SmallIntegerField(verbose_name='', choices=port_choices, default=1)
+    # duration = models.SmallIntegerField(verbose_name='', default=3)
+    # pwm = models.IntegerField(verbose_name='', default=150)
+
+    # parent event
+    parent = models.ForeignKey(to='self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    # total output time
+    total_time = models.PositiveIntegerField(default=10, null=False)
+    # valid while parent
+    valid_while_parent = models.BooleanField(default=None, blank=True, null=True)
 
     # 存储所属的uuid
     uuid = models.CharField(verbose_name='', max_length=36, default=None)

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from web.utils.form import OdorModelForm, TemplateModelForm, RoleModelForm, OdorSelectionModelForm, \
+from web.utils.form import OdorModelForm, TemplateModelForm, RoleModelForm, \
     RoleSelectionModelForm, DeviceModelForm
 from web.models import Template
 from web import models
@@ -11,6 +11,8 @@ import socket
 import threading
 import pymysql
 from web.controller.sockets import sockets
+
+from web.utils.code import get_template_tree
 
 
 @login_required
@@ -107,19 +109,19 @@ def admin_reality(request):
     user_profile = UserProfile.objects.get(user=request.user)
 
     form_template = TemplateModelForm()
-    form_odor = OdorModelForm()
-    form_odor_selection = OdorSelectionModelForm()
+    # form_odor = OdorModelForm()
     odor_list = models.Odor.objects.all().order_by('-id')
     role_list = models.Role.objects.all().order_by('-id')
-    template_list = models.Template.objects.filter(uuid=user_profile.uuid).order_by('-id')
+
+    # template_tree 树形结构
+    template_tree = get_template_tree(user_profile)
 
     context = {
         'odor_list': odor_list,
-        'form_odor': form_odor,
+        # 'form_odor': form_odor,
         'form_template': form_template,
         'role_list': role_list,
-        'template_list': template_list,
-        'form_odor_selection': form_odor_selection,
+        'template_tree': template_tree,
     }
     return render(request, 'admin_reality.html', context)
 
@@ -168,17 +170,15 @@ def admin_reality_add(request):
             template = Template.objects.create(
                 event_name=form.cleaned_data['event_name'],
                 uuid=user_profile.uuid,
-                role_num=form.cleaned_data['role_num'],
+                threshold=form.cleaned_data['threshold'],
                 time_window=form.cleaned_data['time_window'],
-                input_device=form.cleaned_data['input_device'],
+                input_description=form.cleaned_data['input_description'],
                 output_device=form.cleaned_data['output_device'],
-                port=form.cleaned_data['port'],
-                duration=form.cleaned_data['duration'],
-                pwm=form.cleaned_data['pwm']
+                total_time=form.cleaned_data['total_time'],
             )
             template.save()
 
-            return JsonResponse({"status": True})
+            return JsonResponse({"status": True, 'tid': template.id})
 
         except Exception as e:
             print(e)
@@ -213,8 +213,9 @@ def admin_reality_detail(request):
 
     # 方式2
     tid = request.GET.get('tid')
-    row_dict = models.Template.objects.filter(id=tid).values('event_name', 'input_device', 'role_num', 'time_window',
-                                                             'output_device', 'port', 'duration', 'pwm').first()
+    row_dict = models.Template.objects.filter(id=tid)\
+        .values('event_name', 'input_description', 'threshold', 'time_window', 'output_device', 'total_time', 'parent_id')\
+        .first()
     if not row_dict:
         return JsonResponse({'status': False, 'error': 'The data does not exist.'})
 
@@ -235,8 +236,10 @@ def admin_reality_edit(request):
         return JsonResponse({'status': False, 'tips': "The data does not exist."})
 
     form = TemplateModelForm(data=request.POST, instance=row_object)
+    print('before', models.Template.objects.filter(id=tid).first().parent_id)
     if form.is_valid():
         form.save()
+        print('after', models.Template.objects.filter(id=tid).first().parent_id)
         return JsonResponse({'status': True})
 
     return JsonResponse({'status': False, 'error': form.errors})

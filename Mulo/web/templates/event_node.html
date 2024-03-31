@@ -1,0 +1,71 @@
+{% load static %}
+
+<!-- Event Template -->
+<div pid="{{ parent }}" depth="{{ depth }}" path="{{ node.path }}" class="whiteboard-item" style="{% if depth == 0 %} margin-bottom: 1rem!important; {% endif %}">
+    <div class="node-content card bg-light">
+        {% if depth > 0 %}
+            <div class="horizontal-line">
+                <div class="horizontal-line-arrow"></div>
+            </div>
+        {% endif %}
+        <div class="item-info">
+            <div class="item-info-title">
+                <div style="font-size: 1.2rem">
+                    {{ node.data.event_name }}
+                </div>
+                <div>
+                    Event No. {{ node.path }}
+                </div>
+            </div>
+            <div class="item-info-text">
+                <span>
+                    When {{ node.data.threshold }} [{{ node.data.input_description }}] trigger the
+                    "{{ node.data.event_name }}"
+                    button within any {{ node.data.time_window }} seconds,
+                    {{ node.data.output_device }} devices will play the {{ node.data.port }} port
+                    scent, the duration is {{ node.data.total_time }}s.
+                </span>
+            </div>
+        </div>
+
+        <!-- Edit / Delete -->
+        <div class="item-icons">
+            <div class="btn-edit item-icon" tid="{{ node.data.id }}">
+                <img type="button"
+                 src="{% static 'img/bootstrap-icons-1.10.3/pencil-square.svg' %}"
+                 alt="Bootstrap"
+                 width="28" height="28">
+            </div>
+            <div class="item-icon">
+                <a href="/admin/reality/{{ node.data.id }}/delete" style="text-decoration: none">
+                    <img src="{% static 'img/bootstrap-icons-1.10.3/trash.svg' %}"
+                         alt="Bootstrap"
+                         width="28" height="28">
+                </a>
+            </div>
+            <!-- 创建子 -->
+            <div class="create-sub item-icon" tid="{{ node.data.id }}">
+                <img src="{% static 'img/bootstrap-icons-1.10.3/window-plus.svg' %}" alt=""
+                    width="28" height="28">
+            </div>
+            <!-- 展开 -->
+            {% if node.nodes %}
+                <div class="open-sub item-icon" tid="{{ node.data.id }}">
+                    <img src="{% static 'img/bootstrap-icons-1.10.3/arrow-down-square.svg' %}" alt=""
+                        width="28" height="28">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- 子事件容器 -->
+    <div class="nodes-container" style="display: none">
+        <div class="vertical-line">
+            <div></div>
+        </div>
+        <div class="nodes-container-wrapper">
+            {% for root in node.nodes  %}
+                {% include 'event_node.html' with node=root depth=depth|add:1 parent=node.data.id %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

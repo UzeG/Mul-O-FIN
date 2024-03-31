@@ -1,0 +1,110 @@
+::-webkit-scrollbar {
+  width: 5px;
+  background: #eee;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  height: 100px;
+  background-color: #ccc;
+}
+.circle-icon {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.odor-plus-icon {
+  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-color: var(--bs-body-color);
+  color: #eceff1;
+}
+.odor-list {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  height: 18rem;
+  overflow: auto;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 0.5rem;
+}
+.odor-list .form-group * {
+  font-size: 0.85rem !important;
+}
+.odor-list .odor-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding-top: 0.2rem;
+  padding-bottom: 0.5rem;
+  border-radius: 1rem;
+  transition: background-color 0.25s;
+  background-color: #e6e6e6;
+  margin-bottom: 0.2rem;
+}
+.odor-list .odor-item .title {
+  user-select: none;
+}
+.odor-list .odor-item .odor-item-color {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 50%;
+  background-color: skyblue;
+  cursor: pointer;
+  transition: transform 0.25s;
+}
+.odor-list .odor-item .odor-item-item {
+  width: 20%;
+}
+.odor-list .odor-item.active {
+  background-color: #ccc !important;
+}
+.odor-minus-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #ee7976;
+  color: #eceff1;
+}
+.odor-bar {
+  width: 100%;
+  position: relative;
+  margin-bottom: 3rem;
+}
+.odor-bar #timebar {
+  background-color: var(--bs-secondary-bg-subtle);
+}
+.odor-bar .total-time {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  color: #888;
+  margin-bottom: 0.2rem;
+}
+.odor-bar .total-time .title {
+  margin-right: 0.5rem;
+}
+.odor-bar .total-time * {
+  font-weight: lighter;
+  font-size: 0.9rem !important;
+}
+.odor-bar .total-time input {
+  height: 2rem;
+  border-radius: 0.5rem !important;
+  width: 3.5rem;
+}
+.odor-bar .time-scale {
+  display: flex;
+  justify-content: space-between;
+  color: #ccc;
+}

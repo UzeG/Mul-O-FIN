@@ -96,10 +96,10 @@ class OdorModelForm(BootStrapModelForm):
         fields = '__all__'
 
 
-class OdorSelectionModelForm(BootStrapModelForm):
-    class Meta:
-        model = models.OdorSelection
-        fields = '__all__'
+# class OdorSelectionModelForm(BootStrapModelForm):
+#     class Meta:
+#         model = models.OdorSelection
+#         fields = '__all__'
 
 
 class TemplateModelForm(BootStrapModelForm):

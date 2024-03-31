@@ -1,0 +1,113 @@
+@nodeCardHeight: 10rem;
+@nodeCardMarginTop: 1rem;
+@nodesContainerMarginTop: 1rem;
+@indent: 2rem;
+
+#event-tree>.whiteboard-item:first-child>.node-content {
+    margin-top: 0 !important;
+}
+
+.nodes-container-wrapper {
+    &>.whiteboard-item:first-child>.node-content {
+        margin-top: 0 !important;
+    }
+}
+
+.whiteboard-item {
+    display: flex;
+    flex-direction: column;
+
+    &>.node-content {
+        height: @nodeCardHeight;
+        border-radius: .8rem;
+        // border-left: .5rem solid #66CC00;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: relative;
+
+        margin-top: @nodeCardMarginTop;
+
+        &>.horizontal-line {
+            position: absolute;
+            top: 50%;
+            left: -1.5rem;
+            transform: translate(0, -50%);
+            width: 1.5rem;
+            border-top: 2px solid #ccc;
+
+            .horizontal-line-arrow {
+                position: absolute;
+                right: -.4rem;
+                top: -.05rem;
+                transform: translate(0, -50%);
+                width: 0;
+                height: 0;
+                border: .4rem solid transparent;
+                border-left: .8rem solid #ccc;
+            }
+        }
+
+        &>.item-info {
+            padding: 1rem 0rem .5rem 1.5rem;
+            max-width: 70%;
+            text-align: left;
+
+            &>.item-info-title {
+                font-weight: 600;
+                display: flex;
+                flex-direction: row;
+                margin-bottom: 1rem;
+
+                div {
+                    width: 50%;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+
+            &>.item-info-text {
+                font-weight: lighter;
+                color: #666;
+            }
+        }
+
+        &>.item-icons {
+            min-width: 10rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+
+            .item-icon {
+                cursor: pointer;
+                margin-right: 1rem;
+            }
+        }
+    }
+
+    &>.nodes-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: @nodesContainerMarginTop;
+
+        .vertical-line {
+            width: 5%;
+            position: relative;
+
+            div {
+                position: absolute;
+                z-index: -1;
+                height: 100%;
+                left: 30%;
+                border-left: 2px solid #ccc;
+                top: -@nodesContainerMarginTop;
+            }
+        }
+
+        &>.nodes-container-wrapper {
+            width: 95%;
+        }
+    }
+}

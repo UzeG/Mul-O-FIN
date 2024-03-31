@@ -1,0 +1,135 @@
+@bgColor: #eceff1;
+@fontColor: var(--bs-body-color);
+@iptColor: var(--bs-secondary-bg-subtle);
+
+::-webkit-scrollbar {
+    width: 5px;
+    background: #eee;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    height: 100px;
+    background-color: #ccc;
+}
+
+.circle-icon {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.odor-plus-icon {
+    font-size: 1.2rem;
+    width: 1.2rem;
+    height: 1.2rem;
+    background-color: @fontColor;
+    color: @bgColor;
+}
+
+.odor-list {
+    display: flex;
+    flex-direction: column;
+    padding-top: .6rem;
+    padding-bottom: .6rem;
+    height: 18rem;
+    overflow: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: .5rem;
+
+    .form-group * {
+        font-size: .85rem !important;
+    }
+
+    .odor-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        padding-top: .2rem;
+        padding-bottom: .5rem;
+        border-radius: 1rem;
+        transition: background-color .25s;
+        background-color: #e6e6e6;
+        margin-bottom: .2rem;
+
+        .title {
+            user-select: none;
+        }
+
+        .odor-item-color {
+            width: .8rem;
+            height: .8rem;
+            border-radius: 50%;
+            background-color: skyblue;
+            cursor: pointer;
+            transition: transform .25s;
+        }
+
+        .odor-item-item {
+            width: 20%;
+        }
+
+        &.active {
+            background-color: #ccc !important;
+        }
+    }
+}
+
+.odor-minus-icon {
+    // display: none;
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: rgb(238, 121, 118);
+    color: @bgColor;
+}
+
+.odor-bar {
+    width: 100%;
+    position: relative;
+    margin-bottom: 3rem;
+
+    #timebar {
+        background-color: @iptColor;
+    }
+
+    .total-time {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        color: #888;
+
+        .title {
+            margin-right: .5rem;
+        }
+
+        * {
+            font-weight: lighter;
+            font-size: .9rem !important;
+        }
+
+        input {
+            height: 2rem;
+            border-radius: .5rem !important;
+            width: 3.5rem;
+        }
+
+        margin-bottom: .2rem;
+    }
+
+    .time-scale {
+        display: flex;
+        justify-content: space-between;
+        color: #ccc;
+    }
+}

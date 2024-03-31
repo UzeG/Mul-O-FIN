@@ -63,7 +63,7 @@ def home_code(request):
     # 写入到自己的session中（以便于后续获取验证码再进行校验）
     request.session['home_code'] = code_string
     # 给Session设置60s超时
-    request.session.set_expiry(60)
+    request.session.set_expiry(0)
     stream = BytesIO()
     img.save(stream, 'png')
     stream.getvalue()
