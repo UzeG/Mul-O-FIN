@@ -9,7 +9,7 @@ We can do it!
 
 Designed by Peizhong Gao, Qiwei Zhang, and Linxin Zhang
 
-Developed by Kelei and Fan Liu
+Developed by Kelei, Fan Liu and Yuze Gao
 
 Project Director: Qi Lu
 
