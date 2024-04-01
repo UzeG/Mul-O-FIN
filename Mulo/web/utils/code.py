@@ -3,7 +3,7 @@ import re
 from PIL import Image, ImageFont, ImageDraw, ImageFilter
 from django.forms import model_to_dict
 
-from web.models import Template, Role
+from web.models import Template, Role, TemplateOdorModel
 
 
 def validate_code(width=120, height=30, char_length=5, font_file='kumo.ttf', font_size=28):
@@ -68,14 +68,20 @@ def validate_email(email):
 
 def get_template_tree(user_profile):
     def fn(node):
-        nodes = Template.objects\
-            .filter(parent_id=node['data']['id'])\
-            .order_by('-id')
+        nodes = Template.objects \
+            .filter(parent_id=node['data']['id']) \
+            .values('id', 'event_name', 'input_description', 'threshold', 'time_window', 'output_device__role',
+                    'parent', 'total_time', 'valid_while_parent', 'uuid') \
+            .order_by('id')
         if len(nodes) == 0:
             return
         for j, n in enumerate(nodes):
+            odors_query = TemplateOdorModel.objects \
+                    .filter(event_template_id=n['id']) \
+                    .values('odor__odor')
             leaf_node = {
-                'data': model_to_dict(n),
+                'data': n,
+                'odors': [o['odor__odor'] for o in odors_query],
                 'nodes': [],
                 'path': f"{node['path']}-{j + 1}"
             }
@@ -83,24 +89,30 @@ def get_template_tree(user_profile):
             node['nodes'].append(leaf_node)
 
     tree = []
-    roots = Template.objects\
-        .filter(uuid=user_profile.uuid, parent_id=None)\
-        .order_by('-id')
-
+    roots = Template.objects \
+        .filter(uuid=user_profile.uuid, parent_id=None) \
+        .values('id', 'event_name', 'input_description', 'threshold', 'time_window', 'output_device__role', 'parent',
+                'total_time', 'valid_while_parent', 'uuid') \
+        .order_by('id')
     for i, root in enumerate(roots):
+        odors_query = TemplateOdorModel.objects \
+            .filter(event_template_id=root['id']) \
+            .values('odor__odor')
         root_node = {
-            'data': model_to_dict(root),
+            'data': root,
+            'odors': [o['odor__odor'] for o in odors_query],
             'nodes': [],
             'path': f'{i + 1}'
         }
         fn(root_node)
         tree.append(root_node)
-
+    print(tree)
     return tree
-    # print(templates)
-    #
-    # data = []
-    # for template in list(templates):
-    #     dict_template = model_to_dict(template)
-    #     dict_template['output_device'] = Role.objects.get(id=dict_template['output_device']).role
-    #     data.append(dict_template)
+
+
+def get_template_odors_by_tid(tid):
+    # {odor_id: string, port_id: string, duration: number, intensity: number, start: number}[]
+    odors = TemplateOdorModel.objects \
+        .filter(event_template_id=tid) \
+        .values('odor_id', 'port', 'start', 'duration', 'intensity')
+    return list(odors)
