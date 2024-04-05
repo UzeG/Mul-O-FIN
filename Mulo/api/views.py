@@ -19,6 +19,8 @@ from django.forms.models import model_to_dict
 import datetime
 from django.core.serializers import serialize
 
+from web.utils.code import get_template_odors_by_tid
+
 interactive = Interactive()
 
 
@@ -293,11 +295,7 @@ class GetTemplateOdorsByTid(APIView):
     @staticmethod
     def get(request, *args, **kwargs):
         tid = request.query_params.get('tid')
-        # {odor_id: string, port_id: string, duration: number, intensity: number, start: number}[]
-        odors = TemplateOdorModel.objects\
-            .filter(event_template_id=tid)\
-            .values('odor_id', 'port', 'start', 'duration', 'intensity')
-        odors = list(odors)
+        odors = get_template_odors_by_tid(tid)
         return JsonResponse({
             'status': True,
             'data': odors

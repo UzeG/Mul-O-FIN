@@ -19,11 +19,16 @@
             </div>
             <div class="item-info-text">
                 <span>
-                    When {{ node.data.threshold }} [{{ node.data.input_description }}] trigger the
+                    When {{ node.data.threshold }} {{ node.data.input_description }} trigger the
                     "{{ node.data.event_name }}"
                     button within any {{ node.data.time_window }} seconds,
-                    {{ node.data.output_device }} devices will play the {{ node.data.port }} port
-                    scent, the duration is {{ node.data.total_time }}s.
+                    {{ node.data.output_device__role }} devices will play
+                    {% if node.odors %}
+                        the {{ node.odors|join:', ' }}
+                    {% else %}
+                        no
+                    {% endif %}
+                    scent, the total duration is {{ node.data.total_time }}s.
                 </span>
             </div>
         </div>
