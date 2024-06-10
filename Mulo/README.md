@@ -1,4 +1,4 @@
-# Mul-O web
+# Mul-O
 
 A Web-based Development Platform for Connecting More with Smell
 
