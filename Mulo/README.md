@@ -2,12 +2,6 @@
 
 A Web-based Development Platform for Connecting More with Smell
 
-## 👨‍💻 Todo
-[ ] Online demo of Mul-O
-<br>
-[x] Code of Mul-O (completed)
-<br>
-
 ## ⚙️ Installation
 
 ### Clone the Repository
@@ -51,5 +45,5 @@ python manage.py migrate
 
 ## 🛠️ Usage
 ```bash
-python manage.py runserver![img.png](img.png)
+python manage.py runserver 8080
 ```
