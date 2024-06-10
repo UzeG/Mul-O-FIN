@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'Mulo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'atmospheror',  # 数据库名称
+        'NAME': 'atmospheror',  # database name
         'USER': 'root',
         'PASSWORD': 'admin123',
-        'HOST': 'localhost',  # 哪台机器装了MYSQL
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }

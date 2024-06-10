@@ -1,16 +1,54 @@
-# Repository for Mul-O
-## Mul-O: A Web-based Development Platform for Connecting More with Smell
+# Mul-O: A Web-based Development Platform for Connecting More with Smell
 
-CHI2024 reject confirmed. 
+This repository is the official implementation of Mul-O.
 
-Plan to submit to UIST2024...
+## ⚙️ Installation
+Clone the Repository
+```bash
+git clone https://github.com/cheerlucy/Mul-O.git
+```
 
-We can do it!
+## 💻 Web Application
 
-Designed by Peizhong Gao, Qiwei Zhang, and Linxin Zhang
+### Enter the target folder
+```bash
+cd ./Mulo
+```
 
-Developed by Kelei, Fan Liu and Yuze Gao
+### Using Conda Environment
+1. Create the environment using the environment.yml file.
+```bash
+conda env create -f environment.yml
+```
 
-Project Director: Qi Lu
+2. Activate the environment.
+```bash
+conda activate MulO
+```
 
-Special Advisor: Brian Ma
+### Database
+- Configuration
+Open the `./Mulo/settings.py` file, and edit the `DATABASES` variable
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'atmospheror',  # your database name
+        'USER': 'root',  # your database user
+        'PASSWORD': 'admin123',  # your database password
+        'HOST': 'localhost',  # your database host
+        'PORT': '3306',  # your database port
+    }
+}
+```
+
+- Migrations
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### Usage
+```bash
+python manage.py runserver 8080
+```
