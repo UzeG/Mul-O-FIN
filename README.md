@@ -2,12 +2,17 @@
 
 This repository is the official implementation of Mul-O.
 
-## 💻 Web Application
-
-### Clone the Repository
-
+## ⚙️ Installation
+Clone the Repository
 ```bash
 git clone https://github.com/cheerlucy/Mul-O.git
+```
+
+## 💻 Web Application
+
+### Enter the target folder
+```bash
+cd ./Mulo
 ```
 
 ### Using Conda Environment
