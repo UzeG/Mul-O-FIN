@@ -118,7 +118,9 @@
                                             </div>
                                             <div class="col-lg-9">
                                                 {% if obj.character %}
-                                                    {{ obj.character }} <!-- 显示Device存储的role -->
+                                                    <p>Role: {{ obj.character }}</p>
+                                                {% else %}
+                                                    <p style="color: red;">Role not set</p>
                                                 {% endif %}
                                                 <div class="form-group mt-1" style="position: relative;">
                                                     {{ form_role_selection.role_selection }}
@@ -184,6 +186,8 @@
                             } else {
                                 alert('Failed to bind device with the tag.');
                             }
+                            // 刷新整个网页
+                            location.reload();
                         },
                         error: function () {
                             alert('Error occurred while binding device with the tag.');

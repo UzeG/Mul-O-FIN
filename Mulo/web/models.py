@@ -130,6 +130,7 @@ class Device(models.Model):
     is_connected = models.BooleanField(verbose_name='is connected', default=False)
 
     def update_connection_status(self):
+        s = None
         try:
             # 创建一个套接字对象
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -144,7 +145,8 @@ class Device(models.Model):
             self.is_connected = False
         finally:
             # 关闭套接字连接
-            s.close()
+            if s is not None:
+                s.close()
 
         # 保存设备对象的更改
         self.save()

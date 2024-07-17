@@ -10,7 +10,6 @@ import socket
 import threading
 import pymysql
 from web.controller.sockets import sockets
-
 from web.utils.code import get_template_tree
 
 
@@ -33,6 +32,7 @@ def admin_teaching_handle_client_request(request):
     # 收发消息都是用返回的这个新的套接字
     # 循环接收客户端的消息
     send_content = request.POST.get('ref')
+    '''
     for client in sockets:
         # 对字符串进行编码
         send_data = send_content.encode("utf-8")
@@ -45,6 +45,7 @@ def admin_teaching_handle_client_request(request):
 
     # 关闭服务与客户端套接字，表示和客户端终止通信
     # new_client.close()
+    '''
     return HttpResponse("ok")
 
 
@@ -74,7 +75,10 @@ def handle_client_request(client_socket):
                 break
             print(f"Received data from {ip}:{port}: {data.decode('utf-8')}")  # 解码接收到的数据
             # 在此处处理从客户端接收到的数据，例如可以发送响应给客户端
-            response = b"Message received"
+            response = b"0"
+            if sockets.has_device(device):
+                response = sockets.get_socket(device).encode()
+                sockets.delete(device)
             client_socket.sendall(response)
         except ConnectionResetError:
             break
@@ -94,7 +98,7 @@ def handle_client_request(client_socket):
 
 
 @csrf_exempt
-def admin_teaching_tcp_conn(request: object) -> object:
+def admin_teaching_tcp_conn(request):
     # 1. 创建 tcp 服务端套接字
     # AF_INET: ipv4 , AF_INET6: ipv6
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -272,7 +276,7 @@ def admin_device(request):
     form_role = RoleModelForm()
     form_role_selection = RoleSelectionModelForm()
     form_device = DeviceModelForm()
-    device_list = models.Device.objects.all().order_by('-id')
+    device_list = Device.objects.filter(is_connected=True).order_by('-id')
     context = {
         'form_role': form_role,
         'form_role_selection': form_role_selection,

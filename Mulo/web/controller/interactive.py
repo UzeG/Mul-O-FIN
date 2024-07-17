@@ -1,6 +1,5 @@
 # 用户通信模块
-from threading import Lock
-from web.models import Template
+from web.models import Template, Device
 from django.db.models import Q
 from web.controller.congestion import Congestion
 from web.controller.sockets import sockets
@@ -49,13 +48,11 @@ class Interactive:
         try:
             congestion = self.find_congest(int(template_data['id']))
             congestion.add_timeline()
-            # p = int(template_data['port']) # float
             time_window = int(template_data['time_window'])
             threshold = int(template_data['threshold'])
-            # d = int(template_data['duration']) # float
             output_device = template_data['output_device']
             m = len(congestion.congestion_control(time_window, threshold))
-            print("nums:", time_window, threshold, output_device)
+            print("Parameters - nums:", time_window, "threshold:", threshold, "output_device:", output_device)
             if m == threshold:
                 send_data = ""
                 for odor in template_odors:
@@ -64,22 +61,11 @@ class Interactive:
                     # odor.start is not available.
                     # odor.intensity is pwm.
                     send_data += "{"+str(odor.odor)+","+str(odor.port)+","+str(odor.start)+","+str(odor.intensity) + "}"
-
                 print(send_data)
-                
-                '''
-                send_data = ("d" + str(output_device) + "p" + str(p) + "t" + str(d)).encode('utf-8')
-                print(sockets)
-                for client in sockets:
-                    # 对字符串进行编码
 
-                    try:
-                        client.send(send_data)
-                    except Exception as e:
-                        print("admin_teaching_handle_restart:", e)
-                        sockets.remove(client)
-                '''
-            return True
+                device_exists = Device.objects.filter(character=output_device).exists()
+                if device_exists:
+                    sockets.add(Device.objects.filter(character=output_device).first(), send_data)
 
         except Exception as e:
             print(e)
