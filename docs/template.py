@@ -2,14 +2,13 @@
 """
 Created on Fri Aug 18 08:27:59 2023
 
-@author: xiaol
+@author: xiaoleiwww
 """
 
 import requests
 
 # URL
 url = "http://127.0.0.1:8000/api/template/"
-
 # JSON data
 data = {
     "event_name": "Sample Event2",
