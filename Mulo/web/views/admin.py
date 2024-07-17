@@ -51,10 +51,19 @@ def admin_teaching_handle_client_request(request):
 def handle_client_request(client_socket):
     ip, port = client_socket.getpeername()
     print(f"New client connected: {ip}:{port}")
+    device = None
 
     try:
-        Device.objects.create(ip=ip, port=port, is_connected=False)
-        print("Data inserted successfully")
+        # 在数据库中创建设备记录
+        device, created = Device.objects.get_or_create(ip=ip, port=port)
+        if created:
+            print("Device created successfully")
+        else:
+            print("Device already exists")
+
+        device.is_connected = True
+        device.save()
+        print("Device connected status updated")
     except Exception as e:
         print(f"Database error: {e}")
 
@@ -63,10 +72,22 @@ def handle_client_request(client_socket):
             data = client_socket.recv(1024)
             if not data:
                 break
-            print(f"Received data from {ip}:{port}: {data}")
-            # 在此处处理从客户端接收到的数据
+            print(f"Received data from {ip}:{port}: {data.decode('utf-8')}")  # 解码接收到的数据
+            # 在此处处理从客户端接收到的数据，例如可以发送响应给客户端
+            response = b"Message received"
+            client_socket.sendall(response)
         except ConnectionResetError:
             break
+        except Exception as e:
+            print(f"Error processing data: {e}")
+            break
+
+    try:
+        device.is_connected = False
+        device.save()
+        print("Device connected status updated")
+    except Exception as e:
+        print(f"Database error: {e}")
 
     client_socket.close()
     print(f"Client {ip}:{port} disconnected")
