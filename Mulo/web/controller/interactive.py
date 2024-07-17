@@ -60,7 +60,8 @@ class Interactive:
                           f"Intensity: {odor.intensity}")
                     # odor.start is not available.
                     # odor.intensity is pwm.
-                    send_data += "{"+str(odor.odor)+","+str(odor.port)+","+str(odor.start)+","+str(odor.intensity) + "}"
+                    send_data += ("{"+str(odor.odor)+","+str(odor.port)+","+str(odor.start)+","+str(odor.duration)+","
+                                  +str(odor.intensity)+"}")
                 print(send_data)
 
                 device_exists = Device.objects.filter(character=output_device).exists()

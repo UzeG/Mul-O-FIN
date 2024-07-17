@@ -41,7 +41,7 @@ def tcp_control(tcp_socket):
                     '''在这里添加你的控制逻辑，根据收到的数据来控制'''
                     '''以下为数据案例：'''
                     '''Odor: pie, Port: 1, Start: 0.0, Duration: 3.0, Intensity: 100.0'''
-                    '''{pie,1,0.0,100.0}'''
+                    '''{pie,1,0.0,3.0,100.0}'''
                     
                 last_receive_time = time.time()
             else:
