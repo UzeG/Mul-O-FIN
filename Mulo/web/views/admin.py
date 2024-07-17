@@ -8,10 +8,9 @@ from web.models import Template, UserProfile, Device
 from web import models
 import socket
 import threading
-import pymysql
 from web.controller.sockets import sockets
 from web.utils.code import get_template_tree
-
+import re
 
 @login_required
 def admin_main(request):
@@ -32,20 +31,17 @@ def admin_teaching_handle_client_request(request):
     # 收发消息都是用返回的这个新的套接字
     # 循环接收客户端的消息
     send_content = request.POST.get('ref')
-    '''
-    for client in sockets:
-        # 对字符串进行编码
-        send_data = send_content.encode("utf-8")
-        # 6. 发送数据到客户端
-        try:
-            client.send(send_data)
-        except Exception as e:
-            print("admin_teaching_handle_restart:", e)
-            sockets.remove(client)
-
-    # 关闭服务与客户端套接字，表示和客户端终止通信
-    # new_client.close()
-    '''
+    numbers = re.findall(r'\d+', send_content)
+    numbers = [int(num) for num in numbers]
+    if send_content[:4] == "allp":
+        send_data = "{" + "teach" + "," + str(numbers[0]) + "," + str(0) + "," + str(5) + "," + str(100) + "}"
+        for client in Device.objects.filter(is_connected=True):
+            sockets.add(client, send_data)
+    else:
+        filtered_devices = Device.objects.filter(is_connected=True).order_by('id')
+        if filtered_devices.count() <= numbers[0]:
+            send_data = "{" + "teach" + "," + str(numbers[1]) + "," + str(0) + "," + str(5) + "," + str(100) + "}"
+            sockets.add(filtered_devices[numbers[0] - 1], send_data)
     return HttpResponse("ok")
 
 
@@ -73,7 +69,7 @@ def handle_client_request(client_socket):
             data = client_socket.recv(1024)
             if not data:
                 break
-            print(f"Received data from {ip}:{port}: {data.decode('utf-8')}")  # 解码接收到的数据
+            # print(f"Received data from {ip}:{port}: {data.decode('utf-8')}")  # 解码接收到的数据
             # 在此处处理从客户端接收到的数据，例如可以发送响应给客户端
             response = b"0"
             if sockets.has_device(device):
@@ -99,6 +95,10 @@ def handle_client_request(client_socket):
 
 @csrf_exempt
 def admin_teaching_tcp_conn(request):
+    if sockets.get_start_flag():
+        Device.objects.all().delete()
+        sockets.change_start_flag()
+
     # 1. 创建 tcp 服务端套接字
     # AF_INET: ipv4 , AF_INET6: ipv6
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
