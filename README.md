@@ -71,18 +71,9 @@ Peizhong Gao, Fan Liu, Yuze Gao, Qi Lu
 
 ### Citation
 If you find this project useful in your research or development work, please cite our paper:
-[The official citation information will be updated after the paper getting published.]
 
-@article{mulo2024,
-  title={Mul-O: Encouraging Olfactory Innovation in Various Scenarios Through a Task-Oriented Development Platform},
-  author={Peizhong Gao, Fan Liu, Di Wen, Yuze Gao, Linxin Zhang,Yu Zhang, Shao-en Ma, Qi Lu, Haipeng Mi and Yingqing Xu},
-  booktitle={Proceedings of the 37th annual acm symposium on user interface software and technology},
-  year={2024},
-  publisher = {Association for Computing Machinery},
-  address = {New York, NY, USA},
-  pages={XX-XX},
-  doi={10.1234/jash.2024.5678}
-}
+{The official citation information will be updated after the paper getting published.}
+
 
 ### License
 This project is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0).
