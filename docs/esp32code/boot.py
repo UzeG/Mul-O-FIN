@@ -3,18 +3,32 @@
 #esp.osdebug(None)
 #import webrepl
 #webrepl.start()
+
 import time
 import socket
 import network
 import uasyncio as asyncio
 import random
 import select
+import re
 from machine import PWM, Pin
+import utime
 
 SSID = 'Future Lab-6F'
 PASSWORD = 'weilaishiyanshi'
 SEND_INTERVAL = 0.05  # Initial send interval, in seconds
 RECEIVE_TIMEOUT = 5.0  # Receive timeout, in seconds
+
+
+pin_list = [26,25,5,23]
+fan = []
+fan_duty = []
+
+for pin in pin_list:
+    pwm = PWM(Pin(pin), freq = 1000)
+    pwm.duty(0)
+    fan.append(pwm)
+    fan_duty.append(0)
 
 async def connect_wifi():
     wlan = network.WLAN(network.STA_IF)
@@ -82,31 +96,32 @@ async def tcp_control(tcp_socket):
                             "Intensity": float(intensity)
                         }
                         data_map_list.append(data_map)
-                        max_duration = max(max_duration, float(duration))*1000
+                        max_duration = max(max_duration, float(duration))
+                    
+                    print(data_str)
                     
                     pwm_start_time = time.time()
-                    pin_list = [26,25,5,23]
-                    fan = []
-                    fan_duty = []
-                    for pin in pin_list:
-                        fan.append(PWM(Pin(pin)))
-                        fan_duty.append(0)
                         
                     while True:
                         for data_map in data_map_list:
-                            duty = int(1023*100)/data_map["Intensity"]
-                            t = int(1000*data_map["Duration"])
+                            duty = int(1023*data_map["Intensity"]/100)
+                            if duty>1023:
+                                duty=1023
+                            t = int(data_map["Duration"])
                             f = fan[data_map["Port"]-1]
-                            if pwm_start_time + t < time.time():
+                            if time.time() < pwm_start_time + t:
                                 if fan_duty[data_map["Port"]-1] == 0:
                                     fan_duty[data_map["Port"]-1] = duty
-                                    f.duty(int(1023*100)/data_map["Intensity"])
+                                    f.duty(duty)
                             else:
                                 f.duty(0)
                                 fan_duty[data_map["Port"]-1] = 0    
-                        if pwm_start_time + max_duration > time.time():
+                        if time.time() > pwm_start_time + max_duration:
+                            f.duty(0)
+                            for i in range(4):
+                                fan[i].duty(0)
+                                fan_duty[i] = 0    
                             break
-                    
                     
             else:
                 raise print("Receive timeout")
@@ -129,7 +144,7 @@ async def tcp_control(tcp_socket):
 async def handle_tcp_connection():
     tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # server_ip = "101.42.17.45" # Replace with actual server IP
-    server_ip = "192.168.0.106"
+    server_ip = "192.168.0.108"
     server_port = 7890
     server_addr = (server_ip, server_port)
     print(server_addr)
@@ -153,6 +168,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
 
