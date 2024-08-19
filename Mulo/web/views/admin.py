@@ -4,16 +4,13 @@ from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from web.utils.form import OdorModelForm, TemplateModelForm, RoleModelForm, \
     RoleSelectionModelForm, DeviceModelForm
-from web.models import Template
+from web.models import Template, UserProfile, Device
 from web import models
-from web.models import UserProfile
 import socket
 import threading
-import pymysql
 from web.controller.sockets import sockets
-
 from web.utils.code import get_template_tree
-
+import re
 
 @login_required
 def admin_main(request):
@@ -34,78 +31,105 @@ def admin_teaching_handle_client_request(request):
     # 收发消息都是用返回的这个新的套接字
     # 循环接收客户端的消息
     send_content = request.POST.get('ref')
-    for client in sockets:
-        # 对字符串进行编码
-        send_data = send_content.encode("utf-8")
-        # 6. 发送数据到客户端
-        try:
-            client.send(send_data)
-        except Exception as e:
-            print("admin_teaching_handle_restart:", e)
-            sockets.remove(client)
-
-    # 关闭服务与客户端套接字，表示和客户端终止通信
-    # new_client.close()
+    numbers = re.findall(r'\d+', send_content)
+    numbers = [int(num) for num in numbers]
+    if send_content[:4] == "allp":
+        send_data = "{" + "teach" + "," + str(numbers[0]) + "," + str(0) + "," + str(5) + "," + str(100) + "}"
+        for client in Device.objects.filter(is_connected=True):
+            sockets.add(client, send_data)
+    else:
+        filtered_devices = Device.objects.filter(is_connected=True).order_by('id')
+        if filtered_devices.count() <= numbers[0]:
+            send_data = "{" + "teach" + "," + str(numbers[1]) + "," + str(0) + "," + str(5) + "," + str(100) + "}"
+            sockets.add(filtered_devices[numbers[0] - 1], send_data)
     return HttpResponse("ok")
+
+
+def handle_client_request(client_socket):
+    ip, port = client_socket.getpeername()
+    print(f"New client connected: {ip}:{port}")
+    device = None
+
+    try:
+        # 在数据库中创建设备记录
+        device, created = Device.objects.get_or_create(ip=ip, port=port)
+        if created:
+            print("Device created successfully")
+        else:
+            print("Device already exists")
+
+        device.is_connected = True
+        device.save()
+        print("Device connected status updated")
+    except Exception as e:
+        print(f"Database error: {e}")
+
+    while True:
+        try:
+            data = client_socket.recv(1024)
+            if not data:
+                break
+            # print(f"Received data from {ip}:{port}: {data.decode('utf-8')}")  # 解码接收到的数据
+            # 在此处处理从客户端接收到的数据，例如可以发送响应给客户端
+            response = b"0"
+            if sockets.has_device(device):
+                response = sockets.get_socket(device).encode()
+                sockets.delete(device)
+            client_socket.sendall(response)
+        except ConnectionResetError:
+            break
+        except Exception as e:
+            print(f"Error processing data: {e}")
+            break
+
+    try:
+        device.is_connected = False
+        device.save()
+        print("Device connected status updated")
+    except Exception as e:
+        print(f"Database error: {e}")
+
+    client_socket.close()
+    print(f"Client {ip}:{port} disconnected")
 
 
 @csrf_exempt
 def admin_teaching_tcp_conn(request):
+    if sockets.get_start_flag():
+        Device.objects.all().delete()
+        sockets.change_start_flag()
+
     # 1. 创建 tcp 服务端套接字
     # AF_INET: ipv4 , AF_INET6: ipv6
-    tcp_server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # 设置端口号复用，表示意思：服务端程序退出端口号立即释放
     # a. SOL_SOCKET：表示当前套接字
     # b. SO_REUSEADDR：表示复用端口号的选项
     # c. True：确认复用
-    tcp_server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
     # 2. 绑定端口号
     # 第一个参数表示 ip 地址，一般不用指定，表示本机的任何一个 ip 即可
     # 第二个参数表示端口号
-    tcp_server_socket.bind(("", 7890))
+    server_socket.bind(("", 7890))
     # 3. 设置监听
     # 128：表示最大等待建立连接的个数
-    tcp_server_socket.listen(128)
+    server_socket.listen(128)
+    print("TCP server started on port 7890")
     # 4. 等待接受客户端的连接请求
     # 注意点：每次当客户端和服务端建立连接成功都会返回一个新的套接字
-    # tcp_server_socket只负责等待接收客户端的连接请求，收发消息不使用该套接字
+    # tcp_server_socket 只负责等待接收客户端的连接请求，收发消息不使用该套接字
     # 循环等待接收客户端的连接请求
-    print("服务器启动成功")
     while True:
-        new_client, ip_port = tcp_server_socket.accept()
-        print("一个新的客户端已经到来", ip_port)
-        ip, port = ip_port
-        print("ip为", ip)
-        print(type(ip))
-        print("port为", port)
-        print(type(port))
-        # 创建连接，数据库主机地址 数据库用户名称 密码 数据库名 数据库端口 数据库字符集编码
-        conn = pymysql.connect(host='localhost', user='root', password='root', database='mulo', port=3306,
-                               charset='utf8')
-        print('连接成功')
-        # 创建游标
-        cursor = conn.cursor()
-        # cursor.execute("INSERT INTO mulo.web_device(ip, port) values('%s','%s')"%(ip, port))
-        cursor.execute(
-            "INSERT INTO mulo.web_device(ip, port, is_connected) VALUES ('%s', '%s', False)" % (ip, port))
-
-        conn.commit()
-        # 代码执行到此，说明客户端和服务端建立连接成功
-        sockets.append(new_client)
-        # 当客户端和服务端建立连接成功，创建子线程，让子线程专门负责接收客户端的消息
-        # sub_thread = threading.Thread(target=admin_teaching_handle_client_request(request))
-        sub_thread = threading.Thread(target=admin_teaching_handle_client_request, args=(new_client,))
-        # 设置守护主线程，主线程退出子线程直接销毁
-        sub_thread.daemon = True
-        # 启动子线程执行对应的任务
-        sub_thread.start()
-    # 7. 关闭服务端套接字，表示服务端以后不再等待接收客户端的连接请求
-    # tcp_server_socket.close() # 因为服务端的程序需要一直运行，所以关闭服务端套接字的代码可以省略不写
+        client_socket, addr = server_socket.accept()
+        print("client connected from", addr)
+        client_handler = threading.Thread(target=handle_client_request, args=(client_socket,))
+        client_handler.daemon = True
+        client_handler.start()
 
 
 @login_required
 def admin_reality(request):
-    """ reality界面 """
+    """ reality 界面 """
     user_profile = UserProfile.objects.get(user=request.user)
 
     form_template = TemplateModelForm()
@@ -160,7 +184,7 @@ def admin_reality_odor_delete(request, oid):
 
 @csrf_exempt
 def admin_reality_add(request):
-    """ 新建事件范式（Ajax请求） """
+    """ 新建事件范式（Ajax 请求） """
     form = TemplateModelForm(data=request.POST)
     if form.is_valid():
         # 创建 Template 对象
@@ -194,8 +218,8 @@ def admin_reality_delete(request, tid):
 
 
 def admin_reality_detail(request):
-    """ 根据ID获取订单信息 """
-    """  方式1   uid = request.GET.get('uid')
+    """ 根据 ID 获取订单信息 """
+    """  方式 1   uid = request.GET.get('uid')
     row_object = models.Order.objects.filter(id=uid).first()
     if not row_object:
         return JsonResponse({'status': False, 'error': '数据不存在'})
@@ -211,10 +235,11 @@ def admin_reality_detail(request):
     }
     return JsonResponse(result) """
 
-    # 方式2
+    # 方式 2
     tid = request.GET.get('tid')
-    row_dict = models.Template.objects.filter(id=tid)\
-        .values('event_name', 'input_description', 'threshold', 'time_window', 'output_device', 'total_time', 'parent_id')\
+    row_dict = models.Template.objects.filter(id=tid) \
+        .values('event_name', 'input_description', 'threshold', 'time_window', 'output_device', 'total_time',
+                'parent_id') \
         .first()
     if not row_dict:
         return JsonResponse({'status': False, 'error': 'The data does not exist.'})
@@ -251,7 +276,7 @@ def admin_device(request):
     form_role = RoleModelForm()
     form_role_selection = RoleSelectionModelForm()
     form_device = DeviceModelForm()
-    device_list = models.Device.objects.all().order_by('-id')
+    device_list = Device.objects.filter(is_connected=True).order_by('-id')
     context = {
         'form_role': form_role,
         'form_role_selection': form_role_selection,
@@ -263,7 +288,7 @@ def admin_device(request):
 
 @login_required
 def admin_virtual_reality(request):
-    """ VR界面 """
+    """ VR 界面 """
     form_odor = OdorModelForm()
     context = {
         'form_odor': form_odor,

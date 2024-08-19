@@ -7,7 +7,7 @@ def check_device_connection(device):
     try:
         # 创建一个套接字对象
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # 设置连接超时时间为1秒钟
+        # 设置连接超时时间为 1 秒钟
         s.settimeout(1)
         # 尝试连接设备
         s.connect((device.ip, device.port))

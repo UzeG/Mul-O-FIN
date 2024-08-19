@@ -1,6 +1,5 @@
 # 用户通信模块
-from threading import Lock
-from web.models import Template
+from web.models import Template, Device
 from django.db.models import Q
 from web.controller.congestion import Congestion
 from web.controller.sockets import sockets
@@ -45,27 +44,29 @@ class Interactive:
         else:
             return -1
 
-    def control(self, template_data):
+    def control(self, template_data, template_odors):
         try:
             congestion = self.find_congest(int(template_data['id']))
             congestion.add_timeline()
-            p = int(template_data['port'])
-            t = int(template_data['time_window'])
-            n = int(template_data['role_num'])
-            d = int(template_data['duration'])
-            m = len(congestion.congestion_control(t, n))
-            print(p, t, n, m)
-            if m == n:
+            time_window = int(template_data['time_window'])
+            threshold = int(template_data['threshold'])
+            output_device = template_data['output_device']
+            m = len(congestion.congestion_control(time_window, threshold))
+            print("Parameters - nums:", time_window, "threshold:", threshold, "output_device:", output_device)
+            if m == threshold:
+                send_data = ""
+                for odor in template_odors:
+                    print(f"Odor: {odor.odor}, Port: {odor.port}, Start: {odor.start}, Duration: {odor.duration}, "
+                          f"Intensity: {odor.intensity}")
+                    # odor.start is not available.
+                    # odor.intensity is pwm.
+                    send_data += ("{" + str(odor.odor) + "," + str(odor.port) + "," + str(odor.start) + "," + str(
+                        odor.duration) + "," + str(odor.intensity) + "}")
+                print(send_data)
 
-                for client in sockets:
-                    # 对字符串进行编码
-                    send_data = ("d1" + "p" + str(p) + "t" + str(d)).encode('utf-8')
-                    try:
-                        client.send(send_data)
-                    except Exception as e:
-                        print("admin_teaching_handle_restart:", e)
-                        sockets.remove(client)
-            return True
+                device_exists = Device.objects.filter(character=output_device).exists()
+                if device_exists:
+                    sockets.add(Device.objects.filter(character=output_device).first(), send_data)
 
         except Exception as e:
             print(e)

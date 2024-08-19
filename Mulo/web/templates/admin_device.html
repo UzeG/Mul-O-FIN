@@ -3,10 +3,17 @@
 {% load static %}
 {% block title %}
     <title>Mulo Home</title>
+    <script>
+        // 使用 setInterval 定时器每隔 15 秒刷新页面
+        setInterval(function() {
+            location.reload();
+        }, 15000); // 15000 毫秒 = 15 秒
+    </script>
 {% endblock %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/mulo3.css' %}">
 {% endblock %}
+
 {% block content %}
     <section class="pt-3 text-start">
         <div class="container">
@@ -84,9 +91,9 @@
                                     <li class="card-text text-start mb-2">
                                         <div class="row">
                                             <div class="col-lg-3 my-2 text-end">
-                                                <h7 class="ms-2 fw-bold">
+                                                <h6 class="ms-2 fw-bold">
                                                     IP
-                                                </h7>
+                                                </h6>
                                             </div>
                                             <div class="col-lg-9">
                                                 <div class="input-group ms-2 mt-2">
@@ -98,9 +105,9 @@
                                     <li class="card-text text-start mb-2">
                                         <div class="row">
                                             <div class="col-lg-3 my-2 text-end">
-                                                <h7 class="ms-2 fw-bold">
+                                                <h6 class="ms-2 fw-bold">
                                                     Port
-                                                </h7>
+                                                </h6>
                                             </div>
                                             <div class="col-lg-9">
                                                 <div class="input-group ms-2 mt-2">
@@ -112,13 +119,15 @@
                                     <li class="card-text text-start">
                                         <div class="row">
                                             <div class="col-lg-3 my-2 text-end">
-                                                <h7 class="ms-2 fw-bold">
+                                                <h6 class="ms-2 fw-bold">
                                                     Role
-                                                </h7>
+                                                </h6>
                                             </div>
                                             <div class="col-lg-9">
                                                 {% if obj.character %}
-                                                    {{ obj.character }} <!-- 显示Device存储的role -->
+                                                    <p>Role: {{ obj.character }}</p>
+                                                {% else %}
+                                                    <p style="color: red;">Role not set</p>
                                                 {% endif %}
                                                 <div class="form-group mt-1" style="position: relative;">
                                                     {{ form_role_selection.role_selection }}
@@ -132,7 +141,6 @@
                     </div>
                 {% endfor %}
             </div>
-        </div>
         </div>
     </section>
     <!-- ... 其他部分 ... -->
@@ -167,14 +175,14 @@
                 $('.bind-btn').click(function () {
                     let device_id = $(this).data('device-id');
                     let tag_id = $('select[name="role_selection"]').val();
-                    // 获取CSRF令牌值
+                    // 获取 CSRF 令牌值
                     let csrf_token = '{{ csrf_token }}';
 
                     $.ajax({
                         url: '/devices/bind/',
                         method: 'POST',
                         data: {
-                            csrfmiddlewaretoken: csrf_token,  // 添加CSRF令牌
+                            csrfmiddlewaretoken: csrf_token,  // 添加 CSRF 令牌
                             device_id: device_id,
                             tag_id: tag_id
                         },
@@ -184,6 +192,8 @@
                             } else {
                                 alert('Failed to bind device with the tag.');
                             }
+                            // 刷新整个网页
+                            location.reload();
                         },
                         error: function () {
                             alert('Error occurred while binding device with the tag.');
@@ -205,7 +215,7 @@
                         }
                     })
                     .catch(error => {
-                        console.error('发生错误:', error);
+                        console.error('发生错误：', error);
                     });
             }
 

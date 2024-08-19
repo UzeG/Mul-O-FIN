@@ -135,14 +135,13 @@ class EventView(APIView):
             ret['error'] = 'Wrong uuid code'
             return JsonResponse(ret)
 
-        # 处理event的数据信息
+        # 处理 event 的数据信息
         template = find_template(uuid, event_name)
 
         if template:
-
             template_data = convert_template(template)
-
-            interactive.control(template_data)
+            template_odors = TemplateOdorModel.objects.filter(event_template=template)
+            interactive.control(template_data, template_odors)
 
             ret['error_code'] = '0'
             ret['error'] = 'Success'
@@ -183,7 +182,7 @@ class ClearView(APIView):
             if typename == "template":
                 Template.objects.all().delete()
 
-            ret['request'] = '/api/event/'
+            ret['request'] = '/api/clear/'
             ret['error_code'] = '0'
             ret['error'] = 'Success'
 

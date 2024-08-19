@@ -27,7 +27,7 @@ class UserProfile(models.Model):
 
 class RoleInfo(models.Model):
     """ 角色表 """
-    id = models.BigAutoField(verbose_name='角色ID', primary_key=True)
+    id = models.BigAutoField(verbose_name='角色 ID', primary_key=True)
     name = models.CharField(verbose_name='角色名', max_length=16)
     create_date = models.DateTimeField(verbose_name='创建时间')
     update_date = models.DateTimeField(verbose_name='更新时间')
@@ -39,11 +39,11 @@ class RoleInfo(models.Model):
 '''
 class UserInfo(models.Model):
     """ 用户表 """
-    id = models.BigAutoField(verbose_name='用户ID', primary_key=True)
+    id = models.BigAutoField(verbose_name='用户 ID', primary_key=True)
     username = models.CharField(verbose_name='username', max_length=16)
     password = models.CharField(verbose_name='password', max_length=64)
     email = models.CharField(verbose_name='email', max_length=64)
-    role = models.ForeignKey(verbose_name='角色ID', to='RoleInfo', to_field='id', on_delete=models.CASCADE, default=1)
+    role = models.ForeignKey(verbose_name='角色 ID', to='RoleInfo', to_field='id', on_delete=models.CASCADE, default=1)
 
     create_date = models.DateTimeField(verbose_name='创建时间', default=timezone.now)
     update_date = models.DateTimeField(verbose_name='更新时间', default=timezone.now)
@@ -118,7 +118,7 @@ class Template(models.Model):
     # valid while parent
     valid_while_parent = models.BooleanField(default=None, blank=True, null=True)
 
-    # 存储所属的uuid
+    # 存储所属的 uuid
     uuid = models.CharField(verbose_name='', max_length=36, default=None)
 
 
@@ -130,10 +130,11 @@ class Device(models.Model):
     is_connected = models.BooleanField(verbose_name='is connected', default=False)
 
     def update_connection_status(self):
+        s = None
         try:
             # 创建一个套接字对象
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            # 设置连接超时时间为1秒钟
+            # 设置连接超时时间为 1 秒钟
             s.settimeout(1)
             # 尝试连接设备
             s.connect((self.ip, self.port))
@@ -144,7 +145,8 @@ class Device(models.Model):
             self.is_connected = False
         finally:
             # 关闭套接字连接
-            s.close()
+            if s is not None:
+                s.close()
 
         # 保存设备对象的更改
         self.save()

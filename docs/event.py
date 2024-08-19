@@ -8,13 +8,8 @@ Created on Thu Aug 17 09:09:40 2023
 import requests
 
 url = "http://101.42.17.45:8000/api/event/"
-'''
-data = {
-    "uuid": "59253dd3-c200-47a7-b548-0972fef06ec0",
-    "event": "123",
-    "time": "10:25"
-}
-'''
+
+# Enter your uuid and eventID, here is an example
 data = {
     "uuid": "59253dd3-c200-47a7-b548-0972fef06ec0",
     "event": "123"
