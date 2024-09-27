@@ -17,7 +17,7 @@ from django.urls import path, re_path
 from web.views import home, admin, user
 from web.views.device import bind_device_role
 from django.contrib.admin import site
-from api.views import LoginView, RegView, LogoutView, EventView, DateView, ClearView, TemplateView
+from api.views import LoginView, GetUuidView, RegView, LogoutView, EventView, DateView, ClearView, TemplateView
 from api.views import GetOdorList, SaveTemplateOdors, GetTemplateOdorsByTid, SetTemplateParent, GetSubTemplatesByTid, \
     GetValidWhileParentByTid, SaveTemplateValidWhileParent
 
@@ -59,6 +59,8 @@ urlpatterns = [
     # api
     re_path(r'^api/login/$', LoginView.as_view()),
     re_path(r'^api/login', LoginView.as_view()),
+    re_path(r'^api/uuid/$', GetUuidView.as_view()),
+    re_path(r'^api/uuid', GetUuidView.as_view()),
     re_path(r'^api/reg/$', RegView.as_view()),
     re_path(r'^api/reg', RegView.as_view()),
     re_path(r'^api/logout/$', LogoutView.as_view()),
