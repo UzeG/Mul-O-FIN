@@ -64,6 +64,48 @@ class LoginView(APIView):
             return JsonResponse(ret)
 
 
+class GetUuidView(APIView):
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+
+        ret = {'request': '/api/uuid/', 'error_code': '10001', 'error': 'System error'}
+
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if not (isinstance(username, str) and isinstance(password, str)):
+            ret['request'] = '/api/uuid/'
+            ret['error_code'] = '10008'
+            ret['error'] = 'Param error, see doc for more info'
+            ret['uuid'] = ''
+            return JsonResponse(ret)
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+
+            # 检查用户是否有关联的 UserProfile
+            user_profile, created = UserProfile.objects.get_or_create(user=user)
+
+            if created:
+                # 如果创建了新的 UserProfile，可以在这里进行一些初始化设置
+                pass
+
+            print(username, user_profile.uuid)
+
+            ret['request'] = '/api/uuid/'
+            ret['error_code'] = '0'
+            ret['error'] = 'Success'
+            ret['uuid'] = str(user_profile.uuid)
+            return JsonResponse(ret)
+        else:
+            ret['request'] = '/api/uuid/'
+            ret['error_code'] = '21302'
+            ret['error'] = 'Username or password error'
+            ret['uuid'] = ''
+            return JsonResponse(ret)
+
+
 class RegView(APIView):
 
     @staticmethod
