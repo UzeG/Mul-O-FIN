@@ -46,10 +46,9 @@ def home_login(request):
             if created:
                 # 如果创建了新的 UserProfile，可以在这里进行一些初始化设置
                 pass
-
-            print(username, user_profile.uuid)
+            
             login(request, user)
-            next_url = request.GET.get('next')  # 获取next参数
+            next_url = request.GET.get('next')  # 获取 next 参数
             if next_url:
                 return redirect(next_url)
             return redirect('/admin/main/')
@@ -58,11 +57,11 @@ def home_login(request):
 
 def home_code(request):
     """ 生成图片验证码 """
-    # 调用pillow函数，生成图片
+    # 调用 pillow 函数，生成图片
     img, code_string = validate_code()
-    # 写入到自己的session中（以便于后续获取验证码再进行校验）
+    # 写入到自己的 session 中（以便于后续获取验证码再进行校验）
     request.session['home_code'] = code_string
-    # 给Session设置60s超时
+    # 给 Session 设置 60s 超时
     request.session.set_expiry(0)
     stream = BytesIO()
     img.save(stream, 'png')
