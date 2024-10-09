@@ -140,6 +140,8 @@ async def tcp_control(tcp_socket):
                     data_map_list = resv_data_process(recv_data_str)
                     pwm_start_time = time.ticks_ms()
                     max_duration = 0
+                    if pwm_end_time != -1:
+                        pwm_end_time = -1
                     for data_map in data_map_list:
                         max_duration = max(pwm_end_time, data_map["Duration"])
                     pwm_end_time = time.ticks_add(time.ticks_ms(), int(1000*max_duration))
