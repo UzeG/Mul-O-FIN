@@ -39,7 +39,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'atmospheror',  # your database name
         'USER': 'root',  # your database user
-        'PASSWORD': 'admin123',  # your database password
+        'PASSWORD': 'root',  # your database password
         'HOST': 'localhost',  # your database host
         'PORT': '3306',  # your database port
     }
