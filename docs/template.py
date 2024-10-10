@@ -9,7 +9,7 @@ import requests
 
 # URL
 url = "http://127.0.0.1:8000/api/template/"
-# JSON data
+# JSON data example:
 data = {
     "event_name": "Sample Event2",
     "input_device": 9,
