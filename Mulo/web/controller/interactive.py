@@ -58,7 +58,6 @@ class Interactive:
                 for odor in template_odors:
                     print(f"Odor: {odor.odor}, Port: {odor.port}, Start: {odor.start}, Duration: {odor.duration}, "
                           f"Intensity: {odor.intensity}")
-                    # odor.start is not available.
                     # odor.intensity is pwm.
                     send_data += ("{" + str(odor.odor) + "," + str(odor.port) + "," + str(odor.start) + "," + str(
                         odor.duration) + "," + str(odor.intensity) + "}")
@@ -66,7 +65,8 @@ class Interactive:
 
                 device_exists = Device.objects.filter(character=output_device).exists()
                 if device_exists:
-                    sockets.add(Device.objects.filter(character=output_device).first(), send_data)
+                    for device in Device.objects.filter(character=output_device):
+                        sockets.add(device, send_data)
 
         except Exception as e:
             print(e)
