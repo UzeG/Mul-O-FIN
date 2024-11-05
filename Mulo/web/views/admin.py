@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from web.utils.form import OdorModelForm, TemplateModelForm, RoleModelForm, \
     RoleSelectionModelForm, DeviceModelForm
@@ -11,6 +12,7 @@ import threading
 from web.controller.sockets import sockets
 from web.utils.code import get_template_tree
 import re
+from datetime import timedelta
 
 @login_required
 def admin_main(request):
@@ -64,18 +66,31 @@ def handle_client_request(client_socket):
     except Exception as e:
         print(f"Database error: {e}")
 
+    # 设置套接字的超时时间为20秒
+    client_socket.settimeout(20)
+
+    last_activity_time = timezone.now()
+
     while True:
         try:
+            # 尝试接收数据
             data = client_socket.recv(1024)
             if not data:
                 break
-            # print(f"Received data from {ip}:{port}: {data.decode('utf-8')}")  # 解码接收到的数据
+
+            # 更新活动时间
+            last_activity_time = timezone.now()
+
             # 在此处处理从客户端接收到的数据，例如可以发送响应给客户端
             response = b"0"
             if sockets.has_device(device):
                 response = sockets.get_socket(device).encode()
                 sockets.delete(device)
             client_socket.sendall(response)
+        except socket.timeout:
+            # 超时发生，检查是否超过20秒没有活动
+            if timezone.now() - last_activity_time > timedelta(seconds=20):
+                break
         except ConnectionResetError:
             break
         except Exception as e:
@@ -95,36 +110,46 @@ def handle_client_request(client_socket):
 
 @csrf_exempt
 def admin_teaching_tcp_conn(request):
+    # 创建并启动包含tcp_conn()函数的线程
+    if request.method == 'GET':
+        thread = threading.Thread(target=tcp_conn)
+        thread.start()
+        return JsonResponse({'status': 'success'}, status=200)
+    else:
+        return JsonResponse({'error': 'Invalid request method.'}, status=405)
+
+
+def tcp_conn():
     if sockets.get_start_flag():
         Device.objects.all().delete()
         sockets.change_start_flag()
 
-    # 1. 创建 tcp 服务端套接字
-    # AF_INET: ipv4 , AF_INET6: ipv6
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # 设置端口号复用，表示意思：服务端程序退出端口号立即释放
-    # a. SOL_SOCKET：表示当前套接字
-    # b. SO_REUSEADDR：表示复用端口号的选项
-    # c. True：确认复用
-    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
-    # 2. 绑定端口号
-    # 第一个参数表示 ip 地址，一般不用指定，表示本机的任何一个 ip 即可
-    # 第二个参数表示端口号
-    server_socket.bind(("", 7890))
-    # 3. 设置监听
-    # 128：表示最大等待建立连接的个数
-    server_socket.listen(128)
-    print("TCP server started on port 7890")
-    # 4. 等待接受客户端的连接请求
-    # 注意点：每次当客户端和服务端建立连接成功都会返回一个新的套接字
-    # tcp_server_socket 只负责等待接收客户端的连接请求，收发消息不使用该套接字
-    # 循环等待接收客户端的连接请求
-    while True:
-        client_socket, addr = server_socket.accept()
-        print("client connected from", addr)
-        client_handler = threading.Thread(target=handle_client_request, args=(client_socket,))
-        client_handler.daemon = True
-        client_handler.start()
+        # 1. 创建 tcp 服务端套接字
+        # AF_INET: ipv4 , AF_INET6: ipv6
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # 设置端口号复用，表示意思：服务端程序退出端口号立即释放
+        # a. SOL_SOCKET：表示当前套接字
+        # b. SO_REUSEADDR：表示复用端口号的选项
+        # c. True：确认复用
+        server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
+        # 2. 绑定端口号
+        # 第一个参数表示 ip 地址，一般不用指定，表示本机的任何一个 ip 即可
+        # 第二个参数表示端口号
+        server_socket.bind(("", 7890))
+        # 3. 设置监听
+        # 128：表示最大等待建立连接的个数
+        server_socket.listen(128)
+        print("TCP server started on port 7890")
+        # 4. 等待接受客户端的连接请求
+        # 注意点：每次当客户端和服务端建立连接成功都会返回一个新的套接字
+        # tcp_server_socket 只负责等待接收客户端的连接请求，收发消息不使用该套接字
+        # 循环等待接收客户端的连接请求
+        while True:
+            client_socket, addr = server_socket.accept()
+            print("client connected from", addr)
+            client_handler = threading.Thread(target=handle_client_request, args=(client_socket,))
+            client_handler.daemon = True
+            client_handler.start()
 
 
 @login_required
@@ -273,6 +298,8 @@ def admin_reality_edit(request):
 @login_required
 def admin_device(request):
     """ 设备管理界面 """
+    server_thread = threading.Thread(target=tcp_conn)
+    server_thread.start()
     form_role = RoleModelForm()
     form_role_selection = RoleSelectionModelForm()
     form_device = DeviceModelForm()

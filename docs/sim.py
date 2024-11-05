@@ -11,56 +11,56 @@ import threading
 import select
 import random
 
-SEND_INTERVAL = 0.05  # 发送间隔，单位秒
-RECEIVE_TIMEOUT = 5.0  # 接收超时时间，单位秒
+SEND_INTERVAL = 0.05  # Sending interval, in seconds
+RECEIVE_TIMEOUT = 5.0  # Receive timeout, in seconds
 
 
 def tcp_control(tcp_socket):
-    # 生成 16 位随机整数，用于标识tcp链接
+    # Generate a 16-bit random integer to identify the TCP connection
     random_id = random.randint(0x00000000, 0xffffffff)
-    # 将整数格式化为 16 进制字符串
+    # Format the integer as a hexadecimal string
     hex_id = hex(random_id)
 
     last_receive_time = time.time()
     while True:
         try:
-            # 发送数据到服务器
+            # Send data to the server
             message = hex_id
             tcp_socket.sendall(message.encode("utf-8"))
-            # 使用 select 检查 socket 是否准备好接收数据
+            # Use select to check if the socket is ready to receive data
             ready_to_read, _, _ = select.select([tcp_socket], [], [], RECEIVE_TIMEOUT)
             if tcp_socket in ready_to_read:
                 recv_data = tcp_socket.recv(1024)
                 if not recv_data:
                     break
-                # 接收到的数据，"0"表示已接收，否则则需要解包
+                # Received data, "0" indicates it has been received, otherwise unpacking is needed
                 recv_data_str = recv_data.decode("utf-8")
                 if recv_data_str != "0":
                     print(f"Received data from server: {recv_data_str}")
-                    
-                    '''在这里添加你的控制逻辑，根据收到的数据来控制'''
-                    '''以下为数据案例：'''
+
+                    '''Add your control logic here based on the received data'''
+                    '''Following is an example of the data format:'''
                     '''Odor: pie, Port: 1, Start: 0.0, Duration: 3.0, Intensity: 100.0'''
                     '''{pie,1,0.0,3.0,100.0}'''
-                    
+
                 last_receive_time = time.time()
             else:
                 raise TimeoutError("Receive timeout")
 
-            # 计算接收速度
+            # Calculate reception duration
             current_time = time.time()
             receive_duration = current_time - last_receive_time
             # print(f"Receive duration: {receive_duration:.3f} seconds")
 
-            # 如果接收速度过慢，调整发送频率
-            if receive_duration > 1.0:  # 假设大于1秒认为速度过慢
+            # If the reception speed is too slow, adjust the sending frequency
+            if receive_duration > 1.0:  # Assume slower than 1 second is considered too slow
                 global SEND_INTERVAL
-                SEND_INTERVAL += 0.02  # 增加发送间隔
+                SEND_INTERVAL += 0.02  # Increase sending interval
                 print(f"Receive speed is slow. Adjusting send interval to {SEND_INTERVAL} seconds.")
             else:
-                SEND_INTERVAL = 0.05  # 恢复默认发送间隔
+                SEND_INTERVAL = 0.05  # Restore default sending interval
 
-            # 停顿指定间隔后再发送
+            # Sleep for the specified interval before sending again
             time.sleep(SEND_INTERVAL)
 
         except TimeoutError:
@@ -71,9 +71,10 @@ def tcp_control(tcp_socket):
             print(f"Error: {e}")
             break
 
+
 def handle_tcp_connection():
     tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # server_ip = "101.42.17.45" #此处填写IP
+    # Fill in the IP address here
     server_ip = "127.0.0.1"
     server_port = 7890
     server_addr = (server_ip, server_port)
@@ -81,12 +82,12 @@ def handle_tcp_connection():
     try:
         tcp_socket.connect(server_addr)
         print(f"Connected to server {server_ip}:{server_port}")
-        
-        # 启动发送消息的线程
+
+        # Start a thread to send messages
         send_thread = threading.Thread(target=tcp_control, args=(tcp_socket,))
         send_thread.start()
 
-        # 主线程继续保持与服务器的连接
+        # Main thread continues to maintain the connection with the server
         while True:
             pass
 
@@ -97,8 +98,10 @@ def handle_tcp_connection():
         tcp_socket.close()
         print("TCP connection closed")
 
+
 def main():
     handle_tcp_connection()
+
 
 if __name__ == "__main__":
     main()

@@ -64,6 +64,48 @@ class LoginView(APIView):
             return JsonResponse(ret)
 
 
+class GetUuidView(APIView):
+
+    @staticmethod
+    def post(request, *args, **kwargs):
+
+        ret = {'request': '/api/uuid/', 'error_code': '10001', 'error': 'System error'}
+
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        if not (isinstance(username, str) and isinstance(password, str)):
+            ret['request'] = '/api/uuid/'
+            ret['error_code'] = '10008'
+            ret['error'] = 'Param error, see doc for more info'
+            ret['uuid'] = ''
+            return JsonResponse(ret)
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+
+            # 检查用户是否有关联的 UserProfile
+            user_profile, created = UserProfile.objects.get_or_create(user=user)
+
+            if created:
+                # 如果创建了新的 UserProfile，可以在这里进行一些初始化设置
+                pass
+
+            print(username, user_profile.uuid)
+
+            ret['request'] = '/api/uuid/'
+            ret['error_code'] = '0'
+            ret['error'] = 'Success'
+            ret['uuid'] = str(user_profile.uuid)
+            return JsonResponse(ret)
+        else:
+            ret['request'] = '/api/uuid/'
+            ret['error_code'] = '21302'
+            ret['error'] = 'Username or password error'
+            ret['uuid'] = ''
+            return JsonResponse(ret)
+
+
 class RegView(APIView):
 
     @staticmethod
@@ -169,10 +211,19 @@ class ClearView(APIView):
     def post(request, *args, **kwargs):
         ret = {'request': '/api/clear/', 'error_code': '10001', 'error': 'System error'}
 
-        authid = request.data.get('authid')
+        username = request.data.get('username')
+        password = request.data.get('password')
         typename = request.data.get('type')
 
-        if authid == "ASDWi3qwydfweg":
+        if not (isinstance(username, str) and isinstance(password, str)):
+            ret['request'] = '/api/clear/'
+            ret['error_code'] = '10008'
+            ret['error'] = 'Param error, see doc for more info'
+            return JsonResponse(ret)
+
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
             if typename == "device":
                 Device.objects.all().delete()
             if typename == "role":
@@ -185,13 +236,12 @@ class ClearView(APIView):
             ret['request'] = '/api/clear/'
             ret['error_code'] = '0'
             ret['error'] = 'Success'
-
             return JsonResponse(ret)
-
-        ret['request'] = '/api/event/'
-        ret['error_code'] = '10008'
-        ret['error'] = 'Param error, see doc for more info'
-        return JsonResponse(ret)
+        else:
+            ret['request'] = '/api/clear/'
+            ret['error_code'] = '21302'
+            ret['error'] = 'Username or password error'
+            return JsonResponse(ret)
 
 
 class TemplateView(APIView):
